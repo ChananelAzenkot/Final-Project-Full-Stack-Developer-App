@@ -13,6 +13,7 @@ import CreateCards from "../CardBusiness/CreateOperation";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
+import { fontGrid } from "@mui/material/styles/cssUtils";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -20,7 +21,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
     textAlign: "center",
     border: "1px solid white",
-    borderRadius: "8px 8px 0 0",
+    borderRadius: "3px 3px 0 0",
+    fontSize:"14px",
+    padding: "2px 0 2px 0",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -45,6 +48,9 @@ function CreateModalCardForm({ formData, handleInput, errors, handleSubmit }) {
     <>
       {
         <TableContainer component={Paper} id="container">
+          <div className="createOperationTitle">
+            <h4>עדכון נתוני נציג</h4>
+          </div>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>

@@ -174,6 +174,7 @@ const handleSubmit = (ev) => {
                             />
                           ) : (
                             <TextField
+                            size="small"
                             error={errors[`${s.name}.${field.name}`]}
                             helperText={errors[`${s.name}.${field.name}`]}
                               margin="normal"
@@ -200,6 +201,7 @@ const handleSubmit = (ev) => {
                             />
                           ) : (
                             <TextField
+                            size="small"
                             error={errors[`${s.name}`]}
                             helperText={errors[`${s.name}`]}
                               margin="normal"
@@ -227,6 +229,7 @@ const handleSubmit = (ev) => {
                    הירשם
                 </Button>
                 <Button
+                style={{backgroundColor: "rgba(80, 213, 196, 255)"}}
                   type="submit"
                   fullWidth
                   variant="contained"

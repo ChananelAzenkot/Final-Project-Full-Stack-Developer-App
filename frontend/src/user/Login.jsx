@@ -127,6 +127,7 @@ export default function Login(theme) {
                 noValidate
                 sx={{ mt: 1 }}>
                 <TextField
+                size="small"
                   error={Boolean(errors.email)}
                   helperText={errors.email}
                   margin="normal"
@@ -141,6 +142,7 @@ export default function Login(theme) {
                   value={formData.email}
                 />
                 <TextField
+                size="small"
                   error={Boolean(errors.password)}
                   helperText={errors.password}
                   margin="normal"
@@ -163,6 +165,7 @@ export default function Login(theme) {
                   הכנס
                 </Button>
                 <Button
+                style={{backgroundColor: "rgba(80, 213, 196, 255)"}}
                   type="button"
                   fullWidth
                   variant="contained"

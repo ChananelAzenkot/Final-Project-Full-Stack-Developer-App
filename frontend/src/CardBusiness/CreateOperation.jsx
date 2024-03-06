@@ -199,7 +199,7 @@ const [isFetchSuccessful, setIsFetchSuccessful] = useState(false);
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <Box id="boxCards"  sx={style}>
+        <Box id="boxCards" sx={style}>
           {/* <Typography
             id="liners"
             style={{ width: "auto", textAlign: "center", height: "27px" }}
