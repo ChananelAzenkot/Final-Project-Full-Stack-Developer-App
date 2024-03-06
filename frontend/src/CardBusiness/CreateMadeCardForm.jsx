@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
   return (
     <>
       <TextField
+        size="small"
         id="nameAgent"
         label="שם נציג"
         variant="outlined"
@@ -20,8 +21,10 @@ import PropTypes from 'prop-types';
         onChange={handleInput}
         error={Boolean(errors.nameAgent)}
         helperText={errors.nameAgent}
+        style={{ width: "100%" }}
       />
       <TextField
+        size="small"
         id="teamName"
         label="שם צוות"
         variant="outlined"
@@ -34,6 +37,7 @@ import PropTypes from 'prop-types';
       />
 
       <TextField
+      size="small"
         id="numberCalls"
         label="כמות השיחות"
         variant="outlined"
@@ -44,8 +48,10 @@ import PropTypes from 'prop-types';
         error={Boolean(errors.numberCalls)}
         helperText={errors.numberCalls}
         type="number"
+        style={{ width: "63%" }}
       />
       <TextField
+      size="small"
         id="fiberDisconnection"
         label="ניתוק - Fiber"
         variant="outlined"
@@ -57,6 +63,7 @@ import PropTypes from 'prop-types';
         helperText={errors.fiberDisconnection}
       />
       <TextField
+      size="small"
         id="tvDisconnection"
         label="ניתוק - TV"
         variant="outlined"
@@ -69,6 +76,7 @@ import PropTypes from 'prop-types';
         type="number"
       />
       <TextField
+      size="small"
         id="productivity"
         label="פיריון"
         variant="outlined"
@@ -80,6 +88,7 @@ import PropTypes from 'prop-types';
         helperText={errors.productivity}
       /> 
       <TextField
+      size="small"
         id="sellerFiber"
         label="מכר - Fiber"
         variant="outlined"
@@ -91,6 +100,7 @@ import PropTypes from 'prop-types';
         helperText={errors.sellerFiber}
       />
       <TextField
+      size="small"
         id="simurTV"
         label="אחוז שימור - TV"
         variant="outlined"
@@ -103,6 +113,7 @@ import PropTypes from 'prop-types';
         disabled
       />
       <TextField
+      size="small"
         id="simurFiber"
         label="אחוז שימור - Fiber"
         variant="outlined"
@@ -115,6 +126,7 @@ import PropTypes from 'prop-types';
         disabled
       />
       <TextField
+      size="small"
         id="sellerTV"
         label="מכר - TV"
         variant="outlined"
@@ -126,6 +138,7 @@ import PropTypes from 'prop-types';
         helperText={errors.sellerTV}
       />
       <TextField
+      size="small"
         id="easyMesh"
         label="EasyMesh"
         variant="outlined"
@@ -137,6 +150,7 @@ import PropTypes from 'prop-types';
         helperText={errors.easyMesh}
       />
       <TextField
+        size="small"
         id="upgradeProgress"
         label="שדרוג"
         variant="outlined"
@@ -148,6 +162,7 @@ import PropTypes from 'prop-types';
         helperText={errors.upgradeProgress}
       />
       <TextField
+        size="small"
         id="satisfaction"
         label="סמ׳׳ט"
         variant="outlined"
