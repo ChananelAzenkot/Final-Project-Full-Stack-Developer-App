@@ -9,7 +9,7 @@ export const middlewareOperations = Joi.object({
     .min(1)
     .max(4)
     .message("פיריון חייב להיות בין1 -3 ספרות"),
-  tvDisconnection: Joi.number()
+  tvDisconnection: Joi.string()
     .required()
     .min(1)
     .max(2)

@@ -39,6 +39,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function IncrementalOperation() {
+
   const [operations, setOperations] = useState([]);
 
   useEffect(() => {

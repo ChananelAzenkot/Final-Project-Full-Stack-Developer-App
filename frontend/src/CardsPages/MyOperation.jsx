@@ -73,6 +73,7 @@ useEffect(() => {
             <TableHead>
               <TableRow>
                 <StyledTableCell>תאריך</StyledTableCell>
+                <StyledTableCell>שם צוות</StyledTableCell>
                 <StyledTableCell>שם נציג</StyledTableCell>
                 <StyledTableCell align="right">כמות שיחות</StyledTableCell>
                 <StyledTableCell align="right">פיריון</StyledTableCell>
@@ -96,6 +97,9 @@ useEffect(() => {
                 <StyledTableRow key={operation.id}>
                   <StyledTableCell component="th" scope="row">
                     {moment(operation.createTime).format('DD/MM/YYYY')}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {operation.teamName}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
                     {operation.nameAgent}

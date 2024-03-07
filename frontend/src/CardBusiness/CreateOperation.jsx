@@ -9,6 +9,7 @@ import "../styles/CreateCards.css";
 import Joi from "joi";
 import CreateModalCardForm from "./CreateMadeCardForm";
 import Button from "@mui/material/Button";
+import { jwtDecode } from "jwt-decode";
 
 const style = {
   position: "absolute",
@@ -104,6 +105,61 @@ export default function CreateOperation() {
     satisfaction: "",
     teamName: "",
   });
+
+    const [user, setUser] = useState({
+    name: {
+      first: "",
+      last: "",
+    },
+    });
+
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  
+  const decodedToken = jwtDecode(token);
+  const userId = decodedToken.userId;
+  console.log(userId);
+
+  fetch(
+    `http://localhost:4000/api/user/${userId}`,
+    {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        'Authorization': token,
+      }
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      setUser(data);
+    });
+}, []);
+
+  const [nameAgent, setNameAgent] = useState('');
+  const [teamName, setTeamName] = useState('');
+
+useEffect(() => {
+  if (user && user.name && user.name.first) {
+    setNameAgent(user.name.first + " " + user.name.last);
+  }
+}, [user]);
+
+useEffect(() => {
+  if (user && user.teamName) {
+    setTeamName(user.teamName);
+  }
+}, [user]);
+
+
+useEffect(() => {
+  setFormData(prevState => ({ ...prevState, teamName }));
+}, [teamName]);
+
+useEffect(() => {
+  setFormData(prevState => ({ ...prevState, nameAgent }));
+}, [nameAgent]);
 
   const handleInput = (e) => {
     const { id, value } = e.target;
@@ -209,6 +265,8 @@ const [isFetchSuccessful, setIsFetchSuccessful] = useState(false);
             <NoteAddIcon />
           </Typography> */}
           <CreateModalCardForm
+          nameAgent={nameAgent}
+          teamName={teamName}
             formData={formData}
             handleInput={handleInput}
             errors={errors}

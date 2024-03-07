@@ -7,13 +7,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import "../styles/operation.css";
-import CreateCards from "../CardBusiness/CreateOperation";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
-import { fontGrid } from "@mui/material/styles/cssUtils";
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,7 +41,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function CreateModalCardForm({ formData, handleInput, errors, handleSubmit }) {
+function CreateModalCardForm({ formData, handleInput, errors, handleSubmit , nameAgent , teamName }) {
+
+  CreateModalCardForm.propTypes = {
+  nameAgent: PropTypes.string.isRequired,
+  teamName: PropTypes.string.isRequired,
+};
+
   return (
     <>
       {
@@ -76,13 +80,15 @@ function CreateModalCardForm({ formData, handleInput, errors, handleSubmit }) {
               <StyledTableRow>
                 <StyledTableCell component="th" scope="row">
                   <TextField
+                  disabled
                     size="small"
                     id="nameAgent"
                     label="שם נציג"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.nameAgent}
+                    nameAgent={nameAgent}
+                    value={nameAgent}
                     onChange={handleInput}
                     error={Boolean(errors.nameAgent)}
                     helperText={errors.nameAgent}
@@ -91,13 +97,14 @@ function CreateModalCardForm({ formData, handleInput, errors, handleSubmit }) {
                 </StyledTableCell>
                                 <StyledTableCell component="th" scope="row">
                   <TextField
+                  disabled
                     size="small"
                     id="teamName"
                     label="שם הצוות"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.teamName}
+                    value={teamName}
                     onChange={handleInput}
                     error={Boolean(errors.teamName)}
                     helperText={errors.teamName}
