@@ -2,27 +2,24 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Login from "../user/Login";
 import MyOperation from "./MyOperation";
+import { jwtDecode } from "jwt-decode";
 
 export default function Cards() {
 
   const [userConnected, setUserConnected] = useState(false);
-
+  const [, setUser] = useState(null);
+  
   useEffect(() => {
-    fetch(
-      `http://localhost:4000/users/login`,
-      {
-        credentials: "include",
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setUserConnected(data);
-      });
+    const token = localStorage.getItem('token');
+    if (token) {
+       const user = jwtDecode(token);
+      setUser(user);
+      setUserConnected(true);
+    }
   }, []);
 
   const handleUserStatus = () => {
-    const token = localStorage.getItem("token");
-    if (userConnected && token) {
+    if (userConnected) {
       return <MyOperation />;
     } else {
       return <Login />;

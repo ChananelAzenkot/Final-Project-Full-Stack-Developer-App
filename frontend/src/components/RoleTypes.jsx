@@ -42,7 +42,7 @@ export const useLogout = (setUser, setUserRoleType, setLoader, navigate, handleC
   const logout = () => {
     setLoader(true);
 
-    fetch(`https://api.shipap.co.il/clients/logout`, {
+    fetch(`http://localhost:4000/logout`, {
       credentials: "include",
     }).then(() => {
       setUser();

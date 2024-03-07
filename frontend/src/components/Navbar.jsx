@@ -2,7 +2,7 @@ import {AppBar,Box,Toolbar,IconButton,Typography,Menu,MenuItem,Avatar,Button,Too
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useNavigate, useResolvedPath } from "react-router-dom";
 import "../styles/Navbar.css";
-import {checkPermissions,pages,useGeneralContext,useLogout,} from "./RoleTypes";
+import {checkPermissions,pages,useGeneralContext,useLogout} from "./RoleTypes";
 import { useAnchors } from "./useAnchors";
 
 export default function Navbar() {
@@ -28,7 +28,6 @@ export default function Navbar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },

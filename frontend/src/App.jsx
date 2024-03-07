@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FavoriteLabel from "./components/FavoriteLabel";
 import CssBaseline from "@mui/material/CssBaseline";
 import { RoleTypes } from './components/RoleTypes';
+import { jwtDecode } from "jwt-decode";
 
 export const GeneralContext = createContext();
 
@@ -21,7 +22,7 @@ function App() {
     setSnackbarText(text);
     setTimeout(() => setSnackbarText(""), 3 * 1000);
   };
-  const [userRoleType, setUserRoleType] = useState(RoleTypes.none);
+const [userRoleType, setUserRoleType] = useState(localStorage.getItem('userId') || RoleTypes.none);
 
     function handleThemeChange() {
     setThemeType(!themeLight);
@@ -45,34 +46,28 @@ function App() {
   },
 });
 
-  useEffect(() => {
-    fetch(`https://api.shipap.co.il/clients/login`, {
-      credentials: "include",
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.text().then((x) => {
-            throw new Error(x);
-          });
-        }
-      })
-      .then((data) => {
-        setUser(data);
-        setUserRoleType(RoleTypes.user);
+// ...
 
-        if (data.IsBusiness) {
-          setUserRoleType(RoleTypes.IsBusiness);
-        } else if (data.isAdmin) {
-          setUserRoleType(RoleTypes.isAdmin);
-        }
-      })
-      .catch(() => {
-        setUserRoleType(RoleTypes.none);
-      })
-      .finally(() => setLoader(false));
-  }, []);
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    setUserRoleType(RoleTypes.none);
+    setLoader(false);
+    return;
+  }
+
+  const user = jwtDecode(token);
+  let role = RoleTypes.user;
+
+  if (user.isAdmin) {
+    role = RoleTypes.isAdmin;
+  } else if (user.IsBusiness) {
+    role = RoleTypes.IsBusiness;
+  }
+
+  setUserRoleType(role);
+  setLoader(false);
+}, []);
 
   return (
     <ThemeProvider theme={theme}>
