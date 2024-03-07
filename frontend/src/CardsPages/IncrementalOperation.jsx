@@ -44,9 +44,13 @@ export default function IncrementalOperation() {
 
   useEffect(() => {
     fetch(
-      `http://localhost:4000/api/allOperations`,
+      `http://localhost:4000/api/incrementalOperation`,
       {
         credentials: "include",
+        headers: {
+          "Content-type": "application",
+          'Authorization': localStorage.token,
+        }
       }
     )
       .then((res) => res.json())
@@ -54,6 +58,7 @@ export default function IncrementalOperation() {
         setOperations(data);
       });
   }, []);
+  
 
   return (
     <>
@@ -63,6 +68,7 @@ export default function IncrementalOperation() {
             <TableHead>
               <TableRow>
                 <StyledTableCell>תאריך</StyledTableCell>
+                <StyledTableCell>שם צוות</StyledTableCell>
                 <StyledTableCell>שם נציג</StyledTableCell>
                 <StyledTableCell align="right">כמות שיחות</StyledTableCell>
                 <StyledTableCell align="right">פיריון</StyledTableCell>
@@ -82,10 +88,13 @@ export default function IncrementalOperation() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {operations.map((operations , index) => (
+              {Array.isArray(operations) && operations.map((operations , index) => (
                 <StyledTableRow key={index}>
                 <StyledTableCell component="th" scope="row">
                     {moment(operations.createTime).format('DD/MM/YYYY')}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {operations.teamName}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
                     {operations.nameAgent}
