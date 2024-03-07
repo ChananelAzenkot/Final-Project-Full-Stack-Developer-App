@@ -15,7 +15,7 @@ export default function Router(theme) {
         <Routes>
             <Route path="/" element={<Cards theme={theme} />} />
             <Route path="/about" element={<About theme={theme} />} />
-            <Route path="/my-cards" element={<OperationTeams theme={theme} />} />
+            <Route path="/operationTeams" element={<OperationTeams theme={theme} />} />
             <Route path="/dailyOperation" element={<MyOperation theme={theme} />} />
             <Route path="/incrementalOperation" element={<IncrementalOperation theme={theme} />} />
             <Route path="/centralizedOperation" element={<UserManagement theme={theme} />} />

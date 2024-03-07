@@ -2,8 +2,7 @@ import { guard, adminGuard, businessGuard } from "../../guards.js";
 import { IncrementalOperation, DailyOperation, LoggersOperation } from "../../handlers/operation/operations.model.js";
 import { getLoggedUserId } from "../../config/config.js";
 import { middlewareOperations } from "../../middleware/middlewareOperations.js";
-import loggersOperations from "../../loggers/loggersOperation.js";
-
+import { User } from "../../handlers/users/models/user.model.js";
 export default (app) => {
   // get all Operations users //
   app.get("/api/allOperations", async (req, res) => {
@@ -38,6 +37,40 @@ export default (app) => {
       res.status(500).json({ message: "Server error", error: error.message });
     }
   });
+
+app.get("/api/operationTeam", businessGuard, async (req, res) => {
+  try {
+    const { userId } = getLoggedUserId(req, res);
+
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    }
+
+    // Fetch the user's data from the database
+    const user = await User.findById(userId);
+    console.log(user);
+
+    // Check if the user is a business user and if the teamName is equal to the user's teamName
+    if (user.teamName && user.IsBusiness) {
+      const dailyOperationTeam = await DailyOperation.find({
+        teamName: user.teamName,
+      });
+
+      if (!dailyOperationTeam || dailyOperationTeam.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No cards found for this team" });
+      }
+      res.send(dailyOperationTeam);
+    } else {
+      res.status(403).json({ message: "User is not a business user or does not belong to a team" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
   // *** get a specific Operation by id test !!! ***//
     app.get("/api/operationId", guard, async (req, res) => {
       try {

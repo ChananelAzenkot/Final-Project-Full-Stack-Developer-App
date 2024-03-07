@@ -58,6 +58,7 @@ app.post("/users/login", async (req, res) => {
         userId: user._id,
         isAdmin: user.isAdmin,
         IsBusiness: user.IsBusiness,
+        teamName: user.teamName,
       },
       process.env.JWT_SECRET,
       {
