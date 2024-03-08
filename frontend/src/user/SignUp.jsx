@@ -128,6 +128,7 @@ const handleSubmit = (ev) => {
 })
 .catch((err) => alert(err.message))
 .finally(() => setLoader(false));
+navigate("/login");
 };
   return (
     <>

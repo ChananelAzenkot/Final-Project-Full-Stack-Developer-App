@@ -22,6 +22,9 @@ export default (app) => {
       if (!userId) {
         return res.status(403).json({ message: "User not authorized" });
       }
+
+      const user = await User.findById(userId);
+
       const incrementalOperations = await IncrementalOperation.find({
         user_id: userId,
       });
