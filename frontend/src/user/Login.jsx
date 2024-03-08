@@ -95,7 +95,7 @@ export default function Login(theme) {
 
         // Add token to local storage
 
-        navigate("/");
+        navigate("/dailyOperation");
       })
       .catch((err) => {
         alert(err.message);
