@@ -1,5 +1,6 @@
 import { schemaOperations } from "../schemas/schemaOperation";
 
+// handleInput is for creating a new item
 export const handleInput = (e, formData, setFormData, errors, setErrors, setIsFormValid) => {
   const { id, value } = e.target;
   const obj = { ...formData, [id]: value };
@@ -19,7 +20,7 @@ export const handleInput = (e, formData, setFormData, errors, setErrors, setIsFo
   setIsFormValid(!validate.error);
   setErrors(tempErrors);
 };
-
+// handleInputEdit is for editing an existing item
 export const handleInputEdit = (e, item, setItem, errors, setErrors, setIsFormValid) => {
   const { id, value } = e.target;
   const obj = { ...item, [id]: value };
