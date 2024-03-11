@@ -18,7 +18,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
     textAlign: "center",
     border: "1px solid white",
-    borderRadius: "8px 8px 0 0",
+    borderRadius: "3px 3px 0 0",
+    fontSize:"14px",
+    padding: "2px 0 2px 0",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -51,7 +53,7 @@ export function FormFields({ item, errors, handleInput, save }) {
       {
         <TableContainer component={Paper} id="container">
           <div className="createOperationTitle">
-            <h4>עדכון נתוני נציג</h4>
+            <h4>עדכון נתונים</h4>
           </div>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>

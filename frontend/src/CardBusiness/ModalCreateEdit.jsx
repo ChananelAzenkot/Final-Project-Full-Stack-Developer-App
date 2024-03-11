@@ -1,8 +1,6 @@
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import SaveIcon from "@mui/icons-material/Save";
 import { FormFields } from "./FormFields";
 import PropTypes from 'prop-types';
 
@@ -43,14 +41,6 @@ export function ModalCreateEdit({
       aria-describedby="modal-modal-description">
       <Box id="boxCards" sx={style}>
         <FormFields item={item} errors={errors} handleInput={handleInput} save={save} />
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <IconButton
-            id="btnCreateAndPress"
-            style={{ width: "auto" }}
-            onClick={save}>
-            <SaveIcon />
-          </IconButton>
-        </Typography>
       </Box>
     </Modal>
   );
