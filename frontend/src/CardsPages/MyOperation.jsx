@@ -8,12 +8,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import { useEffect } from "react";
-import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import Button from "@mui/material/Button";
 import "../styles/operation.css";
 import CreateCards from "../CardBusiness/CreateOperation";
+import ModalCardsEdit from "../CardBusiness/ModalCardsEdit";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -142,13 +142,16 @@ export default function MyOperation() {
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       <IconButton>
-                        <EditIcon />
+                        <ModalCardsEdit theIDoperation={operation.bizNumber} dataOperation={operation} />
                       </IconButton>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
             </TableBody>
           </Table>
+          {
+            console.log(operation)
+          }
         </TableContainer>
       }
     </>

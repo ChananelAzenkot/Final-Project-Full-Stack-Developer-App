@@ -23,14 +23,7 @@ const style = {
   p: 4,
 };
 
-export default function CreateOperation() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [errors, setErrors] = useState({});
-  const [, setIsFormValid] = useState(false);
-
-  const schema = Joi.object({
+  export const schema = Joi.object({
     nameAgent: Joi.string().min(3).required().messages({
       "string.empty": "נדרש שם נציג",
       "string.min": "שם סוכן חייב להיות בין 3 ל-30 תווים",
@@ -87,6 +80,13 @@ export default function CreateOperation() {
       "string.empty": "שם הצוות הינו חובה",
     }),
   });
+
+export default function CreateOperation() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [errors, setErrors] = useState({});
+  const [, setIsFormValid] = useState(false);
 
   const { snackbar } = useContext(GeneralContext);
 

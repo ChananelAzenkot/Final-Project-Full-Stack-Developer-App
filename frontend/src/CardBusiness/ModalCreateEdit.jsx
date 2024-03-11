@@ -1,11 +1,10 @@
-import React from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
-import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
 import { FormFields } from "./FormFields";
+import PropTypes from 'prop-types';
 
 const style = {
   position: "absolute",
@@ -18,6 +17,14 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+ModalCreateEdit.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  item: PropTypes.object, 
+  errors: PropTypes.object,
+  handleInput: PropTypes.func.isRequired,
+  save: PropTypes.func.isRequired,
+};
 
 export function ModalCreateEdit({
   open,
@@ -26,23 +33,16 @@ export function ModalCreateEdit({
   errors,
   handleInput,
   save,
-}) {
+})
+ {
   return (
     <Modal
       open={open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
-      <Box id="boxCards" className="inputCards" sx={style}>
-        <Typography
-          id="liners"
-          style={{ width: "auto", textAlign: "center", height: "27px" }}
-          variant="h6"
-          component="h2">
-          <b>Edit Card </b>
-          <AutoFixNormalIcon />
-        </Typography>
-        <FormFields item={item} errors={errors} handleInput={handleInput} />
+      <Box id="boxCards" sx={style}>
+        <FormFields item={item} errors={errors} handleInput={handleInput} save={save} />
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <IconButton
             id="btnCreateAndPress"
