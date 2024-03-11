@@ -12,8 +12,8 @@ import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import Button from "@mui/material/Button";
 import "../styles/operation.css";
-import CreateCards from "../CardBusiness/CreateOperation";
-import ModalCardsEdit from "../CardBusiness/ModalCardsEdit";
+import CreateCards from "../Agent/CreateOperation";
+import ModalCardsEdit from "../Agent/EditOperation";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {

@@ -6,12 +6,12 @@ import { useContext } from "react";
 import { GeneralContext } from "../App";
 import Box from "@mui/material/Box";
 import "../styles/CreateCards.css";
-import CreateModalCardForm from "./CreateMadeCardForm";
 import Button from "@mui/material/Button";
 import { jwtDecode } from "jwt-decode";
 import { schemaOperations } from "../schemas/schemaOperation";
 import {calculatePercentageTVcreate, calculatePercentageFiberCreate } from "../components/calculatePercentage";
 import { handleInput } from "../components/handleInput";
+import CreateOperationInputs from "./CreateOperationInputs";
 
 const style = {
   position: "absolute",
@@ -163,7 +163,7 @@ const [isFetchSuccessful, setIsFetchSuccessful] = useState(false);
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box id="boxCards" sx={style}>
-          <CreateModalCardForm
+          <CreateOperationInputs
           nameAgent={nameAgent}
           teamName={teamName}
             formData={formData}

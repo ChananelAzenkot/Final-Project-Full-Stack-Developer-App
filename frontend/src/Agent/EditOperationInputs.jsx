@@ -1,17 +1,16 @@
-import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
-import PropTypes from "prop-types";
+import TextField from "@mui/material/TextField";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import "../styles/operation.css";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
-import SendIcon from "@mui/icons-material/Send";
-
+import PropTypes from "prop-types";
+import SaveIcon from "@mui/icons-material/Save";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,20 +40,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , nameAgent , teamName }) {
-
-  CreateModalCardForm.propTypes = {
-  nameAgent: PropTypes.string.isRequired,
-  teamName: PropTypes.string.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-};
-
+export function EditOperationInputs({ item, errors, onInputChange, save }) {
+  EditOperationInputs.propTypes = {
+    item: PropTypes.any,
+    errors: PropTypes.object,
+    onInputChange: PropTypes.func,
+    save: PropTypes.func,
+  };
+  
   return (
     <>
       {
         <TableContainer component={Paper} id="container">
           <div className="createOperationTitle">
-            <h4>התחל עדכון נתונים</h4>
+            <h4>עדכון נתונים</h4>
           </div>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
@@ -81,31 +80,31 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
               <StyledTableRow>
                 <StyledTableCell component="th" scope="row">
                   <TextField
-                  disabled
+                    disabled
                     size="small"
                     id="nameAgent"
                     label="שם נציג"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    nameAgent={nameAgent}
-                    value={nameAgent}
+                    nameAgent={item.nameAgent}
+                    value={item.nameAgent}
                     onChange={onInputChange}
                     error={Boolean(errors.nameAgent)}
                     helperText={errors.nameAgent}
                     style={{ width: "100%" }}
                   />
                 </StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row">
                   <TextField
-                  disabled
+                    disabled
                     size="small"
                     id="teamName"
                     label="שם הצוות"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={teamName}
+                    value={item.teamName}
                     onChange={onInputChange}
                     error={Boolean(errors.teamName)}
                     helperText={errors.teamName}
@@ -120,7 +119,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.numberCalls}
+                    value={item.numberCalls}
                     onChange={onInputChange}
                     error={Boolean(errors.numberCalls)}
                     helperText={errors.numberCalls}
@@ -136,7 +135,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.productivity}
+                    value={item.productivity}
                     onChange={onInputChange}
                     error={Boolean(errors.productivity)}
                     helperText={errors.productivity}
@@ -150,7 +149,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.tvDisconnection}
+                    value={item.tvDisconnection}
                     onChange={onInputChange}
                     error={Boolean(errors.tvDisconnection)}
                     helperText={errors.tvDisconnection}
@@ -165,7 +164,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.fiberDisconnection}
+                    value={item.fiberDisconnection}
                     onChange={onInputChange}
                     error={Boolean(errors.fiberDisconnection)}
                     helperText={errors.fiberDisconnection}
@@ -179,7 +178,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.simurFiber}
+                    value={item.simurFiber}
                     onChange={onInputChange}
                     error={Boolean(errors.simurFiber)}
                     helperText={errors.simurFiber}
@@ -194,7 +193,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.simurTV}
+                    value={item.simurTV}
                     onChange={onInputChange}
                     error={Boolean(errors.simurTV)}
                     helperText={errors.simurTV}
@@ -209,7 +208,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.sellerFiber}
+                    value={item.sellerFiber}
                     onChange={onInputChange}
                     error={Boolean(errors.sellerFiber)}
                     helperText={errors.sellerFiber}
@@ -223,7 +222,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.sellerTV}
+                    value={item.sellerTV}
                     onChange={onInputChange}
                     error={Boolean(errors.sellerTV)}
                     helperText={errors.sellerTV}
@@ -237,7 +236,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.easyMesh}
+                    value={item.easyMesh}
                     onChange={onInputChange}
                     error={Boolean(errors.easyMesh)}
                     helperText={errors.easyMesh}
@@ -251,7 +250,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.upgradeProgress}
+                    value={item.upgradeProgress}
                     onChange={onInputChange}
                     error={Boolean(errors.upgradeProgress)}
                     helperText={errors.upgradeProgress}
@@ -265,7 +264,7 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={formData.satisfaction}
+                    value={item.satisfaction}
                     onChange={onInputChange}
                     error={Boolean(errors.satisfaction)}
                     helperText={errors.satisfaction}
@@ -275,8 +274,8 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
                   <IconButton
                     id="btnCreateAndPress"
                     style={{ width: "auto" }}
-                    onClick={handleSubmit}>
-                    <SendIcon />
+                    onClick={save}>
+                    <SaveIcon />
                   </IconButton>
                 </StyledTableCell>
               </StyledTableRow>
@@ -287,40 +286,3 @@ function CreateModalCardForm({ formData, onInputChange, errors, handleSubmit , n
     </>
   );
 }
-
-CreateModalCardForm.propTypes = {
-  formData: PropTypes.shape({
-    nameAgent: PropTypes.string,
-    numberCalls: PropTypes.string,
-    productivity: PropTypes.string,
-    tvDisconnection: PropTypes.string,
-    fiberDisconnection: PropTypes.string,
-    simurFiber: PropTypes.string,
-    simurTV: PropTypes.string,
-    sellerFiber: PropTypes.string,
-    sellerTV: PropTypes.string,
-    easyMesh: PropTypes.string,
-    upgradeProgress: PropTypes.string,
-    satisfaction: PropTypes.string,
-    teamName: PropTypes.string,
-  }).isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  errors: PropTypes.shape({
-    nameAgent: PropTypes.string,
-    numberCalls: PropTypes.string,
-    productivity: PropTypes.string,
-    tvDisconnection: PropTypes.string,
-    fiberDisconnection: PropTypes.string,
-    simurFiber: PropTypes.string,
-    simurTV: PropTypes.string,
-    sellerFiber: PropTypes.string,
-    sellerTV: PropTypes.string,
-    easyMesh: PropTypes.string,
-    upgradeProgress: PropTypes.string,
-    satisfaction: PropTypes.string,
-    teamName: PropTypes.string,
-  }).isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-};
-
-export default CreateModalCardForm;

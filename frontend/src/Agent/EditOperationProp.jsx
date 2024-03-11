@@ -1,7 +1,6 @@
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { FormFields } from "./FormFields";
+import { EditOperationInputs } from "./EditOperationInputs";
 import PropTypes from 'prop-types';
 
 const style = {
@@ -15,7 +14,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-ModalCreateEdit.propTypes = {
+EditOperationProp.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   item: PropTypes.object, 
@@ -24,7 +23,7 @@ ModalCreateEdit.propTypes = {
   save: PropTypes.func.isRequired,
 };
 
-export function ModalCreateEdit({
+export function EditOperationProp({
   open,
   handleClose,
   item,
@@ -40,7 +39,7 @@ export function ModalCreateEdit({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
       <Box id="boxCards" sx={style}>
-        <FormFields item={item} errors={errors} onInputChange={onInputChange} save={save} />
+        <EditOperationInputs item={item} errors={errors} onInputChange={onInputChange} save={save} />
       </Box>
     </Modal>
   );

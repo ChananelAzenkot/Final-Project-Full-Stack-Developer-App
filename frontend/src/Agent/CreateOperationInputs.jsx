@@ -1,16 +1,17 @@
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import PropTypes from "prop-types";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 import "../styles/operation.css";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
-import PropTypes from "prop-types";
-import SaveIcon from "@mui/icons-material/Save";
+import SendIcon from "@mui/icons-material/Send";
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,20 +41,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export function FormFields({ item, errors, onInputChange, save }) {
-  FormFields.propTypes = {
-    item: PropTypes.any, // replace 'any' with the actual type of 'item'
-    errors: PropTypes.object,
-    onInputChange: PropTypes.func,
-    save: PropTypes.func,
-  };
-  
+function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit , nameAgent , teamName }) {
+
+  CreateOperationInputs.propTypes = {
+  nameAgent: PropTypes.string.isRequired,
+  teamName: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+};
+
   return (
     <>
       {
         <TableContainer component={Paper} id="container">
           <div className="createOperationTitle">
-            <h4>עדכון נתונים</h4>
+            <h4>התחל עדכון נתונים</h4>
           </div>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
@@ -80,31 +81,31 @@ export function FormFields({ item, errors, onInputChange, save }) {
               <StyledTableRow>
                 <StyledTableCell component="th" scope="row">
                   <TextField
-                    disabled
+                  disabled
                     size="small"
                     id="nameAgent"
                     label="שם נציג"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    nameAgent={item.nameAgent}
-                    value={item.nameAgent}
+                    nameAgent={nameAgent}
+                    value={nameAgent}
                     onChange={onInputChange}
                     error={Boolean(errors.nameAgent)}
                     helperText={errors.nameAgent}
                     style={{ width: "100%" }}
                   />
                 </StyledTableCell>
-                <StyledTableCell component="th" scope="row">
+                                <StyledTableCell component="th" scope="row">
                   <TextField
-                    disabled
+                  disabled
                     size="small"
                     id="teamName"
                     label="שם הצוות"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.teamName}
+                    value={teamName}
                     onChange={onInputChange}
                     error={Boolean(errors.teamName)}
                     helperText={errors.teamName}
@@ -119,7 +120,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.numberCalls}
+                    value={formData.numberCalls}
                     onChange={onInputChange}
                     error={Boolean(errors.numberCalls)}
                     helperText={errors.numberCalls}
@@ -135,7 +136,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.productivity}
+                    value={formData.productivity}
                     onChange={onInputChange}
                     error={Boolean(errors.productivity)}
                     helperText={errors.productivity}
@@ -149,7 +150,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.tvDisconnection}
+                    value={formData.tvDisconnection}
                     onChange={onInputChange}
                     error={Boolean(errors.tvDisconnection)}
                     helperText={errors.tvDisconnection}
@@ -164,7 +165,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.fiberDisconnection}
+                    value={formData.fiberDisconnection}
                     onChange={onInputChange}
                     error={Boolean(errors.fiberDisconnection)}
                     helperText={errors.fiberDisconnection}
@@ -178,7 +179,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.simurFiber}
+                    value={formData.simurFiber}
                     onChange={onInputChange}
                     error={Boolean(errors.simurFiber)}
                     helperText={errors.simurFiber}
@@ -193,7 +194,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.simurTV}
+                    value={formData.simurTV}
                     onChange={onInputChange}
                     error={Boolean(errors.simurTV)}
                     helperText={errors.simurTV}
@@ -208,7 +209,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.sellerFiber}
+                    value={formData.sellerFiber}
                     onChange={onInputChange}
                     error={Boolean(errors.sellerFiber)}
                     helperText={errors.sellerFiber}
@@ -222,7 +223,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.sellerTV}
+                    value={formData.sellerTV}
                     onChange={onInputChange}
                     error={Boolean(errors.sellerTV)}
                     helperText={errors.sellerTV}
@@ -236,7 +237,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.easyMesh}
+                    value={formData.easyMesh}
                     onChange={onInputChange}
                     error={Boolean(errors.easyMesh)}
                     helperText={errors.easyMesh}
@@ -250,7 +251,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.upgradeProgress}
+                    value={formData.upgradeProgress}
                     onChange={onInputChange}
                     error={Boolean(errors.upgradeProgress)}
                     helperText={errors.upgradeProgress}
@@ -264,7 +265,7 @@ export function FormFields({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={item.satisfaction}
+                    value={formData.satisfaction}
                     onChange={onInputChange}
                     error={Boolean(errors.satisfaction)}
                     helperText={errors.satisfaction}
@@ -274,8 +275,8 @@ export function FormFields({ item, errors, onInputChange, save }) {
                   <IconButton
                     id="btnCreateAndPress"
                     style={{ width: "auto" }}
-                    onClick={save}>
-                    <SaveIcon />
+                    onClick={handleSubmit}>
+                    <SendIcon />
                   </IconButton>
                 </StyledTableCell>
               </StyledTableRow>
@@ -286,3 +287,40 @@ export function FormFields({ item, errors, onInputChange, save }) {
     </>
   );
 }
+
+CreateOperationInputs.propTypes = {
+  formData: PropTypes.shape({
+    nameAgent: PropTypes.string,
+    numberCalls: PropTypes.string,
+    productivity: PropTypes.string,
+    tvDisconnection: PropTypes.string,
+    fiberDisconnection: PropTypes.string,
+    simurFiber: PropTypes.string,
+    simurTV: PropTypes.string,
+    sellerFiber: PropTypes.string,
+    sellerTV: PropTypes.string,
+    easyMesh: PropTypes.string,
+    upgradeProgress: PropTypes.string,
+    satisfaction: PropTypes.string,
+    teamName: PropTypes.string,
+  }).isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  errors: PropTypes.shape({
+    nameAgent: PropTypes.string,
+    numberCalls: PropTypes.string,
+    productivity: PropTypes.string,
+    tvDisconnection: PropTypes.string,
+    fiberDisconnection: PropTypes.string,
+    simurFiber: PropTypes.string,
+    simurTV: PropTypes.string,
+    sellerFiber: PropTypes.string,
+    sellerTV: PropTypes.string,
+    easyMesh: PropTypes.string,
+    upgradeProgress: PropTypes.string,
+    satisfaction: PropTypes.string,
+    teamName: PropTypes.string,
+  }).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};
+
+export default CreateOperationInputs;

@@ -6,7 +6,7 @@ import { GeneralContext } from "../App";
 import { useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import { useMemo } from "react";
-import { ModalCreateEdit } from "./ModalCreateEdit";
+import { EditOperationProp } from "./EditOperationProp";
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
 import { schemaOperations } from "../schemas/schemaOperation";
@@ -16,14 +16,14 @@ import {
 } from "../components/calculatePercentage";
 import { handleInputEdit } from "../components/handleInput";
 
-export default function ModalCardsEdit({ dataOperation, theIDoperation }) {
+export default function EditOperation({ dataOperation, theIDoperation }) {
   const { snackbar, setIsLoader } = useContext(GeneralContext);
   const [errors, setErrors] = useState({});
   const [, setIsFormValid] = useState(false);
   const editProp = theIDoperation;
   console.log(editProp);
 
-  ModalCardsEdit.propTypes = {
+  EditOperation.propTypes = {
     dataOperation: PropTypes.shape({
       teamName: PropTypes.string,
       nameAgent: PropTypes.string,
@@ -137,7 +137,7 @@ const onInputChange = (e) => {
         onClick={handleOpen}>
         <EditIcon />
       </IconButton>
-      <ModalCreateEdit
+      <EditOperationProp
         open={open}
         handleClose={handleClose}
         item={item}
