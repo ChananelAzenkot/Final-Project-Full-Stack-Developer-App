@@ -65,7 +65,7 @@ export default function Cards() {
                 <StyledTableCell align="right">פיריון</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - Fiber</StyledTableCell>
+                <StyledTableCell align="right">אחוז שg,gckvtgckימור - Fiber</StyledTableCell>
                 <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
                 <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
                 <StyledTableCell align="right">מכר - TV</StyledTableCell>

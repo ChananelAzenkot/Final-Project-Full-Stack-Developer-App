@@ -4,7 +4,7 @@ import Login from "../user/Login";
 import MyOperation from "./MyOperation";
 import { jwtDecode } from "jwt-decode";
 
-export default function Cards() {
+export default function CheckUser() {
 
   const [userConnected, setUserConnected] = useState(false);
   const [, setUser] = useState(null);

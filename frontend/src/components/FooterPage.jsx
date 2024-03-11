@@ -89,7 +89,7 @@ const pages = [
   },
 ];
 
-export default function FavoriteLabel() {
+export default function FooterPage() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const { userRoleType, user } = useContext(GeneralContext);
 
