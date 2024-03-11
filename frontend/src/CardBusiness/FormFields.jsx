@@ -40,11 +40,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export function FormFields({ item, errors, handleInput, save }) {
+export function FormFields({ item, errors, onInputChange, save }) {
   FormFields.propTypes = {
     item: PropTypes.any, // replace 'any' with the actual type of 'item'
     errors: PropTypes.object,
-    handleInput: PropTypes.func,
+    onInputChange: PropTypes.func,
     save: PropTypes.func,
   };
   
@@ -89,7 +89,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     margin="normal"
                     nameAgent={item.nameAgent}
                     value={item.nameAgent}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.nameAgent)}
                     helperText={errors.nameAgent}
                     style={{ width: "100%" }}
@@ -105,7 +105,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.teamName}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.teamName)}
                     helperText={errors.teamName}
                     style={{ width: "100%" }}
@@ -120,7 +120,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.numberCalls}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.numberCalls)}
                     helperText={errors.numberCalls}
                     type="number"
@@ -136,7 +136,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.productivity}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.productivity)}
                     helperText={errors.productivity}
                   />
@@ -150,7 +150,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.tvDisconnection}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.tvDisconnection)}
                     helperText={errors.tvDisconnection}
                     type="number"
@@ -165,7 +165,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.fiberDisconnection}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.fiberDisconnection)}
                     helperText={errors.fiberDisconnection}
                   />
@@ -179,7 +179,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.simurFiber}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.simurFiber)}
                     helperText={errors.simurFiber}
                     disabled
@@ -194,7 +194,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.simurTV}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.simurTV)}
                     helperText={errors.simurTV}
                     disabled
@@ -209,7 +209,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.sellerFiber}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.sellerFiber)}
                     helperText={errors.sellerFiber}
                   />
@@ -223,7 +223,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.sellerTV}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.sellerTV)}
                     helperText={errors.sellerTV}
                   />
@@ -237,7 +237,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.easyMesh}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.easyMesh)}
                     helperText={errors.easyMesh}
                   />
@@ -251,7 +251,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.upgradeProgress}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.upgradeProgress)}
                     helperText={errors.upgradeProgress}
                   />
@@ -265,7 +265,7 @@ export function FormFields({ item, errors, handleInput, save }) {
                     fullWidth
                     margin="normal"
                     value={item.satisfaction}
-                    onChange={handleInput}
+                    onChange={onInputChange}
                     error={Boolean(errors.satisfaction)}
                     helperText={errors.satisfaction}
                   />

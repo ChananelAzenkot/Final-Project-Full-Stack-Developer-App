@@ -20,7 +20,7 @@ ModalCreateEdit.propTypes = {
   handleClose: PropTypes.func.isRequired,
   item: PropTypes.object, 
   errors: PropTypes.object,
-  handleInput: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
   save: PropTypes.func.isRequired,
 };
 
@@ -29,7 +29,7 @@ export function ModalCreateEdit({
   handleClose,
   item,
   errors,
-  handleInput,
+  onInputChange,
   save,
 })
  {
@@ -40,7 +40,7 @@ export function ModalCreateEdit({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
       <Box id="boxCards" sx={style}>
-        <FormFields item={item} errors={errors} handleInput={handleInput} save={save} />
+        <FormFields item={item} errors={errors} onInputChange={onInputChange} save={save} />
       </Box>
     </Modal>
   );

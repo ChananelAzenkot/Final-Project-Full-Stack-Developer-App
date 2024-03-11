@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import { jwtDecode } from "jwt-decode";
 import { schemaOperations } from "../schemas/schemaOperation";
 import {calculatePercentageTVcreate, calculatePercentageFiberCreate } from "../components/calculatePercentage";
+import { handleInput } from "../components/handleInput";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -94,7 +96,6 @@ useEffect(() => {
   }
 }, [user]);
 
-
 useEffect(() => {
   setFormData(prevState => ({ ...prevState, teamName }));
 }, [teamName]);
@@ -103,26 +104,6 @@ useEffect(() => {
   setFormData(prevState => ({ ...prevState, nameAgent }));
 }, [nameAgent]);
 
-  const handleInput = (e) => {
-    const { id, value } = e.target;
-    const obj = { ...formData, [id]: value };
-    setFormData(obj);
-
-    const validate = schemaOperations.validate(obj, { abortEarly: false });
-    const tempErrors = { ...errors };
-    delete tempErrors[id];
-
-    if (validate.error) {
-      const item = validate.error.details.find((e) => e.context.key === id);
-
-      if (item) {
-        tempErrors[id] = item.message;
-      }
-    }
-    setIsFormValid(!validate.error);
-    setErrors(tempErrors);
-  };
-
   useEffect(() => {
   calculatePercentageTVcreate(formData, setFormData);
 }, [formData.numberCalls, formData.tvDisconnection, formData.simurTV]);
@@ -130,6 +111,10 @@ useEffect(() => {
 useEffect(() => {
   calculatePercentageFiberCreate(formData, setFormData);
 }, [formData.numberCalls, formData.fiberDisconnection, formData.simurFiber]);
+
+const onInputChange = (e) => {
+  handleInput(e, formData, setFormData, errors, setErrors, setIsFormValid);
+};
 
 const [isFetchSuccessful, setIsFetchSuccessful] = useState(false);
 
@@ -178,19 +163,11 @@ const [isFetchSuccessful, setIsFetchSuccessful] = useState(false);
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box id="boxCards" sx={style}>
-          {/* <Typography
-            id="liners"
-            style={{ width: "auto", textAlign: "center", height: "27px" }}
-            variant="h6"
-            component="h2">
-            <b>נתונים ראשונים</b>
-            <NoteAddIcon />
-          </Typography> */}
           <CreateModalCardForm
           nameAgent={nameAgent}
           teamName={teamName}
             formData={formData}
-            handleInput={handleInput}
+            onInputChange={onInputChange}
             errors={errors}
             handleSubmit={handleSubmit}
           />

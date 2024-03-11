@@ -14,6 +14,7 @@ import {
   calculatePercentageTV,
   calculatePercentageFiber,
 } from "../components/calculatePercentage";
+import { handleInputEdit } from "../components/handleInput";
 
 export default function ModalCardsEdit({ dataOperation, theIDoperation }) {
   const { snackbar, setIsLoader } = useContext(GeneralContext);
@@ -84,25 +85,9 @@ export default function ModalCardsEdit({ dataOperation, theIDoperation }) {
     }
   }, [id, setIsLoader, initialValues]);
 
-  const handleInput = (e) => {
-    const { id, value } = e.target;
-    const obj = { ...item, [id]: value };
-    setItem(obj);
-
-    const validate = schemaOperations.validate(obj, { abortEarly: false });
-    const tempErrors = { ...errors };
-    delete tempErrors[id];
-
-    if (validate.error) {
-      const item = validate.error.details.find((e) => e.context.key === id);
-
-      if (item) {
-        tempErrors[id] = item.message;
-      }
-    }
-    setIsFormValid(!validate.error);
-    setErrors(tempErrors);
-  };
+const onInputChange = (e) => {
+  handleInputEdit(e, item, setItem, errors, setErrors, setIsFormValid);
+};
 
   useEffect(() => {
     calculatePercentageTV(item, setItem);
@@ -157,7 +142,7 @@ export default function ModalCardsEdit({ dataOperation, theIDoperation }) {
         handleClose={handleClose}
         item={item}
         errors={errors}
-        handleInput={handleInput}
+        onInputChange={onInputChange}
         save={save}
       />
     </Box>
