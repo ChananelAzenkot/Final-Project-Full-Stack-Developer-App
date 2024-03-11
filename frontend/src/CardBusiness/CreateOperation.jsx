@@ -10,7 +10,7 @@ import CreateModalCardForm from "./CreateMadeCardForm";
 import Button from "@mui/material/Button";
 import { jwtDecode } from "jwt-decode";
 import { schemaOperations } from "../schemas/schemaOperation";
-
+import {calculatePercentageTV ,calculatePercentageFiber, calculatePercentageTVcreate, calculatePercentageFiberCreate } from "../components/calculatePercentage";
 const style = {
   position: "absolute",
   top: "50%",
@@ -123,19 +123,13 @@ useEffect(() => {
     setErrors(tempErrors);
   };
 
-    const calculatePercentageTV = () => {
-    if (!formData.numberCalls || isNaN(formData.tvDisconnection) || isNaN(formData.numberCalls)) {
-      setFormData(prevState => ({...prevState, simurTV: '0%'}));
-    } else if (formData.numberCalls && !formData.tvDisconnection) {
-      setFormData(prevState => ({...prevState, simurTV: '100%'}));
-    } else {
-      const percentage = 1 - (parseFloat(formData.tvDisconnection) / parseFloat(formData.numberCalls));
-      setFormData(prevState => ({...prevState, simurTV: (percentage * 100).toFixed(2) + '%'}));
-    }
-  };
-    useEffect(() => {
-    calculatePercentageTV();
-  }, [formData.numberCalls, formData.tvDisconnection, formData.simurTV]);
+  useEffect(() => {
+  calculatePercentageTVcreate(formData, setFormData);
+}, [formData.numberCalls, formData.tvDisconnection, formData.simurTV]);
+
+useEffect(() => {
+  calculatePercentageFiberCreate(formData, setFormData);
+}, [formData.numberCalls, formData.fiberDisconnection, formData.simurFiber]);
 
 const calculatePercentageFiber = () => {
   if (!formData.numberCalls || isNaN(formData.fiberDisconnection) || isNaN(formData.numberCalls)) {

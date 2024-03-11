@@ -8,11 +8,14 @@ import IconButton from "@mui/material/IconButton";
 import { useMemo } from "react";
 import { ModalCreateEdit } from "./ModalCreateEdit";
 import Box from "@mui/material/Box";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { schemaOperations } from "../schemas/schemaOperation";
+import {
+  calculatePercentageTV,
+  calculatePercentageFiber,
+} from "../components/calculatePercentage";
 
-export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
-
+export default function ModalCardsEdit({ dataOperation, theIDoperation }) {
   const { snackbar, setIsLoader } = useContext(GeneralContext);
   const [errors, setErrors] = useState({});
   const [, setIsFormValid] = useState(false);
@@ -20,23 +23,23 @@ export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
   console.log(editProp);
 
   ModalCardsEdit.propTypes = {
-  dataOperation: PropTypes.shape({
-    teamName: PropTypes.string,
-    nameAgent: PropTypes.string,
-    numberCalls: PropTypes.string,
-    productivity: PropTypes.string,
-    tvDisconnection: PropTypes.string,
-    fiberDisconnection: PropTypes.string,
-    simurFiber: PropTypes.string,
-    simurTV: PropTypes.string,
-    sellerFiber: PropTypes.string,
-    sellerTV: PropTypes.string,
-    easyMesh: PropTypes.string,
-    upgradeProgress: PropTypes.string,
-    satisfaction: PropTypes.string,
-  }).isRequired,
-  theIDoperation: PropTypes.string.isRequired,
-};
+    dataOperation: PropTypes.shape({
+      teamName: PropTypes.string,
+      nameAgent: PropTypes.string,
+      numberCalls: PropTypes.string,
+      productivity: PropTypes.string,
+      tvDisconnection: PropTypes.string,
+      fiberDisconnection: PropTypes.string,
+      simurFiber: PropTypes.string,
+      simurTV: PropTypes.string,
+      sellerFiber: PropTypes.string,
+      sellerTV: PropTypes.string,
+      easyMesh: PropTypes.string,
+      upgradeProgress: PropTypes.string,
+      satisfaction: PropTypes.string,
+    }).isRequired,
+    theIDoperation: PropTypes.string.isRequired,
+  };
 
   const initialValues = useMemo(
     () => ({
@@ -57,13 +60,10 @@ export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
     [dataOperation]
   );
 
-
   const [item, setItem] = useState(initialValues);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-
 
   const { id } = useParams();
 
@@ -72,13 +72,10 @@ export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
       setItem(initialValues);
     } else if (id !== undefined) {
       setIsLoader(true);
-      fetch(
-        `hhttp://localhost:4000/api/operationId/${id}`,
-        {
-          credentials: "include",
-          method: "GET",
-        }
-      )
+      fetch(`hhttp://localhost:4000/api/operationId/${id}`, {
+        credentials: "include",
+        method: "GET",
+      })
         .then((res) => res.json())
         .then((data) => {
           setItem(data);
@@ -86,7 +83,6 @@ export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
         });
     }
   }, [id, setIsLoader, initialValues]);
-  
 
   const handleInput = (e) => {
     const { id, value } = e.target;
@@ -108,63 +104,45 @@ export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
     setErrors(tempErrors);
   };
 
-     const calculatePercentageTV = () => {
-    if (!item.numberCalls || isNaN(item.tvDisconnection) || isNaN(item.numberCalls)) {
-      setItem(prevState => ({...prevState, simurTV: '0%'}));
-    } else if (item.numberCalls && !item.tvDisconnection) {
-      setItem(prevState => ({...prevState, simurTV: '100%'}));
-    } else {
-      const percentage = 1 - (parseFloat(item.tvDisconnection) / parseFloat(item.numberCalls));
-      setItem(prevState => ({...prevState, simurTV: (percentage * 100).toFixed(2) + '%'}));
-    }
-  };
-    useEffect(() => {
-    calculatePercentageTV();
+  useEffect(() => {
+    calculatePercentageTV(item, setItem);
   }, [item.numberCalls, item.tvDisconnection, item.simurTV]);
 
-const calculatePercentageFiber = () => {
-  if (!item.numberCalls || isNaN(item.fiberDisconnection) || isNaN(item.numberCalls)) {
-    setItem(prevState => ({...prevState, simurFiber: '0%'}));
-  } else if (item.numberCalls && !item.fiberDisconnection) {
-    setItem(prevState => ({...prevState, simurFiber: '100%'}));
-  } else {
-    const percentage = 1 - (parseFloat(item.fiberDisconnection) / parseFloat(item.numberCalls));
-    setItem(prevState => ({...prevState, simurFiber: (percentage * 100).toFixed(2) + '%'}));
-  }
-};
-    useEffect(() => {
-    calculatePercentageFiber();
+  useEffect(() => {
+    calculatePercentageFiber(item, setItem);
   }, [item.numberCalls, item.fiberDisconnection, item.simurFiber]);
 
-const save = async (e) => {
-  e.preventDefault();
-  const { error } = schemaOperations.validate(item);
-  if (error) {
-    snackbar(error.details[0].message);
-    return;
-  }
-  try {
-    const response = await fetch(
-      `http://localhost:4000/api/dailyOperationAgentUpdate/${theIDoperation}`,
-      {
-        credentials: "include",
-        method: "PUT",
-        headers: { 
-          "Content-type": "application/json",
-          Authorization: localStorage.token,
-        },
-        body: JSON.stringify(item),
-      }
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  const save = async (e) => {
+    e.preventDefault();
+    const { error } = schemaOperations.validate(item);
+    if (error) {
+      snackbar(error.details[0].message);
+      return;
     }
-    handleClose();
-    snackbar("the card is updated success !");
-  } catch (error) {
-    console.error('There was a problem with the fetch operation: ' + error.message);
-  }
-};
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/dailyOperationAgentUpdate/${theIDoperation}`,
+        {
+          credentials: "include",
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: localStorage.token,
+          },
+          body: JSON.stringify(item),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      handleClose();
+      snackbar("the card is updated success !");
+    } catch (error) {
+      console.error(
+        "There was a problem with the fetch operation: " + error.message
+      );
+    }
+  };
 
   return (
     <Box>
@@ -185,5 +163,4 @@ const save = async (e) => {
     </Box>
   );
 }
-828772738
-
+828772738;
