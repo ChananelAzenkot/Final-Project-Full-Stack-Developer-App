@@ -10,7 +10,7 @@ import CreateModalCardForm from "./CreateMadeCardForm";
 import Button from "@mui/material/Button";
 import { jwtDecode } from "jwt-decode";
 import { schemaOperations } from "../schemas/schemaOperation";
-import {calculatePercentageTV ,calculatePercentageFiber, calculatePercentageTVcreate, calculatePercentageFiberCreate } from "../components/calculatePercentage";
+import {calculatePercentageTVcreate, calculatePercentageFiberCreate } from "../components/calculatePercentage";
 const style = {
   position: "absolute",
   top: "50%",
@@ -131,20 +131,6 @@ useEffect(() => {
   calculatePercentageFiberCreate(formData, setFormData);
 }, [formData.numberCalls, formData.fiberDisconnection, formData.simurFiber]);
 
-const calculatePercentageFiber = () => {
-  if (!formData.numberCalls || isNaN(formData.fiberDisconnection) || isNaN(formData.numberCalls)) {
-    setFormData(prevState => ({...prevState, simurFiber: '0%'}));
-  } else if (formData.numberCalls && !formData.fiberDisconnection) {
-    setFormData(prevState => ({...prevState, simurFiber: '100%'}));
-  } else {
-    const percentage = 1 - (parseFloat(formData.fiberDisconnection) / parseFloat(formData.numberCalls));
-    setFormData(prevState => ({...prevState, simurFiber: (percentage * 100).toFixed(2) + '%'}));
-  }
-};
-    useEffect(() => {
-    calculatePercentageFiber();
-  }, [formData.numberCalls, formData.fiberDisconnection, formData.simurFiber]);
-
 const [isFetchSuccessful, setIsFetchSuccessful] = useState(false);
 
    const handleSubmit = (e) => {
@@ -169,8 +155,8 @@ const [isFetchSuccessful, setIsFetchSuccessful] = useState(false);
       .then((data) => {
         setFormData(data);
         handleClose();
-        calculatePercentageTV();
-        calculatePercentageFiber();
+        calculatePercentageTVcreate();
+        calculatePercentageFiberCreate();
         snackbar("the card was created successfully !");
         setIsFetchSuccessful(true);
       });

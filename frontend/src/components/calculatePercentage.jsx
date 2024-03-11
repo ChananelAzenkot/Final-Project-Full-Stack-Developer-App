@@ -1,4 +1,3 @@
-
 export const calculatePercentageTV = (item, setItem) => {
   if (!item.numberCalls || isNaN(item.tvDisconnection) || isNaN(item.numberCalls)) {
     setItem(prevState => ({...prevState, simurTV: '0%'}));
