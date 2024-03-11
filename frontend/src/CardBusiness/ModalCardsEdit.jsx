@@ -9,8 +9,7 @@ import { useMemo } from "react";
 import { ModalCreateEdit } from "./ModalCreateEdit";
 import Box from "@mui/material/Box";
 import PropTypes from 'prop-types';
-import {schema} from "../CardBusiness/CreateOperation";
-
+import { schemaOperations } from "../schemas/schemaOperation";
 
 export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
 
@@ -38,7 +37,6 @@ export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
   }).isRequired,
   theIDoperation: PropTypes.string.isRequired,
 };
-
 
   const initialValues = useMemo(
     () => ({
@@ -95,7 +93,7 @@ export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
     const obj = { ...item, [id]: value };
     setItem(obj);
 
-    const validate = schema.validate(obj, { abortEarly: false });
+    const validate = schemaOperations.validate(obj, { abortEarly: false });
     const tempErrors = { ...errors };
     delete tempErrors[id];
 
@@ -110,7 +108,7 @@ export default function ModalCardsEdit({ dataOperation , theIDoperation }) {
     setErrors(tempErrors);
   };
 
-      const calculatePercentageTV = () => {
+     const calculatePercentageTV = () => {
     if (!item.numberCalls || isNaN(item.tvDisconnection) || isNaN(item.numberCalls)) {
       setItem(prevState => ({...prevState, simurTV: '0%'}));
     } else if (item.numberCalls && !item.tvDisconnection) {
@@ -140,7 +138,7 @@ const calculatePercentageFiber = () => {
 
 const save = async (e) => {
   e.preventDefault();
-  const { error } = schema.validate(item);
+  const { error } = schemaOperations.validate(item);
   if (error) {
     snackbar(error.details[0].message);
     return;

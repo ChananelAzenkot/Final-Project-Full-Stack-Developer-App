@@ -34,6 +34,11 @@ export const pages = [
     title: "תפעול צוותי",
     permissions: [RoleTypes.IsBusiness, RoleTypes.isAdmin],
   },
+  {
+    route: "/account",
+    title: "הפרטים שלי",
+    permissions: [RoleTypes.user],
+  },
   { route: "/centralizedOperation", title: "תפעול מוקדי", permissions: [RoleTypes.isAdmin] },
     { route: "/about", title: "יעדים" },
 ];
