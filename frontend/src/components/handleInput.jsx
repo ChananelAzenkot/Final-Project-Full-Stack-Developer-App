@@ -40,3 +40,25 @@ export const handleInputEdit = (e, item, setItem, errors, setErrors, setIsFormVa
   setIsFormValid(!validate.error);
   setErrors(tempErrors);
 };
+
+// handleInput to create a new seller
+
+export const handleInputSale = (e, saleData, setSaleData, errors, setErrors, setIsFormValid) => {
+  const { id, value } = e.target;
+  const obj = { ...saleData, [id]: value };
+  setSaleData(obj);
+
+  const validate = schemaOperations.validate(obj, { abortEarly: false });
+  const tempErrors = { ...errors };
+  delete tempErrors[id];
+
+  if (validate.error) {
+    const item = validate.error.details.find((e) => e.context.key === id);
+
+    if (item) {
+      tempErrors[id] = item.message;
+    }
+  }
+  setIsFormValid(!validate.error);
+  setErrors(tempErrors);
+};

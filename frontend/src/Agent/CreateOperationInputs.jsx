@@ -114,6 +114,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="numberCalls"
                     label="כמות שיחות"
@@ -130,6 +131,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="productivity"
                     label="פיריון"
@@ -144,6 +146,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="tvDisconnection"
                     label="ניתוק - TV"
@@ -159,6 +162,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="fiberDisconnection"
                     label="ניתוק - Fiber"
@@ -173,6 +177,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="simurFiber"
                     label="אחוז שימור - Fiber"
@@ -188,6 +193,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="simurTV"
                     label="אחוז שימור - TV"
@@ -203,6 +209,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="sellerFiber"
                     label="מכר - Fiber"
@@ -217,6 +224,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="sellerTV"
                     label="מכר - TV"
@@ -231,6 +239,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="easyMesh"
                     label="EasyMesh"
@@ -245,6 +254,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="upgradeProgress"
                     label="שדרוג"
@@ -259,6 +269,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  autoComplete="off"
                     size="small"
                     id="satisfaction"
                     label="סמ׳׳ט"

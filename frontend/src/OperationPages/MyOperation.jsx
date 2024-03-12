@@ -10,10 +10,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import moment from "moment";
-import Button from "@mui/material/Button";
 import "../styles/operation.css";
-import CreateCards from "../Agent/CreateOperation";
 import ModalCardsEdit from "../Agent/EditOperation";
+import CreateOperation from "../Agent/CreateOperation";
+import NewSale from "../SalesProcess/NewSale";
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -63,10 +64,8 @@ export default function MyOperation() {
       {
         <TableContainer component={Paper} id="container">
           <div className="btnGroup">
-            {<CreateCards />}
-            <Button variant="contained" id="BtnStart">
-              הפסק נתונים
-            </Button>
+            {<CreateOperation />}
+            {<NewSale/>}
           </div>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
