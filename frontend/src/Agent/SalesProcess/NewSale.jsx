@@ -1,17 +1,17 @@
 import React from "react";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
-import "../styles/CreateCards.css";
 import { useContext } from "react";
-import { GeneralContext } from "../App";
+import { GeneralContext } from "../../App";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import "../styles/CreateCards.css";
+import "../../styles/CreateCards.css";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NewSaleInputs from "./NewSaleInputs";
-import { handleInputSale } from "../components/handleInput";
+import { handleInputSale } from "../../components/handleInput";
 import { schemaSale } from "./schemaSale";
+
 
 const style = {
   position: "absolute",
@@ -116,3 +116,6 @@ export default function NewSale() {
     </Box>
 );
 }
+
+
+

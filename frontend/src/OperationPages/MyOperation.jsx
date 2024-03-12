@@ -13,7 +13,7 @@ import moment from "moment";
 import "../styles/operation.css";
 import ModalCardsEdit from "../Agent/EditOperation";
 import CreateOperation from "../Agent/CreateOperation";
-import NewSale from "../SalesProcess/NewSale";
+import NewSale from "../Agent/SalesProcess/NewSale";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
