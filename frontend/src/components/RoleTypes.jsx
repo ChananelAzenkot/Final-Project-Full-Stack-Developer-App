@@ -22,22 +22,22 @@ export const pages = [
   {
     route: "/dailyOperation",
     title: "תפעול יומי",
-    permissions: [RoleTypes.user, RoleTypes.IsBusiness, RoleTypes.isAdmin],
+    permissions: [RoleTypes.user],
   },
   {
     route: "/incrementalOperation",
     title: "תפעול מצטבר",
-    permissions: [RoleTypes.user, RoleTypes.IsBusiness, RoleTypes.isAdmin],
+    permissions: [RoleTypes.user],
   },
   {
     route: "/dailySalesOperation",
     title: "מכירות יומי",
-    permissions: [RoleTypes.user, RoleTypes.IsBusiness, RoleTypes.isAdmin],
+    permissions: [RoleTypes.user],
   },
     {
     route: "/incrementalSalesOperation",
     title: "מכירות מצטבר",
-    permissions: [RoleTypes.user, RoleTypes.IsBusiness, RoleTypes.isAdmin],
+    permissions: [RoleTypes.user],
   },
   {
     route: "/operationTeams",
@@ -72,4 +72,11 @@ export const useLogout = (setUser, setUserRoleType, setLoader, navigate, handleC
 
   return logout;
 };
+
+
+
+
+
+
+
 
