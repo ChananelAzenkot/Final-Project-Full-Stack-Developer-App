@@ -74,9 +74,3 @@ export const useLogout = (setUser, setUserRoleType, setLoader, navigate, handleC
 };
 
 
-
-
-
-
-
-
