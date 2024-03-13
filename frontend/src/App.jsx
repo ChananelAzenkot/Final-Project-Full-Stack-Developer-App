@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
 import Snackbar from "./components/Snackbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import FavoriteLabel from "./components/FooterPage";
+import FooterPage from "./components/FooterPage";
 import CssBaseline from "@mui/material/CssBaseline";
 import { RoleTypes } from './components/RoleTypes';
 import { jwtDecode } from "jwt-decode";
@@ -85,7 +85,7 @@ useEffect(() => {
         <Router theme={theme} />
         {loader && <Loader />}
         {snackbarText && <Snackbar text={snackbarText} />}
-          <FavoriteLabel />
+          <FooterPage/>
       </GeneralContext.Provider>
     </ThemeProvider>
   );
