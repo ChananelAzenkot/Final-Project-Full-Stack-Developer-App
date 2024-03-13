@@ -3,6 +3,8 @@ import { IncrementalOperation, DailyOperation, LoggersOperation } from "../../ha
 import { getLoggedUserId } from "../../config/config.js";
 import { middlewareOperations } from "../../middleware/middlewareOperations.js";
 import { User } from "../../handlers/users/models/user.model.js";
+import { DailyOperationSale, IncrementalOperationSale } from "./operationSale.model.js";
+import { middlewareSales } from "../../middleware/middlewareSale.js";
 export default (app) => {
   // get all Operations users //
   app.get("/api/allOperations", async (req, res) => {
@@ -41,6 +43,68 @@ export default (app) => {
     }
   });
 
+    app.get("/api/incrementalOperationSale", guard, async (req, res) => {
+      try {
+        const { userId } = getLoggedUserId(req, res);
+
+        if (!userId) {
+          return res.status(403).json({ message: "User not authorized" });
+        }
+
+        const user = await User.findById(userId);
+
+        const incrementalOperationsSale = await IncrementalOperationSale.find({
+          user_id: userId,
+        });
+
+        if (
+          !incrementalOperationsSale ||
+          incrementalOperationsSale.length === 0
+        ) {
+          return res
+            .status(404)
+            .json({ message: "No cards found for this user" });
+        }
+        res.send(incrementalOperationsSale);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server error", error: error.message });
+      }
+    });
+
+app.get("/api/operationTeamSale", businessGuard, async (req, res) => {
+  try {
+    const { userId } = getLoggedUserId(req, res);
+
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    }
+
+    // Fetch the user's data from the database
+    const user = await User.findById(userId);
+    console.log(user);
+
+    // Check if the user is a business user and if the teamName is equal to the user's teamName
+    if (user.teamName && user.IsBusiness) {
+      const dailyOperationTeamSale = await IncrementalOperationSale.find({
+        teamName: user.teamName,
+      });
+
+      if (!dailyOperationTeamSale || dailyOperationTeamSale.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No cards found for this team" });
+      }
+      res.send(dailyOperationTeamSale);
+    } else {
+      res.status(403).json({ message: "User is not a business user or does not belong to a team" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 app.get("/api/operationTeam", businessGuard, async (req, res) => {
   try {
     const { userId } = getLoggedUserId(req, res);
@@ -66,7 +130,11 @@ app.get("/api/operationTeam", businessGuard, async (req, res) => {
       }
       res.send(dailyOperationTeam);
     } else {
-      res.status(403).json({ message: "User is not a business user or does not belong to a team" });
+      res
+        .status(403)
+        .json({
+          message: "User is not a business user or does not belong to a team",
+        });
     }
   } catch (error) {
     console.log(error);
@@ -95,6 +163,31 @@ app.get("/api/operationTeam", businessGuard, async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message });
       }
     });
+
+        app.get("/api/operationSale", guard, async (req, res) => {
+          try {
+            const { userId } = getLoggedUserId(req, res);
+
+            if (!userId) {
+              return res.status(403).json({ message: "User not authorized" });
+            }
+            const currentSale = await DailyOperationSale.find({
+              user_id: userId,
+            });
+
+            if (!currentSale || currentSale.length === 0) {
+              return res
+                .status(404)
+                .json({ message: "No cards found for this user" });
+            }
+            res.send(currentSale);
+          } catch (error) {
+            console.log(error);
+            res
+              .status(500)
+              .json({ message: "Server error", error: error.message });
+          }
+        });
   // get a specific Operation by id //
   app.get("/api/operationId/:id", async (req, res) => {
     try {
@@ -144,6 +237,38 @@ app.get("/api/operationTeam", businessGuard, async (req, res) => {
       }
     }
   );
+
+    app.post("/api/dailyOperationStartSale", guard, async (req, res) => {
+      const { userId } = getLoggedUserId(req, res);
+
+      if (!userId) {
+        return res.status(403).json({ message: "User not authorized" });
+      }
+
+      req.body.user_id = userId;
+
+      const { error } = middlewareSales.validate(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
+
+      const bizNumber =
+        await IncrementalOperationSale.generateUniqueBizNumber();
+      req.body.bizNumber = bizNumber;
+
+      const startDayOperationSale = new DailyOperationSale(req.body);
+      const incrementalOperationSale = new IncrementalOperationSale(req.body);
+
+      try {
+        const toIncrementalOperationSale =
+          await incrementalOperationSale.save();
+        const toDailyOperationSale = await startDayOperationSale.save();
+        res.send({ toIncrementalOperationSale, toDailyOperationSale });
+      } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+      }
+    });
+
 
   app.get("/api/getLastOperation/:userId", (req, res) => {
     const userId = req.params.userId;
@@ -285,11 +410,3 @@ app.put(
     }
   });
 };
-
-
-
-
-
-
-
-

@@ -24,14 +24,29 @@ export const pages = [
     title: "תפעול יומי",
     permissions: [RoleTypes.user, RoleTypes.IsBusiness, RoleTypes.isAdmin],
   },
-    {
+  {
     route: "/incrementalOperation",
     title: "תפעול מצטבר",
     permissions: [RoleTypes.user, RoleTypes.IsBusiness, RoleTypes.isAdmin],
   },
   {
+    route: "/dailySalesOperation",
+    title: "מכירות יומי",
+    permissions: [RoleTypes.user, RoleTypes.IsBusiness, RoleTypes.isAdmin],
+  },
+    {
+    route: "/incrementalSalesOperation",
+    title: "מכירות מצטבר",
+    permissions: [RoleTypes.user, RoleTypes.IsBusiness, RoleTypes.isAdmin],
+  },
+  {
     route: "/operationTeams",
     title: "תפעול צוותי",
+    permissions: [RoleTypes.IsBusiness, RoleTypes.isAdmin],
+  },
+    {
+    route: "/incrementalSalesOperationTeams",
+    title: "מכירות הצוות",
     permissions: [RoleTypes.IsBusiness, RoleTypes.isAdmin],
   },
   { route: "/centralizedOperation", title: "תפעול מוקדי", permissions: [RoleTypes.isAdmin] },

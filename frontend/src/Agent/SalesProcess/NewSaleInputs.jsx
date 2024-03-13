@@ -2,184 +2,133 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import Typography from "@mui/material/Typography";
-
-import PropTypes from 'prop-types';
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import PropTypes from "prop-types";
 
 export default function NewSaleInputs({
   saleData,
   onInputChange,
   errors,
   handleSubmit,
+  nameAgent,
+  teamName,
 }) {
-NewSaleInputs.propTypes = {
-  saleData: PropTypes.object.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-};
+  NewSaleInputs.propTypes = {
+    saleData: PropTypes.object.isRequired,
+    onInputChange: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    nameAgent: PropTypes.string.isRequired,
+    teamName: PropTypes.string.isRequired,
+  };
   return (
     <>
+      <Typography
+        id="linersSale"
+        style={{ width: "auto", textAlign: "center" }}
+        variant="h6"
+        component="h2">
+        הוספת מכירה 🤩
+        <NoteAddIcon />
+      </Typography>
       <TextField
-      size="small"
-      autoComplete="off"
-        id="title"
-        label="title"
+        disabled
+        size="small"
+        id="nameAgent"
+        label="שם נציג"
         variant="outlined"
         fullWidth
         margin="normal"
-        value={saleData.title}
+        nameAgent={nameAgent}
+        value={nameAgent}
         onChange={onInputChange}
-        error={Boolean(errors.title)}
-        helperText={errors.title}
+        error={Boolean(errors.nameAgent)}
+        helperText={errors.nameAgent}
+        style={{ width: "100%" }}
       />
       <TextField
-      size="small"
-      autoComplete="off"
-        id="description"
-        label="description"
+        disabled
+        size="small"
+        id="teamName"
+        label="שם הצוות"
         variant="outlined"
         fullWidth
         margin="normal"
-        value={saleData.description}
+        nameAgent={nameAgent}
+        value={teamName}
         onChange={onInputChange}
-        error={Boolean(errors.description)}
-        helperText={errors.description}
+        error={Boolean(errors.teamName)}
+        helperText={errors.teamName}
+        style={{ width: "100%" }}
       />
       <TextField
-      size="small"
-      autoComplete="off"
-        id="subtitle"
-        label="subtitle"
+        autoComplete="off"
+        size="small"
+        id="customerCode"
+        label="קוד הלקוח"
         variant="outlined"
         fullWidth
         margin="normal"
-        value={saleData.subtitle}
+        value={saleData.customerCode}
         onChange={onInputChange}
-        error={Boolean(errors.subtitle)}
-        helperText={errors.subtitle}
+        error={Boolean(errors.customerCode)}
+        helperText={errors.customerCode}
       />
       <TextField
-      size="small"
-      autoComplete="off"
-        id="phone"
-        label="phone"
+        autoComplete="off"
+        size="small"
+        id="sellerFiber"
+        label="מכר - Fiber"
         variant="outlined"
         fullWidth
         margin="normal"
-        value={saleData.phone}
+        value={saleData.sellerFiber}
         onChange={onInputChange}
-        error={Boolean(errors.phone)}
-        helperText={errors.phone}
+        error={Boolean(errors.sellerFiber)}
+        helperText={errors.sellerFiber}
       />
       <TextField
-      size="small"
-      autoComplete="off"
-        id="email"
-        label="email"
+        autoComplete="off"
+        size="small"
+        id="sellerTV"
+        label="מכר - TV"
         variant="outlined"
         fullWidth
         margin="normal"
-        value={saleData.email}
+        value={saleData.sellerTV}
         onChange={onInputChange}
-        error={Boolean(errors.email)}
-        helperText={errors.email}
+        error={Boolean(errors.sellerTV)}
+        helperText={errors.sellerTV}
       />
       <TextField
-      size="small"
-      autoComplete="off"
-        id="web"
-        label="web"
+        autoComplete="off"
+        size="small"
+        id="easyMesh"
+        label="EasyMesh"
         variant="outlined"
         fullWidth
         margin="normal"
-        value={saleData.web}
+        value={saleData.easyMesh}
         onChange={onInputChange}
-        error={Boolean(errors.web)}
-        helperText={errors.web}
+        error={Boolean(errors.easyMesh)}
+        helperText={errors.easyMesh}
       />
       <TextField
-      size="small"
-      autoComplete="off"
-        id="imgUrl"
-        label="imgUrl"
+        autoComplete="off"
+        size="small"
+        id="upgradeProgress"
+        label="שדרוג"
         variant="outlined"
         fullWidth
         margin="normal"
-        value={saleData.imgUrl}
+        value={saleData.upgradeProgress}
         onChange={onInputChange}
-        error={Boolean(errors.imgUrl)}
-        helperText={errors.imgUrl}
+        error={Boolean(errors.upgradeProgress)}
+        helperText={errors.upgradeProgress}
       />
-      <TextField
-      size="small"
-      autoComplete="off"
-        id="imgAlt"
-        label="imgAlt"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={saleData.imgAlt}
-        onChange={onInputChange}
-        error={Boolean(errors.imgAlt)}
-        helperText={errors.imgAlt}
-      />
-      <TextField
-      size="small"
-      autoComplete="off"
-        id="state"
-        label="state"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={saleData.state}
-        onChange={onInputChange}
-        error={Boolean(errors.state)}
-        helperText={errors.state}
-      />
-      <TextField
-      size="small"
-      autoComplete="off"
-        id="country"
-        label="country"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={saleData.country}
-        onChange={onInputChange}
-        error={Boolean(errors.country)}
-        helperText={errors.country}
-      />
-      <TextField
-      size="small"
-      autoComplete="off"
-        id="city"
-        label="city"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={saleData.city}
-        onChange={onInputChange}
-        error={Boolean(errors.city)}
-        helperText={errors.city}
-      />
-      <TextField
-      size="small"
-      autoComplete="off"
-        id="street"
-        label="street"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={saleData.street}
-        onChange={onInputChange}
-        error={Boolean(errors.street)}
-        helperText={errors.street}
-      />
-
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
         <IconButton
           id="btnCreateAndPress"
-          
           style={{ width: "auto" }}
           onClick={handleSubmit}>
           <SendIcon />

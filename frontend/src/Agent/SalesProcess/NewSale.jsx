@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { useContext } from "react";
 import { GeneralContext } from "../../App";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import "../../styles/CreateCards.css";
-import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NewSaleInputs from "./NewSaleInputs";
 import { handleInputSale } from "../../components/handleInput";
-import { schemaSale } from "./schemaSale";
-
+import confetti from "canvas-confetti";
+import { jwtDecode } from "jwt-decode";
+import { schemaSales } from "../../schemas/schemaSale";
 
 const style = {
   position: "absolute",
@@ -35,47 +34,105 @@ export default function NewSale() {
   const { snackbar } = useContext(GeneralContext);
 
   const [saleData, setSaleData] = useState({
-    title: "",
-    description: "",
-    subtitle: "",
-    phone: "",
-    email: "",
-    web: "",
-    imgUrl: "",
-    imgAlt: "",
-    state: "",
-    country: "",
-    city: "",
-    street: "",
-    houseNumber: "",
-    zip: "",
+    nameAgent: "",
+    teamName: "",
+    sellerFiber: "",
+    sellerTV: "",
+    easyMesh: "",
+    upgradeProgress: "",
+    customerCode: "",
   });
 
- const onInputChange = (e) => {
-  handleInputSale(e, saleData, setSaleData, errors, setErrors, setIsFormValid);
-};
+  const [user, setUser] = useState({
+    name: {
+      first: "",
+      last: "",
+    },
+  });
 
-   const handleSubmit = (e) => {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.userId;
+    console.log(userId);
+
+    fetch(`http://localhost:4000/api/user/${userId}`, {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data);
+      });
+  }, []);
+
+  const [nameAgent, setNameAgent] = useState("");
+  const [teamName, setTeamName] = useState("");
+
+  useEffect(() => {
+    if (user && user.name && user.name.first) {
+      setNameAgent(user.name.first + " " + user.name.last);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user && user.teamName) {
+      setTeamName(user.teamName);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    setSaleData((prevState) => ({ ...prevState, teamName }));
+  }, [teamName]);
+
+  useEffect(() => {
+    setSaleData((prevState) => ({ ...prevState, nameAgent }));
+  }, [nameAgent]);
+
+  const onInputChange = (e) => {
+    handleInputSale(
+      e,
+      saleData,
+      setSaleData,
+      errors,
+      setErrors,
+      setIsFormValid
+    );
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { error } = schemaSale.validate(saleData);
-    if(error){
+    const { error } = schemaSales.validate(saleData);
+    if (error) {
       snackbar(error.details[0].message);
       return;
     }
-    fetch(
-      `https://api.shipap.co.il/business/cards?token=d215263e-78c2-11ee-8f3c-14dda9d4a5f0`,
-      {
-        credentials: "include",
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(saleData),
-      }
-    )
-      .then((data) => {
-        setSaleData(data);
-        handleClose();
-        snackbar("the card was created successfully !");
+    fetch(`http://localhost:4000/api/dailyOperationStartSale`, {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: localStorage.token,
+      },
+      body: JSON.stringify(saleData),
+    }).then((data) => {
+      setSaleData(data);
+      handleClose();
+      snackbar("the card was created successfully !");
+
+      const confettiCanvas = document.getElementById("confetti-canvas");
+      confetti(confettiCanvas, {
+        particleCount: 100,
+        spread: 70,
+        decay: 0.9,
+        origin: { y: 0.6 },
       });
+    });
   };
 
   return (
@@ -84,38 +141,25 @@ export default function NewSale() {
         variant="contained"
         id="BtnStart"
         onClick={handleOpen}
-        style={{ width: "auto" }}
-      >
+        style={{ width: "auto" }}>
         הוספת מכירה
       </Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-          <Box id="titleSale" sx={style}>
-          <Typography
-            id="linersSale"
-            style={{ width: "auto", textAlign: "center" }}
-            variant="h6"
-            component="h2"
-          >
-            עדכון מכירה
-            <NoteAddIcon />
-          </Typography>
-            <NewSaleInputs
-              saleData={saleData}
-              onInputChange={onInputChange}
-              errors={errors}
-              handleSubmit={handleSubmit}
-              />
-          </Box>
-
+        aria-describedby="modal-modal-description">
+        <Box id="titleSale" sx={style}>
+          <NewSaleInputs
+            nameAgent={nameAgent}
+            teamName={teamName}
+            saleData={saleData}
+            onInputChange={onInputChange}
+            errors={errors}
+            handleSubmit={handleSubmit}
+          />
+        </Box>
       </Modal>
     </Box>
-);
+  );
 }
-
-
-

@@ -1,4 +1,5 @@
 import { schemaOperations } from "../schemas/schemaOperation";
+import { schemaSales } from "../schemas/schemaSale";
 
 // handleInput is for creating a new item
 export const handleInput = (e, formData, setFormData, errors, setErrors, setIsFormValid) => {
@@ -48,7 +49,7 @@ export const handleInputSale = (e, saleData, setSaleData, errors, setErrors, set
   const obj = { ...saleData, [id]: value };
   setSaleData(obj);
 
-  const validate = schemaOperations.validate(obj, { abortEarly: false });
+  const validate = schemaSales.validate(obj, { abortEarly: false });
   const tempErrors = { ...errors };
   delete tempErrors[id];
 
