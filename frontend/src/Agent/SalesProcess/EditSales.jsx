@@ -2,65 +2,62 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import { GeneralContext } from "../App";
+import { GeneralContext } from "../../App";
 import { useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import { useMemo } from "react";
-import { EditOperationProp } from "./EditOperationProp";
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
-import { schemaOperations } from "../schemas/schemaOperation";
-import {
-  calculatePercentageTV,
-  calculatePercentageFiber,
-} from "../components/calculatePercentage";
-import { handleInputEdit } from "../components/handleInput";
+import { handleInputEdit } from "../../components/handleInput";
+import { schemaSales } from "../../schemas/schemaSale";
+import { EditPropSales } from "./EditPropSales";
 
-export default function EditOperation({ dataOperation, theIDoperation }) {
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+
+
+export default function EditSales({ dataOperationSale, theIDoperationSale }) {
   const { snackbar, setIsLoader } = useContext(GeneralContext);
   const [errors, setErrors] = useState({});
   const [, setIsFormValid] = useState(false);
 
-
-  EditOperation.propTypes = {
-    dataOperation: PropTypes.shape({
+  EditSales.propTypes = {
+    dataOperationSale: PropTypes.shape({
       teamName: PropTypes.string,
       nameAgent: PropTypes.string,
-      numberCalls: PropTypes.string,
-      productivity: PropTypes.string,
-      tvDisconnection: PropTypes.string,
-      fiberDisconnection: PropTypes.string,
-      simurFiber: PropTypes.string,
-      simurTV: PropTypes.string,
       sellerFiber: PropTypes.string,
       sellerTV: PropTypes.string,
       easyMesh: PropTypes.string,
       upgradeProgress: PropTypes.string,
-      satisfaction: PropTypes.string,
+      customerCode: PropTypes.string,
     }).isRequired,
-    theIDoperation: PropTypes.string.isRequired,
+    theIDoperationSale: PropTypes.string.isRequired,
   };
 
   const initialValues = useMemo(
     () => ({
-      teamName: dataOperation.teamName || "",
-      nameAgent: dataOperation.nameAgent || "",
-      numberCalls: dataOperation.numberCalls || "",
-      productivity: dataOperation.productivity || "",
-      tvDisconnection: dataOperation.tvDisconnection || "",
-      fiberDisconnection: dataOperation.fiberDisconnection || "",
-      simurFiber: dataOperation.simurFiber || "",
-      simurTV: dataOperation.simurTV || "",
-      sellerFiber: dataOperation.sellerFiber || "",
-      sellerTV: dataOperation.sellerTV || "",
-      easyMesh: dataOperation.easyMesh || "",
-      upgradeProgress: dataOperation.upgradeProgress || "",
-      satisfaction: dataOperation.satisfaction || "",
+      teamName: dataOperationSale.teamName || "",
+      nameAgent: dataOperationSale.nameAgent || "",
+      sellerFiber: dataOperationSale.sellerFiber || "",
+      sellerTV: dataOperationSale.sellerTV || "",
+      easyMesh: dataOperationSale.easyMesh || "",
+      upgradeProgress: dataOperationSale.upgradeProgress || "",
+        customerCode: dataOperationSale.customerCode || "",
     }),
-    [dataOperation]
+    [dataOperationSale]
   );
 
-  const [item, setItem] = useState(initialValues);
+  const [saleDataUpDate, setSaleDataUpDate] = useState(initialValues);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -69,43 +66,35 @@ export default function EditOperation({ dataOperation, theIDoperation }) {
 
   useEffect(() => {
     if (id === "new") {
-      setItem(initialValues);
+      setSaleDataUpDate(initialValues);
     } else if (id !== undefined) {
       setIsLoader(true);
-      fetch(`hhttp://localhost:4000/api/operationId/${id}`, {
+      fetch(`hhttp://localhost:4000/api/operationSale/${id}`, {
         credentials: "include",
         method: "GET",
       })
         .then((res) => res.json())
         .then((data) => {
-          setItem(data);
+          setSaleDataUpDate(data);
           setIsLoader(false);
         });
     }
   }, [id, setIsLoader, initialValues]);
 
 const onInputChange = (e) => {
-  handleInputEdit(e, item, setItem, errors, setErrors, setIsFormValid);
+  handleInputEdit(e, saleDataUpDate, setSaleDataUpDate, errors, setErrors, setIsFormValid);
 };
-
-  useEffect(() => {
-    calculatePercentageTV(item, setItem);
-  }, [item.numberCalls, item.tvDisconnection, item.simurTV]);
-
-  useEffect(() => {
-    calculatePercentageFiber(item, setItem);
-  }, [item.numberCalls, item.fiberDisconnection, item.simurFiber]);
 
   const save = async (e) => {
     e.preventDefault();
-    const { error } = schemaOperations.validate(item);
+    const { error } = schemaSales.validate(saleDataUpDate);
     if (error) {
       snackbar(error.details[0].message);
       return;
     }
     try {
       const response = await fetch(
-        `http://localhost:4000/api/dailyOperationAgentUpdate/${theIDoperation}`,
+        `http://localhost:4000/api/dailyOperationUpdateSale/${theIDoperationSale}`,
         {
           credentials: "include",
           method: "PUT",
@@ -113,7 +102,7 @@ const onInputChange = (e) => {
             "Content-type": "application/json",
             Authorization: localStorage.token,
           },
-          body: JSON.stringify(item),
+          body: JSON.stringify(saleDataUpDate),
         }
       );
       if (!response.ok) {
@@ -136,10 +125,10 @@ const onInputChange = (e) => {
         onClick={handleOpen}>
         <EditIcon />
       </IconButton>
-      <EditOperationProp
+      <EditPropSales
         open={open}
         handleClose={handleClose}
-        item={item}
+        saleDataUpDate={saleDataUpDate}
         errors={errors}
         onInputChange={onInputChange}
         save={save}

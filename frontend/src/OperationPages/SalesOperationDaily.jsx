@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import "../styles/operation.css";
-import ModalCardsEdit from "../Agent/EditOperation";
+import EditSales from "../Agent/SalesProcess/EditSales";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -111,7 +111,7 @@ export default function SalesOperationDaily() {
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       <IconButton>
-                        <ModalCardsEdit theIDoperation={seller.bizNumber} dataOperation={seller} />
+                        <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
                       </IconButton>
                     </StyledTableCell>
                   </StyledTableRow>

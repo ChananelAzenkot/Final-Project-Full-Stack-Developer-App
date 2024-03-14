@@ -189,22 +189,22 @@ app.get("/api/operationTeam", businessGuard, async (req, res) => {
           }
         });
   // get a specific Operation by id //
-  app.get("/api/operationId/:id", async (req, res) => {
-    try {
-      const operationId = await LoggersOperation.findById(req.params.id);
+  // app.get("/api/operationId/:id", async (req, res) => {
+  //   try {
+  //     const operationId = await LoggersOperation.findById(req.params.id);
 
-      if (!operationId) {
-        return res.status(404).json({ message: "operationId not found" });
-      }
+  //     if (!operationId) {
+  //       return res.status(404).json({ message: "operationId not found" });
+  //     }
 
-      res.send(operationId);
-    } catch (error) {
-      if (error.kind === "ObjectId") {
-        return res.status(404).json({ message: "Invalid operation ID" });
-      }
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  });
+  //     res.send(operationId);
+  //   } catch (error) {
+  //     if (error.kind === "ObjectId") {
+  //       return res.status(404).json({ message: "Invalid operation ID" });
+  //     }
+  //     res.status(500).json({ message: "Server error", error: error.message });
+  //   }
+  // });
 
   // add a new dailyOperation and Posted //
   app.post(
@@ -269,7 +269,6 @@ app.get("/api/operationTeam", businessGuard, async (req, res) => {
       }
     });
 
-
   app.get("/api/getLastOperation/:userId", (req, res) => {
     const userId = req.params.userId;
 
@@ -327,6 +326,44 @@ app.put(
     }
   }
 );
+
+app.put("/api/dailyOperationUpdateSale/:bizNumber", guard, async (req, res) => {
+  const { userId } = getLoggedUserId(req, res);
+
+  if (!userId) {
+    return res.status(403).json({ message: "User not authorized" });
+  }
+
+  req.body.user_id = userId;
+
+  const { error } = middlewareSales.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
+  try {
+    const toIncrementalOperationSale =
+      await IncrementalOperationSale.findOneAndUpdate(
+        { bizNumber: req.params.bizNumber },
+        req.body,
+        { new: true }
+      );
+
+    const toDailyOperationSale = await DailyOperationSale.findOneAndUpdate(
+      { bizNumber: req.params.bizNumber },
+      req.body,
+      { new: true }
+    );
+
+    if (!toIncrementalOperationSale && !toDailyOperationSale) {
+      return res.status(404).json({ message: "Operation not found" });
+    }
+
+    res.send({ toDailyOperationSale, toIncrementalOperationSale });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
   // update a card bizNumber by id number //
   app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
     const newBizNumber = req.body.bizNumber;
