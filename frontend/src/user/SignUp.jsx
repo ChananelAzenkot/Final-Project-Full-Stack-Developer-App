@@ -230,7 +230,7 @@ navigate("/login");
                    הירשם
                 </Button>
                 <Button
-                style={{backgroundColor: "rgba(80, 213, 196, 255)"}}
+                style={{backgroundColor: "rgba(78, 210, 193, 255)"}}
                   type="submit"
                   fullWidth
                   variant="contained"

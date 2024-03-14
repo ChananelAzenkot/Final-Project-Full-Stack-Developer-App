@@ -39,7 +39,7 @@ body{
 }
 
 #linersSale {
-    background-color: rgba(80, 213, 196, 255);
+    background-color: rgba(78, 210, 193, 255);
     font-size: 18px;
     width: auto;
     border: 1px solid black;
@@ -98,7 +98,7 @@ body{
 }
 #btnCreateAndPress:active{
     box-shadow: 1px 1px 5px white;
-    background-color: rgba(80, 213, 196, 255);
+    background-color: rgba(78, 210, 193, 255);
 }
 
 .underlineAbout {
