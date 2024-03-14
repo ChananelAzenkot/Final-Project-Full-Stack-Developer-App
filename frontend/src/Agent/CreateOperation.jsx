@@ -62,8 +62,7 @@ useEffect(() => {
   
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.userId;
-  console.log(userId);
-
+  
   fetch(
     `http://localhost:4000/api/user/${userId}`,
     {

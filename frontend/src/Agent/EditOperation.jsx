@@ -32,13 +32,13 @@ export default function EditOperation({ dataOperation, theIDoperation }) {
       fiberDisconnection: PropTypes.string,
       simurFiber: PropTypes.string,
       simurTV: PropTypes.string,
-      sellerFiber: PropTypes.string,
-      sellerTV: PropTypes.string,
-      easyMesh: PropTypes.string,
-      upgradeProgress: PropTypes.string,
+      sellerFiber: PropTypes.number,
+      sellerTV: PropTypes.number,
+      easyMesh: PropTypes.number,
+      upgradeProgress: PropTypes.number,
       satisfaction: PropTypes.string,
     }).isRequired,
-    theIDoperation: PropTypes.string.isRequired,
+    theIDoperation: PropTypes.number.isRequired,
   };
 
   const initialValues = useMemo(

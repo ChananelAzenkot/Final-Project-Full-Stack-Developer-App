@@ -26,37 +26,21 @@ const style = {
   p: 4,
 };
 
-    NewSale.propTypes = {
-    dataOperation: PropTypes.shape({
-      sellerFiber: PropTypes.string,
-      sellerTV: PropTypes.string,
-      easyMesh: PropTypes.string,
-      upgradeProgress: PropTypes.string,
-      satisfaction: PropTypes.string,
-    }).isRequired,
-    theIDoperation: PropTypes.string.isRequired,
-  };
-
-
 export default function NewSale({dataOperation , theIDoperation}) {
-  console.log(dataOperation);
 
       NewSale.propTypes = {
     dataOperation: PropTypes.shape({
-      sellerFiber: PropTypes.string,
-      sellerTV: PropTypes.string,
-      easyMesh: PropTypes.string,
-      upgradeProgress: PropTypes.string,
+      sellerFiber: PropTypes.number,
+      sellerTV: PropTypes.number,
+      easyMesh: PropTypes.number,
+      upgradeProgress: PropTypes.number,
       satisfaction: PropTypes.string,
       bizNumber: PropTypes.number,
     }).isRequired,
-    theIDoperation: PropTypes.string.isRequired,
+    theIDoperation: PropTypes.number.isRequired,
   };
 
     const { setIsLoader } = useContext(GeneralContext);
-
-    const theOperationId = theIDoperation;
-    console.log(theOperationId);
 
   const initialValues = useMemo(
     () => ({
@@ -76,9 +60,6 @@ export default function NewSale({dataOperation , theIDoperation}) {
   const handleClose = () => setOpen(false);
   const [errors, setErrors] = useState({});
   const [, setIsFormValid] = useState(false);
-
-  
-  
 
   const { snackbar } = useContext(GeneralContext);
 
@@ -104,7 +85,6 @@ export default function NewSale({dataOperation , theIDoperation}) {
 
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.userId;
-    console.log(userId);
 
     fetch(`http://localhost:4000/api/user/${userId}`, {
       credentials: "include",
@@ -143,8 +123,6 @@ export default function NewSale({dataOperation , theIDoperation}) {
     setSaleData((prevState) => ({ ...prevState, nameAgent }));
   }, [nameAgent]);
 
-
-
   const onInputChange = (e) => {
     handleInputSale(
       e,
@@ -174,10 +152,6 @@ export default function NewSale({dataOperation , theIDoperation}) {
     }
   }, [id, setIsLoader, initialValues]);
 
-
-  console.log(dataOperation.bizNumber);
-  console.log(theIDoperation);
-
 const handleSubmit = (e) => {
   e.preventDefault();
   const { error } = schemaSales.validate(saleData);
@@ -196,13 +170,21 @@ const handleSubmit = (e) => {
     body: JSON.stringify(saleData),
   });
 
+  const updatedSaleData = {
+  sellerFiber: parseFloat(dataOperation.sellerFiber) + parseFloat(saleData.sellerFiber),
+  sellerTV: parseFloat(dataOperation.sellerTV) + parseFloat(saleData.sellerTV),
+  easyMesh: parseFloat(dataOperation.easyMesh) + parseFloat(saleData.easyMesh),
+  upgradeProgress: parseFloat(dataOperation.upgradeProgress) + parseFloat(saleData.upgradeProgress),
+  customerCode: saleData.customerCode,
+};
+
   const putRequest = fetch(`http://localhost:4000/api/dailyOperationAgentUpdateForSale/${theIDoperation}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Authorization: localStorage.token,
     },
-    body: JSON.stringify(saleData),
+    body: JSON.stringify(updatedSaleData),
   });
 
   Promise.all([postRequest, putRequest])
@@ -223,7 +205,6 @@ const handleSubmit = (e) => {
     .catch((error) => {
       console.error('Error:', error);
     });
-    console.log(dataOperation.sellerFiber);
 };
 
   return (

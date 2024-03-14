@@ -2,29 +2,25 @@ import Joi from "joi";
 // joi is a validation library of Cards //
 export const schemaSales = Joi.object({
   nameAgent: Joi.string().required().min(3).max(100).allow(""),
-  sellerFiber: Joi.string()
+  sellerFiber: Joi.number()
     .required()
-    .min(1)
-    .max(2)
-    .pattern(/^[0-9]{1,2}$/)
+    .min(0)
+    .max(15)
     .message("כמות המכירות של פייבר חייבת להיות בין1 -2 ספרות"),
-  sellerTV: Joi.string()
+  sellerTV: Joi.number()
     .required()
-    .min(1)
-    .max(2)
-    .pattern(/^[0-9]{1,2}$/)
+    .min(0)
+    .max(15)
     .message("כמות המכירות של טלוויזיה חייבת להיות בין1 -2 ספרות"),
-  easyMesh: Joi.string()
+  easyMesh: Joi.number()
     .required()
-    .min(1)
-    .max(2)
-    .pattern(/^[0-9]{1,2}$/)
+    .min(0)
+    .max(15)
     .message("כמות המכירות של איזי מש חייבת להיות בין1 -2 ספרות"),
-  upgradeProgress: Joi.string()
+  upgradeProgress: Joi.number()
     .required()
-    .min(1)
-    .max(2)
-    .pattern(/^[0-9]{1,2}$/)
+    .min(0)
+    .max(15)
     .message("כמות השדרוגים חייבת להיות בין1 -2 ספרות"),
     customerCode: Joi.string().required().min(3).max(100),
   targets: Joi.string()
