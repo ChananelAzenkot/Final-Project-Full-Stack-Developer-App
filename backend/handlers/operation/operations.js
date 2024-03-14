@@ -327,6 +327,48 @@ app.put(
   }
 );
 
+app.put(
+  "/api/dailyOperationAgentUpdateForSale/:bizNumber",
+  guard,
+  async (req, res) => {
+    const { userId } = getLoggedUserId(req, res);
+
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    }
+
+    req.body.user_id = userId;
+
+    const { error } = middlewareSales.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    try {
+      const toIncrementalOperation =
+        await IncrementalOperation.findOneAndUpdate(
+          { bizNumber: req.params.bizNumber },
+          req.body,
+          { new: true }
+        );
+
+      const toDailyOperation = await DailyOperation.findOneAndUpdate(
+        { bizNumber: req.params.bizNumber },
+        req.body,
+        { new: true }
+      );
+
+      if (!toIncrementalOperation && !toDailyOperation) {
+        return res.status(404).json({ message: "Operation not found" });
+      }
+
+      res.send({ toDailyOperation, toIncrementalOperation });
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  }
+);
+
 app.put("/api/dailyOperationUpdateSale/:bizNumber", guard, async (req, res) => {
   const { userId } = getLoggedUserId(req, res);
 

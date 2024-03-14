@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { useContext } from "react";
@@ -11,6 +12,7 @@ import { handleInputSale } from "../../components/handleInput";
 import confetti from "canvas-confetti";
 import { jwtDecode } from "jwt-decode";
 import { schemaSales } from "../../schemas/schemaSale";
+import PropTypes from "prop-types";
 
 const style = {
   position: "absolute",
@@ -24,12 +26,59 @@ const style = {
   p: 4,
 };
 
-export default function NewSale() {
+    NewSale.propTypes = {
+    dataOperation: PropTypes.shape({
+      sellerFiber: PropTypes.string,
+      sellerTV: PropTypes.string,
+      easyMesh: PropTypes.string,
+      upgradeProgress: PropTypes.string,
+      satisfaction: PropTypes.string,
+    }).isRequired,
+    theIDoperation: PropTypes.string.isRequired,
+  };
+
+
+export default function NewSale({dataOperation , theIDoperation}) {
+  console.log(dataOperation);
+
+      NewSale.propTypes = {
+    dataOperation: PropTypes.shape({
+      sellerFiber: PropTypes.string,
+      sellerTV: PropTypes.string,
+      easyMesh: PropTypes.string,
+      upgradeProgress: PropTypes.string,
+      satisfaction: PropTypes.string,
+      bizNumber: PropTypes.number,
+    }).isRequired,
+    theIDoperation: PropTypes.string.isRequired,
+  };
+
+    const { setIsLoader } = useContext(GeneralContext);
+
+    const theOperationId = theIDoperation;
+    console.log(theOperationId);
+
+  const initialValues = useMemo(
+    () => ({
+      sellerFiber: dataOperation.sellerFiber || "",
+      sellerTV: dataOperation.sellerTV || "",
+      easyMesh: dataOperation.easyMesh || "",
+      upgradeProgress: dataOperation.upgradeProgress || "",
+      satisfaction: dataOperation.satisfaction || "",
+      bizNumber: dataOperation.bizNumber,
+    }),
+    [dataOperation]
+  );
+
+  const [, setItem] = useState(initialValues);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [errors, setErrors] = useState({});
   const [, setIsFormValid] = useState(false);
+
+  
+  
 
   const { snackbar } = useContext(GeneralContext);
 
@@ -42,7 +91,7 @@ export default function NewSale() {
     upgradeProgress: "",
     customerCode: "",
   });
-
+  
   const [user, setUser] = useState({
     name: {
       first: "",
@@ -94,6 +143,8 @@ export default function NewSale() {
     setSaleData((prevState) => ({ ...prevState, nameAgent }));
   }, [nameAgent]);
 
+
+
   const onInputChange = (e) => {
     handleInputSale(
       e,
@@ -105,23 +156,59 @@ export default function NewSale() {
     );
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { error } = schemaSales.validate(saleData);
-    if (error) {
-      snackbar(error.details[0].message);
-      return;
+  const { id } = useParams();
+    useEffect(() => {
+    if (id === "new") {
+      setItem(initialValues);
+    } else if (id !== undefined) {
+      setIsLoader(true);
+      fetch(`hhttp://localhost:4000/api/operationId/${id}`, {
+        credentials: "include",
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setItem(data);
+          setIsLoader(false);
+        });
     }
-    fetch(`http://localhost:4000/api/dailyOperationStartSale`, {
-      credentials: "include",
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.token,
-      },
-      body: JSON.stringify(saleData),
-    }).then((data) => {
-      setSaleData(data);
+  }, [id, setIsLoader, initialValues]);
+
+
+  console.log(dataOperation.bizNumber);
+  console.log(theIDoperation);
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const { error } = schemaSales.validate(saleData);
+  if (error) {
+    snackbar(error.details[0].message);
+    return;
+  }
+
+  const postRequest = fetch(`http://localhost:4000/api/dailyOperationStartSale`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: localStorage.token,
+    },
+    body: JSON.stringify(saleData),
+  });
+
+  const putRequest = fetch(`http://localhost:4000/api/dailyOperationAgentUpdateForSale/${theIDoperation}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.token,
+    },
+    body: JSON.stringify(saleData),
+  });
+
+  Promise.all([postRequest, putRequest])
+    .then(responses => Promise.all(responses.map(response => response.json())))
+    .then(([saleData]) => {
+      setSaleData(saleData);
       handleClose();
       snackbar("the card was created successfully !");
 
@@ -132,8 +219,12 @@ export default function NewSale() {
         decay: 0.9,
         origin: { y: 0.6 },
       });
+    })
+    .catch((error) => {
+      console.error('Error:', error);
     });
-  };
+    console.log(dataOperation.sellerFiber);
+};
 
   return (
     <Box>

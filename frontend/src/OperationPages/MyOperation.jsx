@@ -59,14 +59,21 @@ export default function MyOperation() {
       });
   }, []);
 
-  return (
-    <>
-      {
-        <TableContainer component={Paper} id="container">
-          <div className="btnGroup">
-            {<CreateOperation />}
-            {<NewSale/>}
+    return (
+      <>
+      <CreateOperation />
+        {Array.isArray(operation) && operation.map((operation, index) => (
+          <div key={index} className="btnGroup">
+            <CreateOperation />
+            {operation && (
+              <NewSale
+                theIDoperation={operation.bizNumber}
+                dataOperation={operation}
+              />
+            )}
           </div>
+        ))}
+        <TableContainer component={Paper} id="container">
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -77,9 +84,7 @@ export default function MyOperation() {
                 <StyledTableCell align="right">פיריון</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
-                <StyledTableCell align="right">
-                  אחוז שימור - Fiber
-                </StyledTableCell>
+                <StyledTableCell align="right">אחוז שימור - Fiber</StyledTableCell>
                 <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
                 <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
                 <StyledTableCell align="right">מכר - TV</StyledTableCell>
@@ -141,18 +146,17 @@ export default function MyOperation() {
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       <IconButton>
-                        <ModalCardsEdit theIDoperation={operation.bizNumber} dataOperation={operation} />
+                        <ModalCardsEdit
+                          theIDoperation={operation.bizNumber}
+                          dataOperation={operation}
+                        />
                       </IconButton>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
             </TableBody>
           </Table>
-          {
-            console.log(operation)
-          }
         </TableContainer>
-      }
-    </>
-  );
-}
+      </>
+    );
+  }
