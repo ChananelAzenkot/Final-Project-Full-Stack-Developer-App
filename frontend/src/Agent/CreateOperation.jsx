@@ -42,11 +42,6 @@ export default function CreateOperation() {
     fiberDisconnection: "",
     simurTV: "",
     simurFiber: "",
-    sellerFiber: "",
-    sellerTV: "",
-    easyMesh: "",
-    upgradeProgress: "",
-    satisfaction: "",
     teamName: "",
   });
 
@@ -62,7 +57,7 @@ useEffect(() => {
   
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.userId;
-  
+
   fetch(
     `http://localhost:4000/api/user/${userId}`,
     {

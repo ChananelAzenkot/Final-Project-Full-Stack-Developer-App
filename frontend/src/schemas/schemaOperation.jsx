@@ -29,26 +29,6 @@
       "string.empty": "נדרש כמות התנתקויות פייבר",
       "string.min": "כמות התנתקויות פייבר חייבת להיות לפחות ספרה גם אם זה - 0",
     }),
-  sellerFiber: Joi.number()
-    .required()
-    .min(0)
-    .max(15)
-    .message("כמות המכירות של פייבר חייבת להיות בין1 -2 ספרות"),
-  sellerTV: Joi.number()
-    .required()
-    .min(0)
-    .max(15)
-    .message("כמות המכירות של טלוויזיה חייבת להיות בין1 -2 ספרות"),
-  easyMesh: Joi.number()
-    .required()
-    .min(0)
-    .max(15)
-    .message("כמות המכירות של איזי מש חייבת להיות בין1 -2 ספרות"),
-  upgradeProgress: Joi.number()
-    .required()
-    .min(0)
-    .max(15)
-    .message("כמות השדרוגים חייבת להיות בין1 -2 ספרות"),
     satisfaction: Joi.string().min(3).required().messages({
       "string.empty": "נדרש סמ׳׳ט",
       "string.min": "סמ׳׳ט חייב להיות בין 1 ל-3 ספרות",

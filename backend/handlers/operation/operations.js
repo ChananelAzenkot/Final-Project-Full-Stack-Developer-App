@@ -224,6 +224,10 @@ app.get("/api/operationTeam", businessGuard, async (req, res) => {
 
       const bizNumber = await IncrementalOperation.generateUniqueBizNumber();
       req.body.bizNumber = bizNumber;
+      req.body.sellerFiber = 0;
+      req.body.sellerTV = 0;
+      req.body.easyMesh = 0;
+      req.body.upgradeProgress = 0;
 
       const startDayOperation = new DailyOperation(req.body);
       const incrementalOperation = new IncrementalOperation(req.body);

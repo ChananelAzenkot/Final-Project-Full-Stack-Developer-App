@@ -69,10 +69,6 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                   אחוז שימור - Fiber
                 </StyledTableCell>
                 <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
-                <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
-                <StyledTableCell align="right">מכר - TV</StyledTableCell>
-                <StyledTableCell align="right">EasyMesh</StyledTableCell>
-                <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
                 <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
               </TableRow>
@@ -206,66 +202,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     helperText={errors.simurTV}
                     disabled
                   />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <TextField
-                  autoComplete="off"
-                    size="small"
-                    id="sellerFiber"
-                    label="מכר - Fiber"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={formData.sellerFiber}
-                    onChange={onInputChange}
-                    error={Boolean(errors.sellerFiber)}
-                    helperText={errors.sellerFiber}
-                  />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <TextField
-                  autoComplete="off"
-                    size="small"
-                    id="sellerTV"
-                    label="מכר - TV"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={formData.sellerTV}
-                    onChange={onInputChange}
-                    error={Boolean(errors.sellerTV)}
-                    helperText={errors.sellerTV}
-                  />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <TextField
-                  autoComplete="off"
-                    size="small"
-                    id="easyMesh"
-                    label="EasyMesh"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={formData.easyMesh}
-                    onChange={onInputChange}
-                    error={Boolean(errors.easyMesh)}
-                    helperText={errors.easyMesh}
-                  />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <TextField
-                  autoComplete="off"
-                    size="small"
-                    id="upgradeProgress"
-                    label="שדרוג"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={formData.upgradeProgress}
-                    onChange={onInputChange}
-                    error={Boolean(errors.upgradeProgress)}
-                    helperText={errors.upgradeProgress}
-                  />
+
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
@@ -324,10 +261,10 @@ CreateOperationInputs.propTypes = {
     fiberDisconnection: PropTypes.string,
     simurFiber: PropTypes.string,
     simurTV: PropTypes.string,
-    sellerFiber: PropTypes.string,
-    sellerTV: PropTypes.string,
-    easyMesh: PropTypes.string,
-    upgradeProgress: PropTypes.string,
+    sellerFiber: PropTypes.number,
+    sellerTV: PropTypes.number,
+    easyMesh: PropTypes.number,
+    upgradeProgress: PropTypes.number,
     satisfaction: PropTypes.string,
     teamName: PropTypes.string,
   }).isRequired,
