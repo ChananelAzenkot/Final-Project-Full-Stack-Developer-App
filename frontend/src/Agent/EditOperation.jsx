@@ -127,7 +127,6 @@ const onInputChange = (e) => {
   return (
     <Box>
       <IconButton
-        id="btnCreateAndPress"
         style={{ width: "auto" }}
         onClick={handleOpen}>
         <EditIcon />

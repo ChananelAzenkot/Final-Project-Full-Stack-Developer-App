@@ -41,13 +41,52 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit , nameAgent , teamName }) {
-
   CreateOperationInputs.propTypes = {
   nameAgent: PropTypes.string.isRequired,
   teamName: PropTypes.string.isRequired,
   onInputChange: PropTypes.func.isRequired,
+  formData: PropTypes.object,
 };
+
+CreateOperationInputs.propTypes = {
+  formData: PropTypes.shape({
+    nameAgent: PropTypes.string,
+    numberCalls: PropTypes.string,
+    productivity: PropTypes.string,
+    tvDisconnection: PropTypes.string,
+    fiberDisconnection: PropTypes.string,
+    simurFiber: PropTypes.string,
+    simurTV: PropTypes.string,
+    simurFiberColor: PropTypes.string,
+    simurTVColor: PropTypes.string,
+    sellerFiber: PropTypes.string,
+    sellerTV: PropTypes.string,
+    easyMesh: PropTypes.string,
+    upgradeProgress: PropTypes.string,
+    satisfaction: PropTypes.string,
+    teamName: PropTypes.string,
+  }).isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  errors: PropTypes.shape({
+    nameAgent: PropTypes.string,
+    numberCalls: PropTypes.string,
+    productivity: PropTypes.string,
+    tvDisconnection: PropTypes.string,
+    fiberDisconnection: PropTypes.string,
+    simurFiber: PropTypes.string,
+    simurTV: PropTypes.string,
+    sellerFiber: PropTypes.number,
+    sellerTV: PropTypes.number,
+    easyMesh: PropTypes.number,
+    upgradeProgress: PropTypes.number,
+    satisfaction: PropTypes.string,
+    teamName: PropTypes.string,
+  }).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};
+
+function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit , nameAgent , teamName }) {
+
 
   return (
     <>
@@ -184,6 +223,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     onChange={onInputChange}
                     error={Boolean(errors.simurFiber)}
                     helperText={errors.simurFiber}
+                    style={{backgroundColor: formData.simurFiberColor}}
                     disabled
                   />
                 </StyledTableCell>
@@ -200,6 +240,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     onChange={onInputChange}
                     error={Boolean(errors.simurTV)}
                     helperText={errors.simurTV}
+                    style={{backgroundColor: formData.simurTVColor}}
                     disabled
                   />
 
@@ -235,40 +276,5 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
     </>
   );
 }
-
-CreateOperationInputs.propTypes = {
-  formData: PropTypes.shape({
-    nameAgent: PropTypes.string,
-    numberCalls: PropTypes.string,
-    productivity: PropTypes.string,
-    tvDisconnection: PropTypes.string,
-    fiberDisconnection: PropTypes.string,
-    simurFiber: PropTypes.string,
-    simurTV: PropTypes.string,
-    sellerFiber: PropTypes.string,
-    sellerTV: PropTypes.string,
-    easyMesh: PropTypes.string,
-    upgradeProgress: PropTypes.string,
-    satisfaction: PropTypes.string,
-    teamName: PropTypes.string,
-  }).isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  errors: PropTypes.shape({
-    nameAgent: PropTypes.string,
-    numberCalls: PropTypes.string,
-    productivity: PropTypes.string,
-    tvDisconnection: PropTypes.string,
-    fiberDisconnection: PropTypes.string,
-    simurFiber: PropTypes.string,
-    simurTV: PropTypes.string,
-    sellerFiber: PropTypes.number,
-    sellerTV: PropTypes.number,
-    easyMesh: PropTypes.number,
-    upgradeProgress: PropTypes.number,
-    satisfaction: PropTypes.string,
-    teamName: PropTypes.string,
-  }).isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-};
 
 export default CreateOperationInputs;
