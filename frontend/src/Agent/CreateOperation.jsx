@@ -12,6 +12,7 @@ import { schemaOperations } from "../schemas/schemaOperation";
 import {calculatePercentageTVcreate, calculatePercentageFiberCreate } from "../components/calculatePercentage";
 import { handleInput } from "../components/handleInput";
 import CreateOperationInputs from "./CreateOperationInputs";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -31,6 +32,8 @@ export default function CreateOperation() {
   const handleClose = () => setOpen(false);
   const [errors, setErrors] = useState({});
   const [, setIsFormValid] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const navigate = useNavigate();
 
   const { snackbar } = useContext(GeneralContext);
 
@@ -110,7 +113,6 @@ const onInputChange = (e) => {
   handleInput(e, formData, setFormData, errors, setErrors, setIsFormValid);
 };
 
-const [isFetchSuccessful, setIsFetchSuccessful] = useState(false);
 
    const handleSubmit = (e) => {
     e.preventDefault();
@@ -133,18 +135,35 @@ const [isFetchSuccessful, setIsFetchSuccessful] = useState(false);
     )
       .then((data) => {
         setFormData(data);
+        localStorage.setItem('submitTime', new Date());
+        snackbar("the card was created successfully !");
+        navigate('/dailyOperation');
+        setDisabled(true);
         handleClose();
         calculatePercentageTVcreate();
         calculatePercentageFiberCreate();
-        snackbar("the card was created successfully !");
-        setIsFetchSuccessful(true);
       });
   };
+
+      useEffect(() => {
+    const submitTime = localStorage.getItem('submitTime');
+    if (submitTime) {
+      const now = new Date();
+      const timeDifference = now.getTime() - new Date(submitTime).getTime();
+      const differenceInHours = timeDifference / (1000 * 60);
+if (differenceInHours < 10) {
+  setDisabled(true);
+} else {
+  setDisabled(false);
+  localStorage.removeItem('submitTime');
+}
+    }
+  }, []);
 
   return (
     <Box>
       <Button
-      disabled={isFetchSuccessful}
+      disabled={disabled}
       variant="contained"
         id="BtnStart"
         onClick={handleOpen}

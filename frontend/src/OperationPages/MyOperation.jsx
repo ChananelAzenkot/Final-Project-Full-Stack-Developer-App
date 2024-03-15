@@ -18,9 +18,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
-    fontSize: '16px',
-    padding:'5px',
-    margin:'5px',
+    fontSize: "16px",
+    padding: "5px",
+    margin: "5px",
     textAlign: "center",
     width: "100px",
     border: "1px solid white",
@@ -29,9 +29,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     boxShadow: "1px 1px 3px 1px white",
   },
   [`&.${tableCellClasses.body}`]: {
-    padding:'5px',
-    margin:'5px',
-    fontSize: '16px',
+    padding: "5px",
+    margin: "5px",
+    fontSize: "16px",
     fontWeight: "bold",
     width: "100px",
     textAlign: "center",
@@ -49,7 +49,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:last-child td, &:last-child th": {
     border: "1px solid black",
     textAlign: "center",
-    fontSize: '16px',
+    fontSize: "16px",
   },
 }));
 
@@ -72,11 +72,12 @@ export default function MyOperation() {
 
   return (
     <>
-      <CreateOperation />
+      <div className="btnGroup">
+        <CreateOperation/>
+      </div>
       {Array.isArray(operation) &&
         operation.map((operation, index) => (
           <div key={index} className="btnGroup">
-            <CreateOperation />
             {operation && (
               <NewSale
                 theIDoperation={operation.bizNumber}
@@ -87,28 +88,30 @@ export default function MyOperation() {
         ))}
       <TableContainer component={Paper} id="container">
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>תאריך</StyledTableCell>
-              <StyledTableCell>שם צוות</StyledTableCell>
-              <StyledTableCell>שם נציג</StyledTableCell>
-              <StyledTableCell align="right">כמות שיחות</StyledTableCell>
-              <StyledTableCell align="right">פיריון</StyledTableCell>
-              <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
-              <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
-              <StyledTableCell align="right">
-                אחוז שימור - Fiber
-              </StyledTableCell>
-              <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
-              <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
-              <StyledTableCell align="right">מכר - TV</StyledTableCell>
-              <StyledTableCell align="right">EasyMesh</StyledTableCell>
-              <StyledTableCell align="right">שדרוג</StyledTableCell>
-              <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
-              <StyledTableCell align="right">יעדים</StyledTableCell>
-              <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
-            </TableRow>
-          </TableHead>
+          {operation && operation.length > 0 && (
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>תאריך</StyledTableCell>
+                <StyledTableCell>שם צוות</StyledTableCell>
+                <StyledTableCell>שם נציג</StyledTableCell>
+                <StyledTableCell align="right">כמות שיחות</StyledTableCell>
+                <StyledTableCell align="right">פיריון</StyledTableCell>
+                <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
+                <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
+                <StyledTableCell align="right">
+                  אחוז שימור - Fiber
+                </StyledTableCell>
+                <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
+                <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
+                <StyledTableCell align="right">מכר - TV</StyledTableCell>
+                <StyledTableCell align="right">EasyMesh</StyledTableCell>
+                <StyledTableCell align="right">שדרוג</StyledTableCell>
+                <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
+                <StyledTableCell align="right">יעדים</StyledTableCell>
+                <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
+              </TableRow>
+            </TableHead>
+          )}
           <TableBody>
             {Array.isArray(operation) &&
               operation.map((operation, index) => (
@@ -199,10 +202,10 @@ export default function MyOperation() {
                     {operation.targets}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                      <ModalCardsEdit
-                        theIDoperation={operation.bizNumber}
-                        dataOperation={operation}
-                      />
+                    <ModalCardsEdit
+                      theIDoperation={operation.bizNumber}
+                      dataOperation={operation}
+                    />
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
