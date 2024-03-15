@@ -1,22 +1,38 @@
 export const calculatePercentageTV = (item, setItem) => {
   if (!item.numberCalls || isNaN(item.tvDisconnection) || isNaN(item.numberCalls)) {
-    setItem(prevState => ({...prevState, simurTV: '0%'}));
+    setItem(prevState => ({...prevState, simurTV: '0%', simurTVColor: 'red'}));
   } else if (item.numberCalls && !item.tvDisconnection) {
-    setItem(prevState => ({...prevState, simurTV: '100%'}));
+    setItem(prevState => ({...prevState, simurTV: '100%', simurTVColor: 'green'}));
   } else {
     const percentage = 1 - (parseFloat(item.tvDisconnection) / parseFloat(item.numberCalls));
-    setItem(prevState => ({...prevState, simurTV: (percentage * 100).toFixed(2) + '%'}));
+    let color;
+    if (percentage >= 0.79) {
+      color = 'green';
+    } else if (percentage >= 0.67) {
+      color = 'yellow';
+    } else {
+      color = 'red';
+    }
+    setItem(prevState => ({...prevState, simurTV: (percentage * 100).toFixed(2) + '%', simurTVColor: color}));
   }
 };
 
 export const calculatePercentageFiber = (item, setItem) => {
   if (!item.numberCalls || isNaN(item.fiberDisconnection) || isNaN(item.numberCalls)) {
-    setItem(prevState => ({...prevState, simurFiber: '0%'}));
+    setItem(prevState => ({...prevState, simurFiber: '0%', simurFiberColor: 'red'}));
   } else if (item.numberCalls && !item.fiberDisconnection) {
-    setItem(prevState => ({...prevState, simurFiber: '100%'}));
+    setItem(prevState => ({...prevState, simurFiber: '100%', simurFiberColor: 'green'}));
   } else {
     const percentage = 1 - (parseFloat(item.fiberDisconnection) / parseFloat(item.numberCalls));
-    setItem(prevState => ({...prevState, simurFiber: (percentage * 100).toFixed(2) + '%'}));
+    let color;
+    if (percentage >= 0.79) {
+      color = 'green';
+    } else if (percentage >= 0.67) {
+      color = 'yellow';
+    } else {
+      color = 'red';
+    }
+    setItem(prevState => ({...prevState, simurFiber: (percentage * 100).toFixed(2) + '%', simurFiberColor: color}));
   }
 };
 

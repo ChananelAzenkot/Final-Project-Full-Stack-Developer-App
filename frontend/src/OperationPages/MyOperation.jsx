@@ -42,6 +42,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+
+
 export default function MyOperation() {
   const [operation, setOperation] = useState([]);
   useEffect(() => {
@@ -120,7 +122,7 @@ export default function MyOperation() {
                     <StyledTableCell align="right">
                       {operation.fiberDisconnection}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="right" style={{backgroundColor: operation.simurFiberColor}}>
                       {operation.simurFiber}
                     </StyledTableCell>
                     <StyledTableCell align="right">

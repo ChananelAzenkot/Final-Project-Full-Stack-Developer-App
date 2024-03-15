@@ -51,10 +51,6 @@ export default function EditOperation({ dataOperation, theIDoperation }) {
       fiberDisconnection: dataOperation.fiberDisconnection || "",
       simurFiber: dataOperation.simurFiber || "",
       simurTV: dataOperation.simurTV || "",
-      sellerFiber: dataOperation.sellerFiber || "",
-      sellerTV: dataOperation.sellerTV || "",
-      easyMesh: dataOperation.easyMesh || "",
-      upgradeProgress: dataOperation.upgradeProgress || "",
       satisfaction: dataOperation.satisfaction || "",
     }),
     [dataOperation]

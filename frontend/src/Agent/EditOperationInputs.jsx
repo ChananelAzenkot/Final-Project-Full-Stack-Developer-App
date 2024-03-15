@@ -68,10 +68,6 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                   אחוז שימור - Fiber
                 </StyledTableCell>
                 <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
-                <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
-                <StyledTableCell align="right">מכר - TV</StyledTableCell>
-                <StyledTableCell align="right">EasyMesh</StyledTableCell>
-                <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
                 <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
               </TableRow>
@@ -183,6 +179,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     error={Boolean(errors.simurFiber)}
                     helperText={errors.simurFiber}
                     disabled
+                    style={{backgroundColor: item.simurFiberColor}}
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">
@@ -198,62 +195,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     error={Boolean(errors.simurTV)}
                     helperText={errors.simurTV}
                     disabled
-                  />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <TextField
-                    size="small"
-                    id="sellerFiber"
-                    label="מכר - Fiber"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={item.sellerFiber}
-                    onChange={onInputChange}
-                    error={Boolean(errors.sellerFiber)}
-                    helperText={errors.sellerFiber}
-                  />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <TextField
-                    size="small"
-                    id="sellerTV"
-                    label="מכר - TV"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={item.sellerTV}
-                    onChange={onInputChange}
-                    error={Boolean(errors.sellerTV)}
-                    helperText={errors.sellerTV}
-                  />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <TextField
-                    size="small"
-                    id="easyMesh"
-                    label="EasyMesh"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={item.easyMesh}
-                    onChange={onInputChange}
-                    error={Boolean(errors.easyMesh)}
-                    helperText={errors.easyMesh}
-                  />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <TextField
-                    size="small"
-                    id="upgradeProgress"
-                    label="שדרוג"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={item.upgradeProgress}
-                    onChange={onInputChange}
-                    error={Boolean(errors.upgradeProgress)}
-                    helperText={errors.upgradeProgress}
+                    style={{backgroundColor: item.simurTVColor}}
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">

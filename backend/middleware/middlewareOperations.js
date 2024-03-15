@@ -53,6 +53,8 @@ export const middlewareOperations = Joi.object({
     .required()
     .pattern(/iron|impact|toy/)
     .message("The team name must include 'iron' or 'impact' or 'toy'"),
+  simurFiberColor: Joi.string().allow(""),
+  simurTVColor: Joi.string().allow(""),
   userId: Joi.string().allow(""),
   user_id: Joi.string().allow(""),
 });

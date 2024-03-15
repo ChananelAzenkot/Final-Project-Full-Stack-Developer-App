@@ -40,4 +40,6 @@
       "any.only": "שם הצוות חייב להיות אחד מהאפשרויות הבאות: iron, impact, toy",
       "string.empty": "שם הצוות הינו חובה",
     }),
+    simurFiberColor: Joi.string().allow(""),
+    simurTVColor: Joi.string().allow(""),
   });
