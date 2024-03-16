@@ -51,10 +51,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 CreateOperationInputs.propTypes = {
   formData: PropTypes.shape({
     nameAgent: PropTypes.string,
-    numberCalls: PropTypes.string,
+    numberCalls: PropTypes.number,
     productivity: PropTypes.string,
-    tvDisconnection: PropTypes.string,
-    fiberDisconnection: PropTypes.string,
+    tvDisconnection: PropTypes.number,
+    fiberDisconnection: PropTypes.number,
     simurFiber: PropTypes.string,
     simurTV: PropTypes.string,
     simurFiberColor: PropTypes.string,
@@ -69,10 +69,10 @@ CreateOperationInputs.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   errors: PropTypes.shape({
     nameAgent: PropTypes.string,
-    numberCalls: PropTypes.string,
+    numberCalls: PropTypes.number,
     productivity: PropTypes.string,
-    tvDisconnection: PropTypes.string,
-    fiberDisconnection: PropTypes.string,
+    tvDisconnection: PropTypes.number,
+    fiberDisconnection: PropTypes.number,
     simurFiber: PropTypes.string,
     simurTV: PropTypes.string,
     sellerFiber: PropTypes.number,
@@ -123,7 +123,6 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    nameAgent={nameAgent}
                     value={nameAgent}
                     onChange={onInputChange}
                     error={Boolean(errors.nameAgent)}
@@ -160,7 +159,6 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     onChange={onInputChange}
                     error={Boolean(errors.numberCalls)}
                     helperText={errors.numberCalls}
-                    type="number"
                     style={{ width: "63%" }}
                   />
                 </StyledTableCell>
@@ -192,7 +190,6 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     onChange={onInputChange}
                     error={Boolean(errors.tvDisconnection)}
                     helperText={errors.tvDisconnection}
-                    type="number"
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">

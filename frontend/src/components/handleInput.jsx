@@ -4,7 +4,9 @@ import { schemaSales } from "../schemas/schemaSale";
 // handleInput is for creating a new item
 export const handleInput = (e, formData, setFormData, errors, setErrors, setIsFormValid) => {
   const { id, value } = e.target;
-  const obj = { ...formData, [id]: value };
+  const numberKeys = ['numberCalls', 'tvDisconnection', 'fiberDisconnection'];
+  const newValue = numberKeys.includes(id) ? Number(value) : value;
+  const obj = { ...formData, [id]: newValue };
   setFormData(obj);
 
   const validate = schemaOperations.validate(obj, { abortEarly: false });

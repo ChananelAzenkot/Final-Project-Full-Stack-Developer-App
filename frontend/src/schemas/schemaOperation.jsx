@@ -5,13 +5,15 @@
       "string.empty": "נדרש שם נציג",
       "string.min": "שם סוכן חייב להיות בין 3 ל-30 תווים",
     }),
-    numberCalls: Joi.string().min(1).required().messages({
-      "string.empty": "כמות שיחות נדרשת",
-      "string.min": "כמות שיחות חייבת להיות בין 1 ל-2 ספרות",
+    numberCalls: Joi.number().min(0)
+    .max(100).required().messages({
+      "number.empty": "כמות שיחות נדרשת",
+      "number.min": "כמות שיחות חייבת להיות בין 1 ל-2 ספרות",
     }),
-    productivity: Joi.string().min(3).required().messages({
-      "string.empty": "נדרש פיריון",
-      "string.min": "פיריון חייב להיות בין 1 ל-3 ספרות",
+    productivity: Joi.string().min(0)
+    .max(3).required().messages({
+      "number.empty": "נדרש פיריון",
+      "number.min": "פיריון חייב להיות בין 1 ל-3 ספרות",
     }),
     simurTV: Joi.string().min(3).required().messages({
       "string.empty": "נדרש שימור טלוויזיה",
@@ -21,13 +23,15 @@
       "string.empty": "נדרש שימור פייבר",
       "string.min": "שימור פייבר חייב להיות בין 1 ל-3 ספרות",
     }),
-    tvDisconnection: Joi.string().min(1).required().messages({
-      "string.empty": "נדרש כמות התנתקויות טלוויזיה",
-      "string.min": "כמות התנתקויות טלוויזיה חייבת להיות לפחות ספרה גם אם זה - 0",
+    tvDisconnection: Joi.number().min(0)
+    .max(100).required().messages({
+      "number.empty": "נדרש כמות התנתקויות טלוויזיה",
+      "number.min": "כמות התנתקויות טלוויזיה חייבת להיות לפחות ספרה גם אם זה - 0",
     }),
-    fiberDisconnection: Joi.string().min(1).required().messages({
-      "string.empty": "נדרש כמות התנתקויות פייבר",
-      "string.min": "כמות התנתקויות פייבר חייבת להיות לפחות ספרה גם אם זה - 0",
+    fiberDisconnection: Joi.number().min(0)
+    .max(100).required().messages({
+      "number.empty": "נדרש כמות התנתקויות פייבר",
+      "number.min": "כמות התנתקויות פייבר חייבת להיות לפחות ספרה גם אם זה - 0",
     }),
     satisfaction: Joi.string().min(3).required().messages({
       "string.empty": "נדרש סמ׳׳ט",

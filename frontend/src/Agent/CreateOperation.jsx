@@ -39,13 +39,14 @@ export default function CreateOperation() {
 
   const [formData, setFormData] = useState({
     nameAgent: "",
-    numberCalls: "",
+    numberCalls: 0,
     productivity: "",
-    tvDisconnection: "",
-    fiberDisconnection: "",
+    tvDisconnection: 0,
+    fiberDisconnection: 0,
     simurTV: "",
     simurFiber: "",
     teamName: "",
+    satisfaction: "",
   });
 
     const [user, setUser] = useState({
@@ -140,8 +141,8 @@ const onInputChange = (e) => {
         navigate('/dailyOperation');
         setDisabled(true);
         handleClose();
-        calculatePercentageTVcreate();
-        calculatePercentageFiberCreate();
+        calculatePercentageTVcreate(formData, setFormData);
+        calculatePercentageFiberCreate(formData, setFormData);
       });
   };
 

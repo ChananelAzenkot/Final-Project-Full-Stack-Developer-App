@@ -6,19 +6,18 @@ export const middlewareOperations = Joi.object({
 
   productivity: Joi.string()
     .required()
-    .min(1)
-    .max(4)
+    .min(0)
+    .max(15)
     .message("פיריון חייב להיות בין1 -3 ספרות"),
-  tvDisconnection: Joi.string()
+  tvDisconnection: Joi.number()
     .required()
-    .min(1)
-    .max(2)
+    .min(0)
+    .max(100)
     .message("ניתוק טלוויזיה חייב להיות בין1 -2 ספרות"),
-  fiberDisconnection: Joi.string()
+  fiberDisconnection: Joi.number()
     .required()
-    .min(1)
-    .max(3)
-    .pattern(/^[0-9]{1,2}$/)
+    .min(0)
+    .max(100)
     .message("ניתוק פייבר חייב להיות בין1 -2 ספרות"),
   simurFiber: Joi.string()
     .min(1)
@@ -34,12 +33,10 @@ export const middlewareOperations = Joi.object({
     .required()
     .min(1)
     .max(3)
-    .pattern(/^[0-9]{1,3}%$/)
     .message("כמות השביעות רצון חייבת להיות בין1 -2 ספרות"),
-  targets: Joi.string()
+  targets: Joi.number()
     .min(1)
     .max(3)
-    .pattern(/^[0-9]{1,3}%$/)
     .message("כמות היעדים חייבת להיות בין1 -2 ספרות")
     .allow(""),
   image: Joi.object().keys({

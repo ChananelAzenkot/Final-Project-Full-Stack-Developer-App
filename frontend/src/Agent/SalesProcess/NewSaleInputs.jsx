@@ -39,7 +39,6 @@ export default function NewSaleInputs({
         variant="outlined"
         fullWidth
         margin="normal"
-        nameAgent={nameAgent}
         value={nameAgent}
         onChange={onInputChange}
         error={Boolean(errors.nameAgent)}
@@ -54,7 +53,6 @@ export default function NewSaleInputs({
         variant="outlined"
         fullWidth
         margin="normal"
-        nameAgent={nameAgent}
         value={teamName}
         onChange={onInputChange}
         error={Boolean(errors.teamName)}

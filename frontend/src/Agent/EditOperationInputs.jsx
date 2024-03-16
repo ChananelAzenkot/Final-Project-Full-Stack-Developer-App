@@ -83,7 +83,6 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    nameAgent={item.nameAgent}
                     value={item.nameAgent}
                     onChange={onInputChange}
                     error={Boolean(errors.nameAgent)}

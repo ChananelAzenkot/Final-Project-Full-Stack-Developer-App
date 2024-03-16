@@ -26,10 +26,10 @@ export default function EditOperation({ dataOperation, theIDoperation }) {
     dataOperation: PropTypes.shape({
       teamName: PropTypes.string,
       nameAgent: PropTypes.string,
-      numberCalls: PropTypes.string,
+      numberCalls: PropTypes.number,
       productivity: PropTypes.string,
-      tvDisconnection: PropTypes.string,
-      fiberDisconnection: PropTypes.string,
+      tvDisconnection: PropTypes.number,
+      fiberDisconnection: PropTypes.number,
       simurFiber: PropTypes.string,
       simurTV: PropTypes.string,
       sellerFiber: PropTypes.number,

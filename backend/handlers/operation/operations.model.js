@@ -4,10 +4,10 @@ const ObjectId = Schema.Types.ObjectId;
 // create a new card schema //
 const schema = new Schema({
   nameAgent: String,
-  numberCalls: String,
+  numberCalls: Number,
   productivity: String,
-  tvDisconnection: String,
-  fiberDisconnection: String,
+  tvDisconnection: Number,
+  fiberDisconnection: Number,
   simurFiber: String,
   simurTV: String,
   sellerFiber: Number,
@@ -15,7 +15,7 @@ const schema = new Schema({
   easyMesh: Number,
   upgradeProgress: Number,
   satisfaction: String,
-  targets: String,
+  targets: Number,
   image: {
     url: { type: String },
     alt: { type: String },
