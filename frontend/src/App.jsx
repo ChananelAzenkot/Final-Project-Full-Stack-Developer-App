@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext } from "react";
 import "./App.css";
 import Router from "./Router";
 import Navbar from "./components/Navbar";
@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FooterPage from "./components/FooterPage";
 import CssBaseline from "@mui/material/CssBaseline";
 import { RoleTypes } from './components/RoleTypes';
-import { jwtDecode } from "jwt-decode";
+import { useAuth } from './user/useAuth';
 
 export const GeneralContext = createContext();
 
@@ -46,28 +46,7 @@ const [userRoleType, setUserRoleType] = useState(localStorage.getItem('userId') 
   },
 });
 
-// ...
-
-useEffect(() => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    setUserRoleType(RoleTypes.none);
-    setLoader(false);
-    return;
-  }
-
-  const user = jwtDecode(token);
-  let role = RoleTypes.user;
-
-  if (user.isAdmin) {
-    role = RoleTypes.isAdmin;
-  } else if (user.IsBusiness) {
-    role = RoleTypes.IsBusiness;
-  }
-
-  setUserRoleType(role);
-  setLoader(false);
-}, []);
+useAuth(setUserRoleType, setLoader, user);
 
   return (
     <ThemeProvider theme={theme}>
@@ -80,6 +59,7 @@ useEffect(() => {
           setLoader,
           userRoleType,
           setUserRoleType,
+          useAuth,
         }}>
         <Navbar onThemeChange={handleThemeChange} theme={theme} />
         <Router theme={theme} />

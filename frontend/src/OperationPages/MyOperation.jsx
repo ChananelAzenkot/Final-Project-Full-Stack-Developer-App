@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import "../styles/operation.css";
-import ModalCardsEdit from "../Agent/EditOperation";
+import EditOperation from "../Agent/EditOperation";
 import CreateOperation from "../Agent/CreateOperation";
 import NewSale from "../Agent/SalesProcess/NewSale";
 
@@ -55,6 +55,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function MyOperation() {
   const [operation, setOperation] = useState([]);
+
   useEffect(() => {
     fetch(`http://localhost:4000/api/operationId`, {
       credentials: "include",
@@ -72,9 +73,14 @@ export default function MyOperation() {
 
   return (
     <>
-      <div className="btnGroup">
-        <CreateOperation/>
+      <div className="btnGroup" style={{ flexDirection: "column" }}>
+        <h1>הפעולות שלי</h1>
+        <CreateOperation
+          setOperation={setOperation}
+          dataOperation={operation}
+        />
       </div>
+
       {Array.isArray(operation) &&
         operation.map((operation, index) => (
           <div key={index} className="btnGroup">
@@ -141,47 +147,32 @@ export default function MyOperation() {
                     align="right"
                     style={{
                       backgroundColor:
-                        1 -
-                          parseFloat(operation.fiberDisconnection) /
-                            parseFloat(operation.numberCalls) >=
+                        parseFloat(operation.simurFiber.replace("%", "")) /
+                          100 >=
                         0.79
                           ? "#62a462"
-                          : 1 -
-                              parseFloat(operation.fiberDisconnection) /
-                                parseFloat(operation.numberCalls) >=
+                          : parseFloat(operation.simurFiber.replace("%", "")) /
+                              100 >=
                             0.67
                           ? "#c1c16f"
                           : "#ad6262",
                     }}>
-                    {`${(
-                      (1 -
-                        parseFloat(operation.fiberDisconnection) /
-                          parseFloat(operation.numberCalls)) *
-                      100
-                    ).toFixed(2)}%`}
+                    {operation.simurFiber}
                   </StyledTableCell>
                   <StyledTableCell
                     align="right"
                     style={{
                       backgroundColor:
-                        1 -
-                          parseFloat(operation.tvDisconnection) /
-                            parseFloat(operation.numberCalls) >=
+                        parseFloat(operation.simurTV.replace("%", "")) / 100 >=
                         0.79
                           ? "#62a462"
-                          : 1 -
-                              parseFloat(operation.tvDisconnection) /
-                                parseFloat(operation.numberCalls) >=
+                          : parseFloat(operation.simurTV.replace("%", "")) /
+                              100 >=
                             0.67
                           ? "#c1c16f"
                           : "#ad6262",
                     }}>
-                    {`${(
-                      (1 -
-                        parseFloat(operation.tvDisconnection) /
-                          parseFloat(operation.numberCalls)) *
-                      100
-                    ).toFixed(2)}%`}
+                    {operation.simurTV}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {operation.sellerFiber}
@@ -202,7 +193,7 @@ export default function MyOperation() {
                     {operation.targets}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    <ModalCardsEdit
+                    <EditOperation
                       theIDoperation={operation.bizNumber}
                       dataOperation={operation}
                     />

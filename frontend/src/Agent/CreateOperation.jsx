@@ -13,6 +13,7 @@ import {calculatePercentageTVcreate, calculatePercentageFiberCreate } from "../c
 import { handleInput } from "../components/handleInput";
 import CreateOperationInputs from "./CreateOperationInputs";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const style = {
   position: "absolute",
@@ -27,6 +28,7 @@ const style = {
 };
 
 export default function CreateOperation() {
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

@@ -5,7 +5,6 @@ import Account from './user/Account';
 import OperationTeams from './OperationPages/OperationTeams';
 import UserManagement from './admin/UserManagement';
 import About from './pages/About';
-import CreateOperation from './Agent/CreateOperation';
 import MyOperation from './OperationPages/MyOperation';
 import IncrementalOperation from './OperationPages/IncrementalOperation';
 import CheckUser from './OperationPages/CheckUser';
@@ -14,6 +13,7 @@ import SalesOperationIncremental from './OperationPages/SalesOperationIncrementa
 import SalesIncrementalTeams from './OperationPages/SalesIncrementalTeams';
 
 export default function Router(theme) {
+
     return (
         <Routes>
             <Route path="/" element={<CheckUser theme={theme} />} />
@@ -28,7 +28,6 @@ export default function Router(theme) {
             <Route path="/login" element={<Login theme={theme} />} />
             <Route path="/SignUp" element={<SignUp theme={theme} />} />
             <Route path="/account" element={<Account theme={theme} />} />
-            <Route path="/create-operation" element={<CreateOperation theme={theme} />} />
         </Routes>
     )
 }
