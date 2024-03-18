@@ -12,8 +12,6 @@ import { schemaOperations } from "../schemas/schemaOperation";
 import {calculatePercentageTVcreate, calculatePercentageFiberCreate } from "../components/calculatePercentage";
 import { handleInput } from "../components/handleInput";
 import CreateOperationInputs from "./CreateOperationInputs";
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 
 const style = {
   position: "absolute",
@@ -35,7 +33,6 @@ export default function CreateOperation() {
   const [errors, setErrors] = useState({});
   const [, setIsFormValid] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const navigate = useNavigate();
 
   const { snackbar } = useContext(GeneralContext);
 
@@ -140,7 +137,9 @@ const onInputChange = (e) => {
         setFormData(data);
         localStorage.setItem('submitTime', new Date());
         snackbar("the card was created successfully !");
-        navigate('/dailyOperation');
+        setTimeout(() => {
+          window.location.href = "/dailyOperation";
+        }, 1500);
         setDisabled(true);
         handleClose();
         calculatePercentageTVcreate(formData, setFormData);

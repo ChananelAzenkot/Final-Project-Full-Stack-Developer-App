@@ -117,6 +117,9 @@ const onInputChange = (e) => {
       }
       handleClose();
       snackbar("the card is updated success !");
+      setTimeout(() => {
+        window.location.href = "/dailyOperation";
+      }, 1500);
     } catch (error) {
       console.error(
         "There was a problem with the fetch operation: " + error.message

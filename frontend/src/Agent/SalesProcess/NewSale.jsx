@@ -201,6 +201,9 @@ const handleSubmit = (e) => {
         decay: 0.9,
         origin: { y: 0.6 },
       });
+      setTimeout(() => {
+        window.location.href = "/dailyOperation";
+      }, 1800);
     })
     .catch((error) => {
       console.error('Error:', error);

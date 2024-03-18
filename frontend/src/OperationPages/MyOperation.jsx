@@ -14,6 +14,7 @@ import EditOperation from "../Agent/EditOperation";
 import CreateOperation from "../Agent/CreateOperation";
 import NewSale from "../Agent/SalesProcess/NewSale";
 
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -52,6 +53,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     fontSize: "16px",
   },
 }));
+
 
 export default function MyOperation() {
   const [operation, setOperation] = useState([]);

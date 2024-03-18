@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { RoleTypes } from '../components/RoleTypes';
 
-
-export const useAuth = (setUserRoleType, setLoader, user) => {
+export const useAuth = (setUserRoleType, setLoader) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -32,6 +31,5 @@ export const useAuth = (setUserRoleType, setLoader, user) => {
     }
     setUserRoleType(role);
     setLoader(false);
-  }, [user]);
+  }, []);
 };
-
