@@ -16,7 +16,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import HandymanIcon from "@mui/icons-material/Handyman";
-import Avatar from "@mui/material/Avatar";
 import EventIcon from '@mui/icons-material/Event';
 
 export const RoleTypes = {
@@ -91,7 +90,7 @@ const pages = [
 
 export default function FooterPage() {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const { userRoleType, user } = useContext(GeneralContext);
+  const { userRoleType } = useContext(GeneralContext);
 
   const path = useResolvedPath().pathname;
 
@@ -176,18 +175,6 @@ export default function FooterPage() {
                   </Button>
                 </Link>
               ))}
-            <Link to="/login">
-              <Avatar
-                id="avatarPage"
-                alt={user ? user.fullName || user.none : ""}
-                src={
-                  user && user.isAdmin
-                    ? "https://ideogram.ai/api/images/direct/-v0aqxnQTpOG6STx2inSrg.jpg"
-                    : (user && user.imgUrl) ||
-                      "https://ideogram.ai/api/images/direct/Lgf0yImGRqetiFUUf67b4g.jpg"
-                }
-              />
-            </Link>
           </Box>
         </Toolbar>
       </Container>
