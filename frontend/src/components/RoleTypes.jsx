@@ -56,20 +56,13 @@ export const pages = [
 export const useLogout = (setUser, setUserRoleType, setLoader, navigate, handleCloseUserMenu) => {
   const logout = () => {
     setLoader(true);
-
-    fetch(`http://localhost:4000/logout`, {
-      credentials: "include",
-    }).then(() => {
       setUser();
       setUserRoleType(RoleTypes.none);
       setLoader(false);
       localStorage.removeItem("token");
       navigate("./login");
-    });
-
     handleCloseUserMenu();
   };
-
   return logout;
 };
 

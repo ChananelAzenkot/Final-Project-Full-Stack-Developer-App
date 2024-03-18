@@ -75,13 +75,24 @@ export default function MyOperation() {
 
   return (
     <>
-      <div className="btnGroup" style={{ flexDirection: "column" }}>
-        <h1>הפעולות שלי</h1>
-        <CreateOperation
-          setOperation={setOperation}
-          dataOperation={operation}
-        />
+ <div className="btnGroup">
+  {operation.length > 0 ? operation.map((operation, index) => (
+    <div key={index} className="btnGroup" style={{ flexDirection: "column" }}>
+      <div className="nameAgentTitle">
+      <h1>{`התפעול היומי של : ${operation.nameAgent}`}</h1>
       </div>
+      <CreateOperation
+        setOperation={setOperation}
+        dataOperation={operation}
+      />
+    </div>
+  )) : (
+    <CreateOperation
+      setOperation={setOperation}
+      dataOperation={{}}
+    />
+  )}
+</div>
 
       {Array.isArray(operation) &&
         operation.map((operation, index) => (

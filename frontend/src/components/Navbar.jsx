@@ -21,6 +21,8 @@ import {
   useLogout,
 } from "./RoleTypes";
 import { useAnchors } from "./useAnchors";
+import { useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export default function Navbar() {
   const {
@@ -34,6 +36,30 @@ export default function Navbar() {
 
   const { user, setUser, setLoader, userRoleType, setUserRoleType } =
     useGeneralContext();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return;
+    }
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.userId;
+    fetch(`http://localhost:4000/api/user/${userId}`, {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(userId);
+        setUser(data);
+      });
+  }, []);
+
+  console.log(user);
 
   const navigate = useNavigate();
   const path = useResolvedPath().pathname;
@@ -65,7 +91,6 @@ export default function Navbar() {
                   textDecoration: "none",
                 }}>
                 <b id="myNavBarBtn" style={{ fontFamily: "initial" }}>
-                  {" "}
                   ⚡️GoPartner
                 </b>
               </Typography>
@@ -151,6 +176,12 @@ export default function Navbar() {
                       </Button>
                     </Link>
                   ))}
+                <h3 className="titleAgent">
+                  {user && user.name
+                    ? " שלום ל : " + user.name.first + " " + user.name.last
+                    : ""}
+                  {user && user.teamName ? " צוות : " + user.teamName : ""}
+                </h3>
               </Box>
               {user ? (
                 <Box sx={{ flexGrow: 0 }}>
@@ -158,13 +189,13 @@ export default function Navbar() {
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
                         id="avatarPageNav"
-                        alt={user ? user.nameAgent || user.none : ""}
+                        alt={user ? user.isAdmin || user.none : ""}
                         src={
                           user && user.isAdmin
-                            ? "https://ideogram.ai/api/images/direct/-v0aqxnQTpOG6STx2inSrg.jpg"
-                            : user && user.isBusiness
-                            ? "https://example.com/business.jpg"
-                            : user && !user.isAdmin && !user.isBusiness
+                            ? "https://ideogram.ai/api/images/direct/nXIhWw6ER_eLGigiACob8g.png"
+                            : user && user.IsBusiness
+                            ? "https://ideogram.ai/api/images/direct/-v0aqxnQTpOG6STx2inSrg.png"
+                            : user && !user.isAdmin && !user.IsBusiness
                             ? "https://ideogram.ai/api/images/direct/B6hXS_fXR6uEHFsB_3yrjA.png"
                             : "https://ideogram.ai/api/images/direct/Lgf0yImGRqetiFUUf67b4g.jpg"
                         }
@@ -190,8 +221,7 @@ export default function Navbar() {
                       style={{ textDecoration: "none", color: "inherit" }}>
                       <MenuItem onClick={handleCloseUserMenu}>
                         <Typography textAlign="center">החשבון שלי</Typography>
-                        <Typography textAlign="center">
-                        </Typography>
+                        <Typography textAlign="center"></Typography>
                       </MenuItem>
                     </Link>
                     <MenuItem onClick={logout}>
