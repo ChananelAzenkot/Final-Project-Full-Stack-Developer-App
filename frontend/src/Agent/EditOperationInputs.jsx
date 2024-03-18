@@ -64,10 +64,10 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 <StyledTableCell align="right">פיריון</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
+                <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
                 <StyledTableCell align="right">
                   אחוז שימור - Fiber
                 </StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
                 <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
               </TableRow>
@@ -168,22 +168,6 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 <StyledTableCell align="right">
                   <TextField
                     size="small"
-                    id="simurFiber"
-                    label="אחוז שימור - Fiber"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={item.simurFiber}
-                    onChange={onInputChange}
-                    error={Boolean(errors.simurFiber)}
-                    helperText={errors.simurFiber}
-                    disabled
-                    style={{backgroundColor: item.simurFiberColor}}
-                  />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  <TextField
-                    size="small"
                     id="simurTV"
                     label="אחוז שימור - TV"
                     variant="outlined"
@@ -195,6 +179,22 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     helperText={errors.simurTV}
                     disabled
                     style={{backgroundColor: item.simurTVColor}}
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <TextField
+                    size="small"
+                    id="simurTV"
+                    label="אחוז שימור - Fiber"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={item.simurFiber}
+                    onChange={onInputChange}
+                    error={Boolean(errors.simurFiber)}
+                    helperText={errors.simurFiber}
+                    disabled
+                    style={{backgroundColor: item.simurFiberColor}}
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">
