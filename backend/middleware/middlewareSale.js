@@ -28,10 +28,9 @@ export const middlewareSales = Joi.object({
     .max(9)
     .pattern(/^[0-9]{1,9}$/)
     .message("קוד הלקוח חייב להיות בין 1-9 ספרות"),
-  targets: Joi.string()
-    .min(1)
-    .max(3)
-    .pattern(/^[0-9]{1,3}%$/)
+  targets: Joi.number()
+    .min(0)
+    .max(30)
     .message("כמות היעדים חייבת להיות בין1 -2 ספרות")
     .allow(""),
   teamName: Joi.string()

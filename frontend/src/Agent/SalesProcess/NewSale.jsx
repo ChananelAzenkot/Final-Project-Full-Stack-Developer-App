@@ -34,6 +34,7 @@ export default function NewSale({dataOperation , theIDoperation}) {
       sellerTV: PropTypes.number,
       easyMesh: PropTypes.number,
       upgradeProgress: PropTypes.number,
+      targets: PropTypes.number,
       satisfaction: PropTypes.string,
       bizNumber: PropTypes.number,
     }).isRequired,
@@ -47,6 +48,7 @@ export default function NewSale({dataOperation , theIDoperation}) {
       sellerFiber: dataOperation.sellerFiber || "",
       sellerTV: dataOperation.sellerTV || "",
       easyMesh: dataOperation.easyMesh || "",
+      targets: dataOperation.targets || "",
       upgradeProgress: dataOperation.upgradeProgress || "",
       satisfaction: dataOperation.satisfaction || "",
       bizNumber: dataOperation.bizNumber,
@@ -70,6 +72,7 @@ export default function NewSale({dataOperation , theIDoperation}) {
     sellerTV: "",
     easyMesh: "",
     upgradeProgress: "",
+    targets: 2,
     customerCode: "",
   });
   
@@ -175,6 +178,7 @@ const handleSubmit = (e) => {
   sellerTV: parseFloat(dataOperation.sellerTV) + parseFloat(saleData.sellerTV),
   easyMesh: parseFloat(dataOperation.easyMesh) + parseFloat(saleData.easyMesh),
   upgradeProgress: parseFloat(dataOperation.upgradeProgress) + parseFloat(saleData.upgradeProgress),
+  targets: parseFloat(dataOperation.sellerFiber) + parseFloat(saleData.sellerFiber) + parseFloat(dataOperation.sellerTV) + parseFloat(saleData.sellerTV) + parseFloat(dataOperation.easyMesh) + parseFloat(saleData.easyMesh) + parseFloat(dataOperation.upgradeProgress) + parseFloat(saleData.upgradeProgress),
   customerCode: saleData.customerCode,
 };
 

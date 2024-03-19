@@ -23,10 +23,9 @@ export const schemaSales = Joi.object({
     .max(15)
     .message("כמות השדרוגים חייבת להיות בין1 -2 ספרות"),
     customerCode: Joi.string().required().min(3).max(100),
-  targets: Joi.string()
-    .min(1)
-    .max(3)
-    .pattern(/^[0-9]{1,3}%$/)
+  targets: Joi.number()
+    .min(0)
+    .max(30)
     .message("כמות היעדים חייבת להיות בין1 -2 ספרות")
     .allow(""),
   teamName: Joi.string()

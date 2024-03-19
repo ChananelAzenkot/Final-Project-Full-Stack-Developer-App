@@ -19,7 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
-    fontSize: "16px",
+    fontSize: "15px",
     padding: "5px",
     margin: "5px",
     textAlign: "center",
@@ -117,16 +117,16 @@ export default function MyOperation() {
                 <StyledTableCell align="right">פיריון</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
+                <StyledTableCell align="right">אחוז שימור-TV</StyledTableCell>
                 <StyledTableCell align="right">
-                  אחוז שימור - Fiber
+                  אחוז שימור-Fiber
                 </StyledTableCell>
                 <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
                 <StyledTableCell align="right">מכר - TV</StyledTableCell>
                 <StyledTableCell align="right">EasyMesh</StyledTableCell>
                 <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
-                <StyledTableCell align="right">יעדים</StyledTableCell>
+                <StyledTableCell align="right">יעד פעולות</StyledTableCell>
                 <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -202,9 +202,9 @@ export default function MyOperation() {
                   <StyledTableCell align="right">
                     {operation.satisfaction}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operation.targets}
-                  </StyledTableCell>
+<StyledTableCell align="right" style={{ color: operation.targets < 2 ? 'red' : 'green' }}>
+  {`2 | ${operation.targets}`}
+</StyledTableCell>
                   <StyledTableCell align="right">
                     <EditOperation
                       theIDoperation={operation.bizNumber}

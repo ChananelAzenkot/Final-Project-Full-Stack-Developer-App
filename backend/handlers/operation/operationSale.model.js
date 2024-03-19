@@ -9,7 +9,7 @@ const schema = new Schema({
   sellerTV: Number,
   easyMesh: Number,
   upgradeProgress: Number,
-  targets: String,
+  targets: Number,
   customerCode: String,
   _id: { type: ObjectId, default: () => new mongoose.Types.ObjectId() },
   bizNumber: Number,
