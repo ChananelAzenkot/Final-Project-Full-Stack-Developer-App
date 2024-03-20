@@ -16,14 +16,26 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
-    textAlign: 'center',
-    border: '1px solid white',
-    borderRadius: '8px 8px 0 0',
+    fontSize: "15px",
+    padding: "5px",
+    margin: "5px",
+    textAlign: "center",
+    width: "100px",
+    border: "1px solid white",
+    borderRadius: "8px 8px 0 0",
+    textShadow: "1px 1px 6px white",
+    boxShadow: "1px 1px 3px 1px white",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-    textAlign: 'center',
-    border: '1px solid black',
+    padding: "5px",
+    margin: "5px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    width: "100px",
+    textAlign: "center",
+    border: "1px solid black",
+    boxShadow: "1px 1px 8px  1px black",
+    textShadow: "1px 1px 6px black",
   },
 }));
 
@@ -63,7 +75,7 @@ export default function IncrementalOperation() {
   return (
     <>
       {
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} id="container">
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -114,11 +126,36 @@ export default function IncrementalOperation() {
                   <StyledTableCell align="right">
                     {operations.simurFiber}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
+                  <StyledTableCell
+                    align="right"
+                    style={{
+                      backgroundColor:
+                        parseFloat(operations.simurTV.replace("%", "")) /
+                          100 >=
+                        0.79
+                          ? "#62a462"
+                          : parseFloat(operations.simurTV.replace("%", "")) /
+                              100 >=
+                            0.67
+                          ? "#c1c16f"
+                          : "#ad6262",
+                    }}>
                     {operations.simurTV}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operations.sellerFiber}
+                  <StyledTableCell
+                    align="right"
+                    style={{
+                      backgroundColor:
+                        parseFloat(operations.simurFiber.replace("%", "")) / 100 >=
+                        0.79
+                          ? "#62a462"
+                          : parseFloat(operations.simurFiber.replace("%", "")) /
+                              100 >=
+                            0.67
+                          ? "#c1c16f"
+                          : "#ad6262",
+                    }}>
+                    {operations.simurFiber}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {operations.sellerTV}

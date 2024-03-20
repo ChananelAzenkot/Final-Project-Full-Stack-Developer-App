@@ -37,7 +37,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     width: "100px",
     textAlign: "center",
     border: "1px solid black",
-    boxShadow: "1px 1px 6px  1px black",
+    boxShadow: "1px 1px 8px  1px black",
     textShadow: "1px 1px 6px black",
   },
 }));
