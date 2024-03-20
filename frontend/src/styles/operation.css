@@ -17,6 +17,26 @@
     margin: 5px;
 }
 
+.buttonsModal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 5px;
+}
+
+#buttonsModalWin{
+    display: flex;
+    width: 350px;
+    height: 350px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius:15px;
+    text-shadow: 1px 2px 16px black;
+
+}
+
 .btnGroup{
     display:flex;
     flex-direction: row;

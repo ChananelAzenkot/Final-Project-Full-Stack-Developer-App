@@ -13,7 +13,8 @@ import "../styles/operation.css";
 import EditOperation from "../Agent/EditOperation";
 import CreateOperation from "../Agent/CreateOperation";
 import NewSale from "../Agent/SalesProcess/NewSale";
-
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteOperation from "../Agent/DeleteOperation";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -54,7 +55,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
 export default function MyOperation() {
   const [operation, setOperation] = useState([]);
 
@@ -75,24 +75,26 @@ export default function MyOperation() {
 
   return (
     <>
- <div className="btnGroup">
-  {operation.length > 0 ? operation.map((operation, index) => (
-    <div key={index} className="btnGroup" style={{ flexDirection: "column" }}>
-      <div className="nameAgentTitle">
-      <h1>{`התפעול היומי של : ${operation.nameAgent}`}</h1>
+      <div className="btnGroup">
+        {operation.length > 0 ? (
+          operation.map((operation, index) => (
+            <div
+              key={index}
+              className="btnGroup"
+              style={{ flexDirection: "column" }}>
+              <div className="nameAgentTitle">
+                <h1>{`התפעול היומי של : ${operation.nameAgent}`}</h1>
+              </div>
+              <CreateOperation
+                setOperation={setOperation}
+                dataOperation={operation}
+              />
+            </div>
+          ))
+        ) : (
+          <CreateOperation setOperation={setOperation} dataOperation={{}} />
+        )}
       </div>
-      <CreateOperation
-        setOperation={setOperation}
-        dataOperation={operation}
-      />
-    </div>
-  )) : (
-    <CreateOperation
-      setOperation={setOperation}
-      dataOperation={{}}
-    />
-  )}
-</div>
 
       {Array.isArray(operation) &&
         operation.map((operation, index) => (
@@ -128,6 +130,7 @@ export default function MyOperation() {
                 <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
                 <StyledTableCell align="right">יעד פעולות</StyledTableCell>
                 <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
+                <StyledTableCell align="right">מחיקת תפעול</StyledTableCell>
               </TableRow>
             </TableHead>
           )}
@@ -160,8 +163,7 @@ export default function MyOperation() {
                     align="right"
                     style={{
                       backgroundColor:
-                        parseFloat(operation.simurTV.replace("%", "")) /
-                          100 >=
+                        parseFloat(operation.simurTV.replace("%", "")) / 100 >=
                         0.79
                           ? "#62a462"
                           : parseFloat(operation.simurTV.replace("%", "")) /
@@ -176,7 +178,8 @@ export default function MyOperation() {
                     align="right"
                     style={{
                       backgroundColor:
-                        parseFloat(operation.simurFiber.replace("%", "")) / 100 >=
+                        parseFloat(operation.simurFiber.replace("%", "")) /
+                          100 >=
                         0.79
                           ? "#62a462"
                           : parseFloat(operation.simurFiber.replace("%", "")) /
@@ -202,11 +205,19 @@ export default function MyOperation() {
                   <StyledTableCell align="right">
                     {operation.satisfaction}
                   </StyledTableCell>
-<StyledTableCell align="right" style={{ color: operation.targets < 2 ? 'red' : 'green' }}>
-  {`2 | ${operation.targets}`}
-</StyledTableCell>
+                  <StyledTableCell
+                    align="right"
+                    style={{ color: operation.targets < 2 ? "red" : "green" }}>
+                    {`2 | ${operation.targets}`}
+                  </StyledTableCell>
                   <StyledTableCell align="right">
                     <EditOperation
+                      theIDoperation={operation.bizNumber}
+                      dataOperation={operation}
+                    />
+                  </StyledTableCell>
+                                    <StyledTableCell align="right">
+                    <DeleteOperation
                       theIDoperation={operation.bizNumber}
                       dataOperation={operation}
                     />

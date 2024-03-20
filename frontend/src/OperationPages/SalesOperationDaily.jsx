@@ -18,14 +18,26 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    fontSize: "15px",
+    padding: "5px",
+    margin: "5px",
     textAlign: "center",
+    width: "100px",
     border: "1px solid white",
     borderRadius: "8px 8px 0 0",
+    textShadow: "1px 1px 6px white",
+    boxShadow: "1px 1px 3px 1px white",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    padding: "5px",
+    margin: "5px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    width: "100px",
     textAlign: "center",
     border: "1px solid black",
+    boxShadow: "1px 1px 8px  1px black",
+    textShadow: "1px 1px 6px black",
   },
 }));
 

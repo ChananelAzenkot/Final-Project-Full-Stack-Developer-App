@@ -43,151 +43,151 @@ export default (app) => {
     }
   });
 
-    app.get("/api/incrementalOperationSale", guard, async (req, res) => {
-      try {
-        const { userId } = getLoggedUserId(req, res);
+  app.get("/api/incrementalOperationSale", guard, async (req, res) => {
+    try {
+      const { userId } = getLoggedUserId(req, res);
 
-        if (!userId) {
-          return res.status(403).json({ message: "User not authorized" });
-        }
+      if (!userId) {
+        return res.status(403).json({ message: "User not authorized" });
+      }
 
-        const user = await User.findById(userId);
+      const user = await User.findById(userId);
 
-        const incrementalOperationsSale = await IncrementalOperationSale.find({
-          user_id: userId,
+      const incrementalOperationsSale = await IncrementalOperationSale.find({
+        user_id: userId,
+      });
+
+      if (
+        !incrementalOperationsSale ||
+        incrementalOperationsSale.length === 0
+      ) {
+        return res
+          .status(404)
+          .json({ message: "No cards found for this user" });
+      }
+      res.send(incrementalOperationsSale);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  });
+
+  app.get("/api/operationTeamSale", businessGuard, async (req, res) => {
+    try {
+      const { userId } = getLoggedUserId(req, res);
+
+      if (!userId) {
+        return res.status(403).json({ message: "User not authorized" });
+      }
+
+      // Fetch the user's data from the database
+      const user = await User.findById(userId);
+      console.log(user);
+
+      // Check if the user is a business user and if the teamName is equal to the user's teamName
+      if (user.teamName && user.IsBusiness) {
+        const dailyOperationTeamSale = await IncrementalOperationSale.find({
+          teamName: user.teamName,
         });
 
-        if (
-          !incrementalOperationsSale ||
-          incrementalOperationsSale.length === 0
-        ) {
+        if (!dailyOperationTeamSale || dailyOperationTeamSale.length === 0) {
           return res
             .status(404)
-            .json({ message: "No cards found for this user" });
+            .json({ message: "No cards found for this team" });
         }
-        res.send(incrementalOperationsSale);
-      } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Server error", error: error.message });
+        res.send(dailyOperationTeamSale);
+      } else {
+        res
+          .status(403)
+          .json({
+            message: "User is not a business user or does not belong to a team",
+          });
       }
-    });
-
-app.get("/api/operationTeamSale", businessGuard, async (req, res) => {
-  try {
-    const { userId } = getLoggedUserId(req, res);
-
-    if (!userId) {
-      return res.status(403).json({ message: "User not authorized" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Server error", error: error.message });
     }
+  });
 
-    // Fetch the user's data from the database
-    const user = await User.findById(userId);
-    console.log(user);
+  app.get("/api/operationTeam", businessGuard, async (req, res) => {
+    try {
+      const { userId } = getLoggedUserId(req, res);
 
-    // Check if the user is a business user and if the teamName is equal to the user's teamName
-    if (user.teamName && user.IsBusiness) {
-      const dailyOperationTeamSale = await IncrementalOperationSale.find({
-        teamName: user.teamName,
-      });
-
-      if (!dailyOperationTeamSale || dailyOperationTeamSale.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "No cards found for this team" });
+      if (!userId) {
+        return res.status(403).json({ message: "User not authorized" });
       }
-      res.send(dailyOperationTeamSale);
-    } else {
-      res.status(403).json({ message: "User is not a business user or does not belong to a team" });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
 
-app.get("/api/operationTeam", businessGuard, async (req, res) => {
-  try {
-    const { userId } = getLoggedUserId(req, res);
+      // Fetch the user's data from the database
+      const user = await User.findById(userId);
+      console.log(user);
 
-    if (!userId) {
-      return res.status(403).json({ message: "User not authorized" });
-    }
+      // Check if the user is a business user and if the teamName is equal to the user's teamName
+      if (user.teamName && user.IsBusiness) {
+        const dailyOperationTeam = await DailyOperation.find({
+          teamName: user.teamName,
+        });
 
-    // Fetch the user's data from the database
-    const user = await User.findById(userId);
-    console.log(user);
-
-    // Check if the user is a business user and if the teamName is equal to the user's teamName
-    if (user.teamName && user.IsBusiness) {
-      const dailyOperationTeam = await DailyOperation.find({
-        teamName: user.teamName,
-      });
-
-      if (!dailyOperationTeam || dailyOperationTeam.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "No cards found for this team" });
-      }
-      res.send(dailyOperationTeam);
-    } else {
-      res
-        .status(403)
-        .json({
+        if (!dailyOperationTeam || dailyOperationTeam.length === 0) {
+          return res
+            .status(404)
+            .json({ message: "No cards found for this team" });
+        }
+        res.send(dailyOperationTeam);
+      } else {
+        res.status(403).json({
           message: "User is not a business user or does not belong to a team",
         });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Server error", error: error.message });
     }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
+  });
 
   // *** get a specific Operation by id test !!! ***//
-    app.get("/api/operationId", guard, async (req, res) => {
-      try {
-        const { userId } = getLoggedUserId(req, res);
+  app.get("/api/operationId", guard, async (req, res) => {
+    try {
+      const { userId } = getLoggedUserId(req, res);
 
-        if (!userId) {
-          return res.status(403).json({ message: "User not authorized" });
-        }
-        const currentOperation = await DailyOperation.find({ user_id: userId });
-
-        if (!currentOperation || currentOperation.length === 0) {
-          return res
-            .status(404)
-            .json({ message: "No cards found for this user" });
-        }
-        res.send(currentOperation);
-      } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Server error", error: error.message });
+      if (!userId) {
+        return res.status(403).json({ message: "User not authorized" });
       }
-    });
+      const currentOperation = await DailyOperation.find({ user_id: userId });
 
-        app.get("/api/operationSale", guard, async (req, res) => {
-          try {
-            const { userId } = getLoggedUserId(req, res);
+      if (!currentOperation || currentOperation.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No cards found for this user" });
+      }
+      res.send(currentOperation);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  });
 
-            if (!userId) {
-              return res.status(403).json({ message: "User not authorized" });
-            }
-            const currentSale = await DailyOperationSale.find({
-              user_id: userId,
-            });
+  app.get("/api/operationSale", guard, async (req, res) => {
+    try {
+      const { userId } = getLoggedUserId(req, res);
 
-            if (!currentSale || currentSale.length === 0) {
-              return res
-                .status(404)
-                .json({ message: "No cards found for this user" });
-            }
-            res.send(currentSale);
-          } catch (error) {
-            console.log(error);
-            res
-              .status(500)
-              .json({ message: "Server error", error: error.message });
-          }
-        });
+      if (!userId) {
+        return res.status(403).json({ message: "User not authorized" });
+      }
+      const currentSale = await DailyOperationSale.find({
+        user_id: userId,
+      });
+
+      if (!currentSale || currentSale.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No cards found for this user" });
+      }
+      res.send(currentSale);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  });
   // get a specific Operation by id //
   // app.get("/api/operationId/:id", async (req, res) => {
   //   try {
@@ -207,71 +207,67 @@ app.get("/api/operationTeam", businessGuard, async (req, res) => {
   // });
 
   // add a new dailyOperation and Posted //
-  app.post(
-    "/api/dailyOperationAgentStart",guard , async (req, res) => {
-      const { userId } = getLoggedUserId(req, res);
+  app.post("/api/dailyOperationAgentStart", guard, async (req, res) => {
+    const { userId } = getLoggedUserId(req, res);
 
-      if (!userId) {
-        return res.status(403).json({ message: "User not authorized" });
-      }
-
-      req.body.user_id = userId;
-
-      const { error } = middlewareOperations.validate(req.body);
-      if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-      }
-
-      const bizNumber = await IncrementalOperation.generateUniqueBizNumber();
-      req.body.bizNumber = bizNumber;
-      req.body.sellerFiber = 0;
-      req.body.sellerTV = 0;
-      req.body.easyMesh = 0;
-      req.body.upgradeProgress = 0;
-
-      const startDayOperation = new DailyOperation(req.body);
-      const incrementalOperation = new IncrementalOperation(req.body);
-
-      try {
-        const toIncrementalOperation = await incrementalOperation.save();
-        const toDailyOperation = await startDayOperation.save();
-        res.send({ toIncrementalOperation, toDailyOperation });
-      } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
-      }
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
     }
-  );
 
-    app.post("/api/dailyOperationStartSale", guard, async (req, res) => {
-      const { userId } = getLoggedUserId(req, res);
+    req.body.user_id = userId;
 
-      if (!userId) {
-        return res.status(403).json({ message: "User not authorized" });
-      }
+    const { error } = middlewareOperations.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
 
-      req.body.user_id = userId;
+    const bizNumber = await IncrementalOperation.generateUniqueBizNumber();
+    req.body.bizNumber = bizNumber;
+    req.body.sellerFiber = 0;
+    req.body.sellerTV = 0;
+    req.body.easyMesh = 0;
+    req.body.upgradeProgress = 0;
 
-      const { error } = middlewareSales.validate(req.body);
-      if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-      }
+    const startDayOperation = new DailyOperation(req.body);
+    const incrementalOperation = new IncrementalOperation(req.body);
 
-      const bizNumber =
-        await IncrementalOperationSale.generateUniqueBizNumber();
-      req.body.bizNumber = bizNumber;
+    try {
+      const toIncrementalOperation = await incrementalOperation.save();
+      const toDailyOperation = await startDayOperation.save();
+      res.send({ toIncrementalOperation, toDailyOperation });
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  });
 
-      const startDayOperationSale = new DailyOperationSale(req.body);
-      const incrementalOperationSale = new IncrementalOperationSale(req.body);
+  app.post("/api/dailyOperationStartSale", guard, async (req, res) => {
+    const { userId } = getLoggedUserId(req, res);
 
-      try {
-        const toIncrementalOperationSale =
-          await incrementalOperationSale.save();
-        const toDailyOperationSale = await startDayOperationSale.save();
-        res.send({ toIncrementalOperationSale, toDailyOperationSale });
-      } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
-      }
-    });
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    }
+
+    req.body.user_id = userId;
+
+    const { error } = middlewareSales.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    const bizNumber = await IncrementalOperationSale.generateUniqueBizNumber();
+    req.body.bizNumber = bizNumber;
+
+    const startDayOperationSale = new DailyOperationSale(req.body);
+    const incrementalOperationSale = new IncrementalOperationSale(req.body);
+
+    try {
+      const toIncrementalOperationSale = await incrementalOperationSale.save();
+      const toDailyOperationSale = await startDayOperationSale.save();
+      res.send({ toIncrementalOperationSale, toDailyOperationSale });
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  });
 
   app.get("/api/getLastOperation/:userId", (req, res) => {
     const userId = req.params.userId;
@@ -287,129 +283,133 @@ app.get("/api/operationTeam", businessGuard, async (req, res) => {
       res.status(404).json({ message: "No operations found for this user." });
     }
   });
-  
+
   // update a card by id number //
-app.put(
-  "/api/dailyOperationAgentUpdate/:bizNumber",
-  guard,
-  async (req, res) => {
-    const { userId } = getLoggedUserId(req, res);
+  app.put(
+    "/api/dailyOperationAgentUpdate/:bizNumber",
+    guard,
+    async (req, res) => {
+      const { userId } = getLoggedUserId(req, res);
 
-    if (!userId) {
-      return res.status(403).json({ message: "User not authorized" });
-    }
+      if (!userId) {
+        return res.status(403).json({ message: "User not authorized" });
+      }
 
-    req.body.user_id = userId;
+      req.body.user_id = userId;
 
-    const { error } = middlewareOperations.validate(req.body);
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
-    }
+      const { error } = middlewareOperations.validate(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
 
-    try {
-      const toIncrementalOperation =
-        await IncrementalOperation.findOneAndUpdate(
+      try {
+        const toIncrementalOperation =
+          await IncrementalOperation.findOneAndUpdate(
+            { bizNumber: req.params.bizNumber },
+            req.body,
+            { new: true }
+          );
+
+        const toDailyOperation = await DailyOperation.findOneAndUpdate(
           { bizNumber: req.params.bizNumber },
           req.body,
           { new: true }
         );
 
-      const toDailyOperation = await DailyOperation.findOneAndUpdate(
-        { bizNumber: req.params.bizNumber },
-        req.body,
-        { new: true }
-      );
+        if (!toIncrementalOperation && !toDailyOperation) {
+          return res.status(404).json({ message: "Operation not found" });
+        }
 
-      if (!toIncrementalOperation && !toDailyOperation) {
-        return res.status(404).json({ message: "Operation not found" });
+        res.send({ toDailyOperation, toIncrementalOperation });
+      } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+      }
+    }
+  );
+
+  app.put(
+    "/api/dailyOperationAgentUpdateForSale/:bizNumber",
+    guard,
+    async (req, res) => {
+      const { userId } = getLoggedUserId(req, res);
+
+      if (!userId) {
+        return res.status(403).json({ message: "User not authorized" });
       }
 
-      res.send({ toDailyOperation, toIncrementalOperation });
-    } catch (error) {
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  }
-);
+      req.body.user_id = userId;
 
-app.put(
-  "/api/dailyOperationAgentUpdateForSale/:bizNumber",
-  guard,
-  async (req, res) => {
-    const { userId } = getLoggedUserId(req, res);
+      const { error } = middlewareSales.validate(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
 
-    if (!userId) {
-      return res.status(403).json({ message: "User not authorized" });
-    }
+      try {
+        const toIncrementalOperation =
+          await IncrementalOperation.findOneAndUpdate(
+            { bizNumber: req.params.bizNumber },
+            req.body,
+            { new: true }
+          );
 
-    req.body.user_id = userId;
-
-    const { error } = middlewareSales.validate(req.body);
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
-    }
-
-    try {
-      const toIncrementalOperation =
-        await IncrementalOperation.findOneAndUpdate(
+        const toDailyOperation = await DailyOperation.findOneAndUpdate(
           { bizNumber: req.params.bizNumber },
           req.body,
           { new: true }
         );
 
-      const toDailyOperation = await DailyOperation.findOneAndUpdate(
-        { bizNumber: req.params.bizNumber },
-        req.body,
-        { new: true }
-      );
+        if (!toIncrementalOperation && !toDailyOperation) {
+          return res.status(404).json({ message: "Operation not found" });
+        }
 
-      if (!toIncrementalOperation && !toDailyOperation) {
-        return res.status(404).json({ message: "Operation not found" });
+        res.send({ toDailyOperation, toIncrementalOperation });
+      } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+      }
+    }
+  );
+
+  app.put(
+    "/api/dailyOperationUpdateSale/:bizNumber",
+    guard,
+    async (req, res) => {
+      const { userId } = getLoggedUserId(req, res);
+
+      if (!userId) {
+        return res.status(403).json({ message: "User not authorized" });
       }
 
-      res.send({ toDailyOperation, toIncrementalOperation });
-    } catch (error) {
-      res.status(500).json({ message: "Server error", error: error.message });
+      req.body.user_id = userId;
+
+      const { error } = middlewareSales.validate(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
+
+      try {
+        const toIncrementalOperationSale =
+          await IncrementalOperationSale.findOneAndUpdate(
+            { bizNumber: req.params.bizNumber },
+            req.body,
+            { new: true }
+          );
+
+        const toDailyOperationSale = await DailyOperationSale.findOneAndUpdate(
+          { bizNumber: req.params.bizNumber },
+          req.body,
+          { new: true }
+        );
+
+        if (!toIncrementalOperationSale && !toDailyOperationSale) {
+          return res.status(404).json({ message: "Operation not found" });
+        }
+
+        res.send({ toDailyOperationSale, toIncrementalOperationSale });
+      } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+      }
     }
-  }
-);
-
-app.put("/api/dailyOperationUpdateSale/:bizNumber", guard, async (req, res) => {
-  const { userId } = getLoggedUserId(req, res);
-
-  if (!userId) {
-    return res.status(403).json({ message: "User not authorized" });
-  }
-
-  req.body.user_id = userId;
-
-  const { error } = middlewareSales.validate(req.body);
-  if (error) {
-    return res.status(400).json({ message: error.details[0].message });
-  }
-
-  try {
-    const toIncrementalOperationSale =
-      await IncrementalOperationSale.findOneAndUpdate(
-        { bizNumber: req.params.bizNumber },
-        req.body,
-        { new: true }
-      );
-
-    const toDailyOperationSale = await DailyOperationSale.findOneAndUpdate(
-      { bizNumber: req.params.bizNumber },
-      req.body,
-      { new: true }
-    );
-
-    if (!toIncrementalOperationSale && !toDailyOperationSale) {
-      return res.status(404).json({ message: "Operation not found" });
-    }
-
-    res.send({ toDailyOperationSale, toIncrementalOperationSale });
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
+  );
   // update a card bizNumber by id number //
   app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
     const newBizNumber = req.body.bizNumber;
@@ -464,6 +464,34 @@ app.put("/api/dailyOperationUpdateSale/:bizNumber", guard, async (req, res) => {
       }
     }
   });
+
+  // delete a card by id number //
+app.delete("/api/dailyOperationAgentEnd/:bizNumber", guard, async (req, res) => {
+  const { userId } = getLoggedUserId(req, res);
+
+  if (!userId) {
+    return res.status(403).json({ message: "User not authorized" });
+  }
+
+  const bizNumber = req.params.bizNumber;
+
+  try {
+    const dailyOperation = await DailyOperation.findOne({ bizNumber: bizNumber });
+    const incrementalOperation = await IncrementalOperation.findOne({ bizNumber: bizNumber });
+
+    if (!dailyOperation || !incrementalOperation) {
+      return res.status(404).json({ message: "Operation not found" });
+    }
+
+    await DailyOperation.deleteOne({ bizNumber: bizNumber });
+    await IncrementalOperation.deleteOne({ bizNumber: bizNumber });
+
+    res.send({ message: "Operation deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
   // delete a card by id number //
   app.delete("/api/card/:id", businessGuard, async (req, res) => {
     try {
