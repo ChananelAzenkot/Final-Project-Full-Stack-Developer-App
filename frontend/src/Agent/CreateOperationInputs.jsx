@@ -95,8 +95,8 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
           <div className="createOperationTitle">
             <h4>התחל עדכון נתונים</h4>
           </div>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table" id="cssForMobile">
+            <TableHead id="forMobile">
               <TableRow>
                 <StyledTableCell>שם נציג</StyledTableCell>
                 <StyledTableCell align="right">שם הצוות</StyledTableCell>
@@ -113,10 +113,11 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
               </TableRow>
             </TableHead>
             <TableBody>
-              <StyledTableRow>
+              <StyledTableRow id="boxCardsInputs">
                 <StyledTableCell component="th" scope="row">
                   <TextField
                   disabled
+inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="nameAgent"
                     label="שם נציג"
@@ -127,11 +128,11 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     onChange={onInputChange}
                     error={Boolean(errors.nameAgent)}
                     helperText={errors.nameAgent}
-                    style={{ width: "100%" }}
                   />
                 </StyledTableCell>
                                 <StyledTableCell component="th" scope="row">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                   disabled
                     size="small"
                     id="teamName"
@@ -143,11 +144,11 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     onChange={onInputChange}
                     error={Boolean(errors.teamName)}
                     helperText={errors.teamName}
-                    style={{ width: "100%" }}
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                   autoComplete="off"
                     size="small"
                     id="numberCalls"
@@ -159,11 +160,11 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     onChange={onInputChange}
                     error={Boolean(errors.numberCalls)}
                     helperText={errors.numberCalls}
-                    style={{ width: "63%" }}
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                   autoComplete="off"
                     size="small"
                     id="productivity"
@@ -179,6 +180,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                   autoComplete="off"
                     size="small"
                     id="tvDisconnection"
@@ -194,6 +196,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                   autoComplete="off"
                     size="small"
                     id="fiberDisconnection"
@@ -209,6 +212,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                   autoComplete="off"
                     size="small"
                     id="simurFiber"
@@ -226,6 +230,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                   autoComplete="off"
                     size="small"
                     id="simurTV"
@@ -244,6 +249,7 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                   autoComplete="off"
                     size="small"
                     id="satisfaction"
@@ -262,7 +268,8 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
                     id="btnCreateAndPress"
                     style={{ width: "auto" }}
                     onClick={handleSubmit}>
-                    <SendIcon />
+                    <SendIcon/>
+                      עדכן                    
                   </IconButton>
                 </StyledTableCell>
               </StyledTableRow>

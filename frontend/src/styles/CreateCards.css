@@ -87,19 +87,16 @@ body{
 }
 
 #btnCreateAndPress{
-    height: 40px;
-    width: 40px;
+    font-size: 17px;
     border: 1px solid black;
-    margin: 0px;
-    padding: 0px;
-    border-radius: 15px;
+    background-color: rgba(78, 210, 193, 255);
+    border-radius: 10px;
     box-shadow: 1px 1px 5px black;
-    direction:ltr;
     color: inherit;
 }
 #btnCreateAndPress:active{
     box-shadow: 1px 1px 5px white;
-    background-color: rgba(78, 210, 193, 255);
+    background-color: white;
 }
 
 .underlineAbout {

@@ -39,3 +39,51 @@
     text-align: top;
     align-items: start;
 }
+
+@media (max-width: 768px){
+    .createOperationTitle{
+        font-size: 16px;
+    }
+    .nameAgentTitle{
+        font-size: 14px;
+    }
+    #BtnStart{
+        margin: 5px;
+    }
+    #container{
+        width: 100%;
+        height: fit-content;
+    }
+
+    #boxCardsInputs {
+        height:550px;
+        text-align: center;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 2fr);
+        grid-template-rows: repeat(4, 1fr);
+        box-shadow: 2px 1px 10px 3px black;
+        border-radius: 10px;
+    }
+
+    #forMobile{
+        display: none;
+    }
+    #cssForMobile{
+        min-width:auto;
+    }
+    .css-plkea4-MuiTableCell-root.MuiTableCell-body{
+        border-radius: 5px;
+        text-shadow: 1px 2px 10px black;
+    }
+    .css-vgtjtp-MuiTableCell-root.MuiTableCell-body{
+        border-radius: 5px;
+        text-shadow: 1px 2px 10px black;
+    }
+    .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input{
+        border-radius: 5px;
+        text-shadow: 1px 2px 10px black;
+
+
+    }
+}

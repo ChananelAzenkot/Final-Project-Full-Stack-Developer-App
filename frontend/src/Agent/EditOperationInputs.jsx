@@ -55,8 +55,8 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
           <div className="createOperationTitle">
             <h4>עדכון נתונים</h4>
           </div>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table" id="cssForMobile">
+            <TableHead id="forMobile">
               <TableRow>
                 <StyledTableCell>שם נציג</StyledTableCell>
                 <StyledTableCell align="right">שם הצוות</StyledTableCell>
@@ -73,9 +73,10 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              <StyledTableRow>
+              <StyledTableRow id="boxCardsInputs">
                 <StyledTableCell component="th" scope="row">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                     disabled
                     size="small"
                     id="nameAgent"
@@ -92,6 +93,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                     disabled
                     size="small"
                     id="teamName"
@@ -108,6 +110,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="numberCalls"
                     label="כמות שיחות"
@@ -124,6 +127,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="productivity"
                     label="פיריון"
@@ -138,6 +142,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="tvDisconnection"
                     label="ניתוק - TV"
@@ -153,6 +158,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="fiberDisconnection"
                     label="ניתוק - Fiber"
@@ -167,6 +173,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="simurTV"
                     label="אחוז שימור - TV"
@@ -183,6 +190,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="simurTV"
                     label="אחוז שימור - Fiber"
@@ -199,6 +207,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
+                  inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="satisfaction"
                     label="סמ׳׳ט"
@@ -216,6 +225,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     id="btnCreateAndPress"
                     style={{ width: "auto" }}
                     onClick={save}>
+                      שמור
                     <SaveIcon />
                   </IconButton>
                 </StyledTableCell>
