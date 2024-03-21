@@ -13,7 +13,6 @@ import "../styles/operation.css";
 import EditOperation from "../Agent/EditOperation";
 import CreateOperation from "../Agent/CreateOperation";
 import NewSale from "../Agent/SalesProcess/NewSale";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DeleteOperation from "../Agent/DeleteOperation";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -216,7 +215,7 @@ export default function MyOperation() {
                       dataOperation={operation}
                     />
                   </StyledTableCell>
-                                    <StyledTableCell align="right">
+                  <StyledTableCell align="right">
                     <DeleteOperation
                       theIDoperation={operation.bizNumber}
                       dataOperation={operation}

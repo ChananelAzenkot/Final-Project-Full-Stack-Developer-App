@@ -65,3 +65,23 @@ export const handleInputSale = (e, saleData, setSaleData, errors, setErrors, set
   setIsFormValid(!validate.error);
   setErrors(tempErrors);
 };
+
+export const handleInputSaleEdit = (e, saleDataUpDate, setSaleDataUpDate, errors, setErrors, setIsFormValid) => {
+  const { id, value } = e.target;
+  const obj = { ...saleDataUpDate, [id]: value };
+  setSaleDataUpDate(obj);
+
+  const validate = schemaSales.validate(obj, { abortEarly: false });
+  const tempErrors = { ...errors };
+  delete tempErrors[id];
+
+  if (validate.error) {
+    const item = validate.error.details.find((e) => e.context.key === id);
+
+    if (item) {
+      tempErrors[id] = item.message;
+    }
+  }
+  setIsFormValid(!validate.error);
+  setErrors(tempErrors);
+};

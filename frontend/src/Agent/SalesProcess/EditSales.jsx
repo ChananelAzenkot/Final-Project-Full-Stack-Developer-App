@@ -8,22 +8,9 @@ import IconButton from "@mui/material/IconButton";
 import { useMemo } from "react";
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
-import { handleInputEdit } from "../../components/handleInput";
+import { handleInputSaleEdit } from "../../components/handleInput";
 import { schemaSales } from "../../schemas/schemaSale";
 import { EditPropSales } from "./EditPropSales";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 
 
 export default function EditSales({ dataOperationSale, theIDoperationSale }) {
@@ -82,7 +69,7 @@ export default function EditSales({ dataOperationSale, theIDoperationSale }) {
   }, [id, setIsLoader, initialValues]);
 
 const onInputChange = (e) => {
-  handleInputEdit(e, saleDataUpDate, setSaleDataUpDate, errors, setErrors, setIsFormValid);
+  handleInputSaleEdit(e, saleDataUpDate, setSaleDataUpDate, errors, setErrors, setIsFormValid);
 };
 
   const save = async (e) => {
@@ -109,7 +96,7 @@ const onInputChange = (e) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       handleClose();
-      snackbar("the card is updated success !");
+      snackbar(`המכירה עודכנה בהצלחה ! כל הכבוד ${saleDataUpDate.nameAgent}!`);
     } catch (error) {
       console.error(
         "There was a problem with the fetch operation: " + error.message
