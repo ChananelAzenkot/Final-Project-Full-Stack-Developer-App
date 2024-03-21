@@ -492,6 +492,40 @@ app.delete("/api/dailyOperationAgentEnd/:bizNumber", guard, async (req, res) => 
   }
 });
 
+app.delete(
+  "/api/dailyOperationStartSale/:bizNumber",
+  guard,
+  async (req, res) => {
+    const { userId } = getLoggedUserId(req, res);
+
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    }
+
+    const bizNumber = req.params.bizNumber;
+
+    try {
+      const dailyOperationSale = await DailyOperationSale.findOne({
+        bizNumber: bizNumber,
+      });
+      const incrementalOperationSale = await IncrementalOperationSale.findOne({
+        bizNumber: bizNumber,
+      });
+
+      if (!dailyOperationSale || !incrementalOperationSale) {
+        return res.status(404).json({ message: "Operation not found" });
+      }
+
+      await DailyOperationSale.deleteOne({ bizNumber: bizNumber });
+      await IncrementalOperationSale.deleteOne({ bizNumber: bizNumber });
+
+      res.send({ message: "Operation deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  }
+);
+
   // delete a card by id number //
   app.delete("/api/card/:id", businessGuard, async (req, res) => {
     try {

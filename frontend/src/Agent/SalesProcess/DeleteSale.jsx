@@ -1,24 +1,16 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import React from "react";
-import EditIcon from "@mui/icons-material/Edit";
 import { GeneralContext } from "../../App";
 import { useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import { useMemo } from "react";
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
-import { handleInputSaleEdit } from "../../components/handleInput";
-import { schemaSales } from "../../schemas/schemaSale";
-import { EditPropSales } from "./EditPropSales";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { DeleteSaleProp } from "./DeleteSaleProp";
 
-
-export default function EditSales({ dataOperationSale, theIDoperationSale }) {
-  const { snackbar, setIsLoader } = useContext(GeneralContext);
-  const [errors, setErrors] = useState({});
-  const [, setIsFormValid] = useState(false);
-
-  EditSales.propTypes = {
+  DeleteSale.propTypes = {
     dataOperationSale: PropTypes.shape({
       teamName: PropTypes.string,
       nameAgent: PropTypes.string,
@@ -30,6 +22,9 @@ export default function EditSales({ dataOperationSale, theIDoperationSale }) {
     }).isRequired,
     theIDoperationSale: PropTypes.string.isRequired,
   };
+
+export default function DeleteSale({ dataOperationSale, theIDoperationSale }) {
+  const { snackbar, setIsLoader } = useContext(GeneralContext);
 
   const initialValues = useMemo(
     () => ({
@@ -44,7 +39,7 @@ export default function EditSales({ dataOperationSale, theIDoperationSale }) {
     [dataOperationSale]
   );
 
-  const [saleDataUpDate, setSaleDataUpDate] = useState(initialValues);
+  const [item, setItem] = useState(initialValues);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -53,7 +48,7 @@ export default function EditSales({ dataOperationSale, theIDoperationSale }) {
 
   useEffect(() => {
     if (id === "new") {
-      setSaleDataUpDate(initialValues);
+      setItem(initialValues);
     } else if (id !== undefined) {
       setIsLoader(true);
       fetch(`http://localhost:4000/api/operationSale/${id}`, {
@@ -62,63 +57,53 @@ export default function EditSales({ dataOperationSale, theIDoperationSale }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          setSaleDataUpDate(data);
+          setItem(data);
           setIsLoader(false);
         });
     }
   }, [id, setIsLoader, initialValues]);
 
-const onInputChange = (e) => {
-  handleInputSaleEdit(e, saleDataUpDate, setSaleDataUpDate, errors, setErrors, setIsFormValid);
-};
 
-  const save = async (e) => {
+  const DeleteSale = async (e) => {
     e.preventDefault();
-    const { error } = schemaSales.validate(saleDataUpDate);
-    if (error) {
-      snackbar(error.details[0].message);
-      return;
-    }
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/dailyOperationUpdateSale/${theIDoperationSale}`,
+      const res = await fetch(
+        `http://localhost:4000/api/dailyOperationStartSale/${theIDoperationSale}`,
         {
           credentials: "include",
-          method: "PUT",
+          method: "DELETE",
           headers: {
             "Content-type": "application/json",
             Authorization: localStorage.token,
           },
-          body: JSON.stringify(saleDataUpDate),
         }
       );
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message);
       }
       handleClose();
-      snackbar(`המכירה עודכנה בהצלחה ! כל הכבוד ${saleDataUpDate.nameAgent}!`);
-    } catch (error) {
-      console.error(
-        "There was a problem with the fetch operation: " + error.message
-      );
+      snackbar(`מכירה של ${item.customerCode} נמחק בהצלחה`, "success");setTimeout(() => {
+        window.location.href = "/dailyOperation";
+      }, 1500);
+    } catch (err) {
+      snackbar(err.message, "error");
     }
   };
 
   return (
     <Box>
       <IconButton
-        id="btnCreateAndPress"
+      id="btnCreateAndPress"
         style={{ width: "auto" }}
         onClick={handleOpen}>
-        <EditIcon />
+        <DeleteForeverIcon />
       </IconButton>
-      <EditPropSales
+      <DeleteSaleProp
         open={open}
         handleClose={handleClose}
-        saleDataUpDate={saleDataUpDate}
-        errors={errors}
-        onInputChange={onInputChange}
-        save={save}
+        item={item}
+        DeleteSale={DeleteSale}
       />
     </Box>
   );

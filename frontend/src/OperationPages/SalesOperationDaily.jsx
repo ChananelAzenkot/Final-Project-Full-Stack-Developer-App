@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import "../styles/operation.css";
 import EditSales from "../Agent/SalesProcess/EditSales";
+import DeleteSale from "../Agent/SalesProcess/DeleteSale";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -87,7 +88,8 @@ export default function SalesOperationDaily() {
                 <StyledTableCell align="right">EasyMesh</StyledTableCell>
                 <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">יעדים</StyledTableCell>
-                <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
+                <StyledTableCell align="right">עדכון מכירה</StyledTableCell>
+                <StyledTableCell align="right">מחיקת מכירה</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -124,6 +126,11 @@ export default function SalesOperationDaily() {
                     <StyledTableCell align="right">
                       <IconButton>
                         <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
+                      </IconButton>
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <IconButton>
+                        <DeleteSale theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
                       </IconButton>
                     </StyledTableCell>
                   </StyledTableRow>
