@@ -1,5 +1,5 @@
 import { getLoggedUserId } from "../config/config.js";
-import { LoggersOperation } from "../handlers/operation/operations.model.js";
+import { LoggersOperation } from "../handlers/operation/schemasOperations&Sales/operations.model.js";
 
 const loggersOperations = async (req, res, next) => {
   let responseBody;
@@ -11,7 +11,7 @@ const loggersOperations = async (req, res, next) => {
   };
 
   const user = getLoggedUserId(req, res);
-  if (user){
+  if (user) {
     const { userId } = user;
     console.log("userId:", userId);
     console.log("method:", req.method);
@@ -19,7 +19,7 @@ const loggersOperations = async (req, res, next) => {
     console.log("body:", req.body);
 
     res.on("finish", async () => {
-      console.log("responseBody:", responseBody)
+      console.log("responseBody:", responseBody);
       const log = new LoggersOperation({
         timestamp: new Date(),
         userId,
@@ -32,7 +32,7 @@ const loggersOperations = async (req, res, next) => {
         const result = await log.save();
         console.log("save result:", result);
       } catch (error) {
-        console.error('Error saving log:', error);
+        console.error("Error saving log:", error);
       }
     });
   }
@@ -40,8 +40,3 @@ const loggersOperations = async (req, res, next) => {
 };
 
 export default loggersOperations;
-
-
-
-
-

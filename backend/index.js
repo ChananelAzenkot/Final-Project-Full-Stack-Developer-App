@@ -9,7 +9,11 @@ import moment from 'moment';
 
 import login from './handlers/users/login.js';
 import signup from "./handlers/users/signup.js";
-import operations from "./handlers/operation/operations.js";
+import getOperations from "./handlers/operation/getOperations.js";
+import postOperations from "./handlers/operation/postOperations.js";
+import putOperations from "./handlers/operation/putOperations.js";
+import patchOperations from "./handlers/operation/patchOperations.js";
+import deleteOperations from "./handlers/operation/deleteOperations.js";
 import users from "./handlers/users/models/users.js";
 import initialDataStart from "./initial-data/initial-data.service.js";
 import logout from "./handlers/users/logout.js";
@@ -56,7 +60,12 @@ app.use(morgan(chalk.bgMagenta(morganFormat)));
 
 login(app);
 signup(app);
-operations(app);
+getOperations(app);
+postOperations(app);
+putOperations(app);
+patchOperations(app);
+deleteOperations(app);
+
 users(app);
 initialDataStart(app);
 logout(app);
@@ -68,6 +77,7 @@ app.use(loggersOperations);
 app.use((req, res) => {
   res.status(404).json({ message: "Sorry, page not found 404" });
 });
+
 
 
 

@@ -51,7 +51,7 @@ export const incrementalOperation = [
     easyMesh: "4",
     upgradeProgress: "2",
     satisfaction: "88%",
-    targets: "82% | 85% | 3.8 | 88%",
+    targets: 3,
     web: "https://www.test.co.il",
     image: {
       url: "",
@@ -73,7 +73,7 @@ export const incrementalOperation = [
     easyMesh: "6",
     upgradeProgress: "12",
     satisfaction: "84%",
-    targets: "82% | 85% | 3.8 | 88%",
+    targets: 3,
     web: "https://www.test.co.il",
     image: {
       url: "",
@@ -95,7 +95,7 @@ export const incrementalOperation = [
     easyMesh: "1",
     upgradeProgress: "9",
     satisfaction: "86%",
-    targets: "82% | 85% | 3.8 | 88%",
+    targets: 3,
     web: "https://www.test.co.il",
     image: {
       url: "",
@@ -120,14 +120,20 @@ export const dailyOperation = [
     easyMesh: "4",
     upgradeProgress: "2",
     satisfaction: "88%",
-    targets: "82% | 85% | 3.8 | 88%",
+    targets: 3,
     web: "https://www.test.co.il",
     image: {
       url: "",
       alt: "",
     },
     bizNumber: 147414278,
+    teamName: "toy",
   },
 ];
+
+
+
+
+
 
 
