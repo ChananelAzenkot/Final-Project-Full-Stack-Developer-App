@@ -69,7 +69,10 @@ export function SearchBarProp({
         <div className="QuestionModal">
           {filteredResults.length > 0 && (
             <ul>
-                <h3>{`מספר העובדים בחיפוש הוא : ${parseFloat(filteredResults.length)}`}</h3>
+              <h4>תוצאות החיפוש</h4>
+              <h3>{`מספר העובדים בחיפוש הוא : ${parseFloat(
+                filteredResults.length
+              )}`}</h3>
               {filteredResults.map((agent) => (
                 <li key={agent._id}>
                   {agent.name.first} {agent.name.last}
@@ -84,6 +87,10 @@ export function SearchBarProp({
                 <div>
                   <h2>{`עובד הנבחר : ${selectedAgent.name.first} ${selectedAgent.name.last}`}</h2>
                   <h3>{`שם הצוות : ${selectedAgent.teamName}`}</h3>
+                  <h3>{`ראש צוות : ${
+                    selectedAgent.IsBusiness ? "כן" : "לא"
+                  }`}</h3>
+                    <h3>{`מחלקת : ${selectedAgent.conservationDepartment ? "שימור" : "שירות"} `}</h3>
                   <h3>{`מספר הנייד : ${selectedAgent.phone}`}</h3>
                   <h3>{`כתובת מייל : ${selectedAgent.email}`}</h3>
                   <h3>{`תאריך הצטרפות : ${moment(
@@ -98,14 +105,15 @@ export function SearchBarProp({
               )}
             </ul>
           )}
-{filteredResults.length === 0 && (
-  <div>
-    <p>No results found for {searchTerm}</p>
-    <IconButton onClick={handleClose} id="btnCreateAndPress">
-      Close
-    </IconButton>
-  </div>
-)}
+          {filteredResults.length === 0 && (
+            <div>
+              <h4>תוצאות החיפוש :</h4>
+              <p>לא נמצא פרטים עבור : {searchTerm}</p>
+              <IconButton onClick={handleClose} id="btnCreateAndPress">
+                לסגור
+              </IconButton>
+            </div>
+          )}
         </div>
       </Box>
     </Modal>
