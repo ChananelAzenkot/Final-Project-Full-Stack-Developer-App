@@ -16,6 +16,52 @@ app.get("/api/users", adminGuard, async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
+
+
+
+
+
+
+app.get("/api/agent/search", async (req, res) => {
+  const { name, bizNumber, teamName, phone, email } = req.query;
+
+  try {
+    const query = {
+      $or: [
+        { 'name.first': name },
+        { 'name.last': name },
+        { bizNumber: bizNumber },
+        { teamName: teamName },
+        { phone: phone },
+        { email: email },
+      ],
+    };
+
+    const agents = await User.find(query);
+    if (agents.length === 0) {
+      res.status(404).json({ message: "No found items" });
+    } else {
+      res.json(agents);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // get the user logged for user and admin users //
 app.get("/api/user/:id", adminGuard, guard, async (req, res) => {
   try {

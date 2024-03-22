@@ -14,6 +14,7 @@ import EditOperation from "../Agent/EditOperation";
 import CreateOperation from "../Agent/CreateOperation";
 import NewSale from "../Agent/SalesProcess/NewSale";
 import DeleteOperation from "../Agent/DeleteOperation";
+import SearchBar from "../components/SearchBar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -88,6 +89,7 @@ export default function MyOperation() {
                 setOperation={setOperation}
                 dataOperation={operation}
               />
+              <SearchBar/>
             </div>
           ))
         ) : (

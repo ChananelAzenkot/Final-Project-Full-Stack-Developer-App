@@ -5,7 +5,6 @@ import { GeneralContext } from "../App";
 import { useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import { useMemo } from "react";
-import { EditOperationProp } from "./EditOperationProp";
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
