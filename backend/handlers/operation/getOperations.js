@@ -49,6 +49,70 @@ export default (app) => {
     }
   });
 
+app.get("/api/incrementalOperatingAverage", guard, async (req, res) => {
+  try {
+    const { userId } = getLoggedUserId(req, res);
+
+    console.log(`userId: ${userId}`); // Log the userId
+
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    }
+
+    const incrementalOperations = await IncrementalOperation.find({ user_id: userId });
+
+    if (!incrementalOperations || incrementalOperations.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No cards found for this user" });
+    }
+
+    let totalNumberCalls = 0;
+    let totalTvDisconnection = 0;
+    let totalFiberDisconnection = 0;
+    let totalSellerFiber = 0;
+    let totalSellerTV = 0;
+    let totalEasyMesh = 0;
+    let totalUpgradeProgress = 0;
+    let totalProductivity = 0;
+    let totalSimurFiber = 0;
+    let totalSimurTV = 0;
+    let totalSatisfaction = 0;
+
+    incrementalOperations.forEach(operation => {
+      totalNumberCalls += operation.numberCalls;
+      totalTvDisconnection += operation.tvDisconnection;
+      totalFiberDisconnection += operation.fiberDisconnection;
+      totalSellerFiber += operation.sellerFiber;
+      totalSellerTV += operation.sellerTV;
+      totalEasyMesh += operation.easyMesh;
+      totalUpgradeProgress += operation.upgradeProgress;
+      totalProductivity += parseFloat(operation.productivity);
+      totalSimurFiber += parseFloat(operation.simurFiber);
+      totalSimurTV += parseFloat(operation.simurTV);
+      totalSatisfaction += parseFloat(operation.satisfaction);
+    });
+
+    const averages = {
+      totalNumberCalls: totalNumberCalls,
+      totalTvDisconnection: totalTvDisconnection,
+      totalFiberDisconnection: totalFiberDisconnection,
+      totalSellerFiber: totalSellerFiber,
+      totalSellerTV: totalSellerTV,
+      totalEasyMesh: totalEasyMesh,
+      totalUpgradeProgress: totalUpgradeProgress,
+totalProductivity: (totalProductivity / incrementalOperations.length).toFixed(2),
+totalSimurFiber: ((totalSimurFiber / incrementalOperations.length)).toFixed(2) + "%",
+totalSimurTV: ((totalSimurTV / incrementalOperations.length)).toFixed(2) + "%",
+totalSatisfaction: ((totalSatisfaction / incrementalOperations.length)).toFixed(2) + "%",
+    };
+
+    res.send(averages);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
   app.get("/api/incrementalOperationSale", guard, async (req, res) => {
     try {
       const { userId } = getLoggedUserId(req, res);

@@ -8,10 +8,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import { useEffect } from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import IconButton from "@mui/material/IconButton";
-import moment from 'moment';
-import OperatingAverage from "./OperatingAverage";
+import moment from "moment";
+import "../styles/operation.css";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,31 +44,31 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 
   "&:last-child td, &:last-child th": {
-    border: '1px solid black',
-    textAlign: 'center',
+    border: "1px solid black",
+    textAlign: "center",
+    fontSize: "16px",
   },
 }));
 
-export default function IncrementalOperation() {
-
-  const [operations, setOperations] = useState([]);
+export default function OperatingAverage() {
+  const [operationAverage, setOperationAverage] = useState([]);
 
   useEffect(() => {
-    fetch(
-      `http://localhost:4000/api/incrementalOperation`,
-      {
-        credentials: "include",
-        headers: {
-          "Content-type": "application",
-          'Authorization': localStorage.token,
-        }
-      }
-    )
+    fetch(`http://localhost:4000/api/incrementalOperatingAverage`, {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: localStorage.token,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
-        setOperations(data);
+        setOperationAverage([data]);
       });
   }, []);
+
+  console.log(operationAverage);
 
   return (
     <>
@@ -79,9 +77,7 @@ export default function IncrementalOperation() {
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>תאריך</StyledTableCell>
-                <StyledTableCell>שם צוות</StyledTableCell>
-                <StyledTableCell>שם נציג</StyledTableCell>
+                <StyledTableCell>חודש</StyledTableCell>
                 <StyledTableCell align="right">כמות שיחות</StyledTableCell>
                 <StyledTableCell align="right">פיריון</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
@@ -93,97 +89,79 @@ export default function IncrementalOperation() {
                 <StyledTableCell align="right">EasyMesh</StyledTableCell>
                 <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
-                <StyledTableCell align="right">יעדים</StyledTableCell>
-                <StyledTableCell align="right">
-                  עדכון פרטים
-                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(operations) && operations.map((operations , index) => (
+              {Array.isArray(operationAverage) && operationAverage.map((operationAverage , index) => (
                 <StyledTableRow key={index}>
                 <StyledTableCell component="th" scope="row">
-                    {moment(operations.createTime).format('DD/MM/YYYY')}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {operations.teamName}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {operations.nameAgent}
+                    {moment(operationAverage.createTime).format('MM/YYYY')}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operations.numberCalls}
+                    {operationAverage.totalNumberCalls}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operations.productivity}
+                    {operationAverage.totalProductivity}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operations.tvDisconnection}
+                    {operationAverage.totalTvDisconnection}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operations.fiberDisconnection}
+                    {operationAverage.totalFiberDisconnection}
                   </StyledTableCell>
                   <StyledTableCell
                     align="right"
                     style={{
                       backgroundColor:
-                        parseFloat(operations.simurFiber.replace("%", "")) / 100 >=
+                        parseFloat(operationAverage.totalSimurFiber) / 100 >=
                         0.79
                           ? "#62a462"
-                          : parseFloat(operations.simurFiber.replace("%", "")) /
+                          : parseFloat(operationAverage.totalSimurFiber) /
                               100 >=
                             0.67
                           ? "#c1c16f"
                           : "#ad6262",
                     }}>
-                    {operations.simurFiber}
+                    {operationAverage.totalSimurFiber}
                   </StyledTableCell>
                   <StyledTableCell
                     align="right"
                     style={{
                       backgroundColor:
-                        parseFloat(operations.simurTV.replace("%", "")) /
+                        parseFloat(operationAverage.totalSimurTV) /
                           100 >=
                         0.79
                           ? "#62a462"
-                          : parseFloat(operations.simurTV.replace("%", "")) /
+                          : parseFloat(operationAverage.totalSimurTV) /
                               100 >=
                             0.67
                           ? "#c1c16f"
                           : "#ad6262",
                     }}>
-                    {operations.simurTV}
+                    {operationAverage.totalSimurTV}
                   </StyledTableCell>
                   <StyledTableCell
                     align="right">
-                    {operations.sellerFiber}
+                    {operationAverage.totalSellerFiber}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operations.sellerTV}
+                    {operationAverage.totalSellerTV}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operations.easyMesh}
+                    {operationAverage.totalEasyMesh}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operations.upgradeProgress}
+                    {operationAverage.totalUpgradeProgress}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operations.satisfaction}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{operations.targets}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    <IconButton>
-                      <EditIcon />
-                    </IconButton>
+                    {operationAverage.totalSatisfaction}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
           </Table>
-          <h3>תפעול מצטבר</h3>
-        </TableContainer>
+    </TableContainer>
       }
-      <OperatingAverage />
     </>
   );
 }
