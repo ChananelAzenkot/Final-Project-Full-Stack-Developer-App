@@ -2,10 +2,10 @@ import { useState } from "react";
 import "../styles/operation.css";
 import IconButton from "@mui/material/IconButton";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-import { SearchBarProp } from "./SearchBarProp";
 import Box from "@mui/material/Box";
+import { SearchBarOperationProp } from "./SearchBarOperationProp";
 
-export default function SearchBar() {
+export default function SearchBarOperation() {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,13 @@ export default function SearchBar() {
     setLoading(true);
     setError(null);
     setSearchResults([]);
-    fetch(`http://localhost:4000/api/agent/search?name=${search}`, {
+    const queryParams = new URLSearchParams({
+      nameAgent: search,
+      teamName: search,
+      simurFiber: search,
+      simurTV: search,
+    });
+    fetch(`http://localhost:4000/api/agent/searchOperation?${queryParams.toString()}`, {
       credentials: "include",
       method: "GET",
       headers: {
@@ -66,7 +72,7 @@ export default function SearchBar() {
         <IconButton style={{ width: "auto" }} onClick={handleOpen}>
           <ManageSearchIcon />
         </IconButton>
-        <SearchBarProp
+        <SearchBarOperationProp
           open={open}
           handleClose={handleClose}
           searchResults={searchResults}
@@ -80,5 +86,3 @@ export default function SearchBar() {
     </div>
   );
 }
-
-
