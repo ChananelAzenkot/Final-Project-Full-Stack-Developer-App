@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import Box from "@mui/material/Box";
 import { SearchBarOperationProp } from "./SearchBarOperationProp";
+import TextField from "@mui/material/TextField";
 
 export default function SearchBarOperation() {
   const [search, setSearch] = useState("");
@@ -57,21 +58,25 @@ export default function SearchBarOperation() {
 
   return (
     <div>
-      {console.log(searchResults)}
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button type="submit" onClick={handleOpen}>
-          Search
-        </button>
-      </form>
-      <Box>
-        <IconButton style={{ width: "auto" }} onClick={handleOpen}>
+      <form onSubmit={handleSearch} style={{display:"flex"}}>
+          <TextField
+                  inputProps={{ style: {width:"150px"}}}
+                  autoComplete="off"
+                  type="text"
+                  value={search}
+                    size="small"
+                    label="חיפוש נתונים"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+
+        <IconButton type="submit" style={{ width: "auto" }} onClick={handleOpen}>
           <ManageSearchIcon />
         </IconButton>
+      </form>
+      <Box>
         <SearchBarOperationProp
           open={open}
           handleClose={handleClose}

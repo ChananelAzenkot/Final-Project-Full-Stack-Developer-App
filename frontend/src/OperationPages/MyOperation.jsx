@@ -90,12 +90,8 @@ export default function MyOperation() {
                 setOperation={setOperation}
                 dataOperation={operation}
               />
-             <div className="searchUser">
-              <h3 style={{margin:"0",padding:"0"}}>חיפוש עובד</h3>
+             <div className="searchUser" style={{display:"flex" , border:"1px solid black" , borderRadius:"10px"}}>
                <SearchBar/>
-             </div>
-            <div className="searchUser">
-              <h3 style={{margin:"0",padding:"0"}}>חיפוש נתונים</h3>
                <SearchBarOperation/>
              </div>
             </div>
