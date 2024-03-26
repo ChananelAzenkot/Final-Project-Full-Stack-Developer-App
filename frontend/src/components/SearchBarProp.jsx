@@ -66,7 +66,7 @@ export function SearchBarProp({
       <Box id="buttonsModalWin" sx={style}>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        <div className="QuestionModal">
+        <div className="QuestionModal" style={{ maxHeight: '500px', overflowY: 'scroll' }}>
           {filteredResults.length > 0 && (
             <ul>
               <h4>תוצאות החיפוש</h4>

@@ -121,7 +121,7 @@ const filteredResults = Array.isArray(searchResults)
       <Box id="buttonsModalWin" sx={style}>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        <div className="QuestionModal">
+        <div className="QuestionModal" style={{ maxHeight: '500px', overflowY: 'scroll' }}>
           {filteredResults.length > 0 && (
             <ul>
               <h4>תוצאות החיפוש</h4>
@@ -129,6 +129,7 @@ const filteredResults = Array.isArray(searchResults)
               {filteredResults.map((agent) => (
                 <li key={agent._id}>
                   <p>{`נציג : ${agent.nameAgent} `}</p>
+                  <p>{`בתאריך : ${moment(agent.createTime).format("DD/MM/YYYY")}`}</p>
                   <p>{`עם נתון אחוז שימור טלוויזיה : ${agent.simurTV} , ועם נתון אחוז שימור סיבים : ${agent.simurFiber}.`}</p>
                   <IconButton
                     id="btnCreateAndPress"
