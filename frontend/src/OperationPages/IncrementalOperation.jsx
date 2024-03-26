@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import moment from 'moment';
 import OperatingAverage from "./OperatingAverage";
+import "../styles/operation.css";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -76,6 +77,9 @@ export default function IncrementalOperation() {
     <>
       {
         <TableContainer component={Paper} id="container">
+          <div className="titleOperationAndAgents">
+          <h1>{`התפעול החודשי של חודש : ${moment(operations.createTime).format('MM/YYYY')}`}</h1>
+          </div>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -180,7 +184,9 @@ export default function IncrementalOperation() {
               ))}
             </TableBody>
           </Table>
-          <h3>תפעול מצטבר</h3>
+          <div className="titleOperationAndAgents">
+            <h3 style={{fontSize:"20px"}}>תפעול מצטבר של החודש</h3>
+          </div>
         </TableContainer>
       }
       <OperatingAverage />

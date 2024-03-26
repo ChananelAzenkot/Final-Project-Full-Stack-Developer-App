@@ -78,17 +78,17 @@ export default function OperatingAverage() {
             <TableHead>
               <TableRow>
                 <StyledTableCell>חודש</StyledTableCell>
-                <StyledTableCell align="right">כמות שיחות</StyledTableCell>
-                <StyledTableCell align="right">פיריון</StyledTableCell>
-                <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
-                <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - Fiber</StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
-                <StyledTableCell align="right">מכירות - Fiber</StyledTableCell>
-                <StyledTableCell align="right"> מכירות - TV</StyledTableCell>
-                <StyledTableCell align="right">EasyMesh</StyledTableCell>
-                <StyledTableCell align="right">שדרוג</StyledTableCell>
-                <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
+                <StyledTableCell align="right">כמות שיחות מצטבר</StyledTableCell>
+                <StyledTableCell align="right">פיריון מצטבר</StyledTableCell>
+                <StyledTableCell align="right">ניתוק - TV מצטבר</StyledTableCell>
+                <StyledTableCell align="right">ניתוק - Fiber מצטבר</StyledTableCell>
+                <StyledTableCell align="right">אחוז שימור - Fiber מצטבר</StyledTableCell>
+                <StyledTableCell align="right">אחוז שימור - TV מצטבר</StyledTableCell>
+                <StyledTableCell align="right">מכירות - Fiber מצטבר</StyledTableCell>
+                <StyledTableCell align="right"> מכירות - TV מצטבר</StyledTableCell>
+                <StyledTableCell align="right">EasyMesh - מצטבר</StyledTableCell>
+                <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
+                <StyledTableCell align="right">סמ׳׳ט - מצטבר</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

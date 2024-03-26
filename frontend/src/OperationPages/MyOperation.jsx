@@ -83,7 +83,7 @@ export default function MyOperation() {
               key={index}
               className="btnGroup"
               style={{ flexDirection: "column" }}>
-              <div className="nameAgentTitle">
+              <div className="titleOperationAndAgents">
                 <h1>{`התפעול היומי של : ${operation.nameAgent}`}</h1>
               </div>
               <CreateOperation
