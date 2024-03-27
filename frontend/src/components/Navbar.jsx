@@ -59,8 +59,6 @@ export default function Navbar() {
       });
   }, []);
 
-  console.log(user);
-
   const navigate = useNavigate();
   const path = useResolvedPath().pathname;
   const logout = useLogout(

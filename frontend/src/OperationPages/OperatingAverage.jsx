@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import "../styles/operation.css";
+import PropTypes from 'prop-types';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -50,8 +51,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function OperatingAverage() {
+OperatingAverage.propTypes = {
+  selectedMonth: PropTypes.string,
+  setSelectedMonth: PropTypes.func,
+}
+export default function OperatingAverage({ selectedMonth, setSelectedMonth }) {
+
   const [operationAverage, setOperationAverage] = useState([]);
+
+
+    const handleMonthChange = (event) => { // Add this function
+    setSelectedMonth(event.target.value);
+  };
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/incrementalOperatingAverage`, {
@@ -68,10 +79,20 @@ export default function OperatingAverage() {
       });
   }, []);
 
-  console.log(operationAverage);
+let operationAverageArray = [];
+if (operationAverage[0]) {
+  operationAverageArray = Object.entries(operationAverage[0]).map(([monthYear, totals]) => ({
+    monthYear,
+    ...totals,
+  }));
+}
 
   return (
     <>
+<select onChange={handleMonthChange}>
+  <option value="">Select a month</option>
+  {operationAverage[0] && Object.keys(operationAverage[0]).map((month, index) => <option key={index} value={month}>{month}</option>)}
+</select>
       {
         <TableContainer component={Paper} id="container">
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -92,10 +113,10 @@ export default function OperatingAverage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(operationAverage) && operationAverage.map((operationAverage , index) => (
+              {Array.isArray(operationAverageArray) && operationAverageArray.filter(operation => operation.monthYear === selectedMonth).map((operationAverage , index) => (
                 <StyledTableRow key={index}>
                 <StyledTableCell component="th" scope="row">
-                    {moment(operationAverage.createTime).format('MM/YYYY')}
+                    {selectedMonth}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {operationAverage.totalNumberCalls}

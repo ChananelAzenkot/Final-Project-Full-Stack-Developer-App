@@ -10,9 +10,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
-import moment from 'moment';
+import moment from "moment";
 import OperatingAverage from "./OperatingAverage";
 import "../styles/operation.css";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,38 +52,74 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 
   "&:last-child td, &:last-child th": {
-    border: '1px solid black',
-    textAlign: 'center',
+    border: "1px solid black",
+    textAlign: "center",
   },
 }));
 
 export default function IncrementalOperation() {
-
   const [operations, setOperations] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [months, setMonths] = useState([]);
 
   useEffect(() => {
-    fetch(
-      `http://localhost:4000/api/incrementalOperation`,
-      {
-        credentials: "include",
-        headers: {
-          "Content-type": "application",
-          'Authorization': localStorage.token,
-        }
-      }
-    )
+    fetch(`http://localhost:4000/api/incrementalOperation`, {
+      credentials: "include",
+      headers: {
+        "Content-type": "application",
+        Authorization: localStorage.token,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
+        const uniqueMonths = [
+          ...new Set(
+            data.map((operation) =>
+              moment(operation.createTime).format("MM/YYYY")
+            )
+          ),
+        ];
+        setMonths(uniqueMonths);
         setOperations(data);
       });
   }, []);
+
+  const handleMonthChange = (event) => {
+    setSelectedMonth(event.target.value);
+  };
+
+  const filteredOperations = operations.filter((operation) => {
+    return moment(operation.createTime).format("MM/YYYY") === selectedMonth;
+  });
 
   return (
     <>
       {
         <TableContainer component={Paper} id="container">
-          <div className="titleOperationAndAgents">
-          <h1>{`התפעול החודשי של חודש : ${moment(operations.createTime).format('MM/YYYY')}`}</h1>
+          <div className="titleOperationAndAgents" style={{height:"70px"}}>
+            <h1>{`התפעול החודשי של חודש : ${moment(
+              selectedMonth,
+              "MM/YYYY"
+            ).format("MM/YYYY")}`}</h1>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }} style={{marginTop:"-5px"}}>
+        <InputLabel id="demo-simple-select-standard-label">בחירת חודש</InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          value={selectedMonth}
+          onChange={handleMonthChange}
+          label="בחירת חודש"
+        >
+          <MenuItem value="בכד">
+            <em>חודשים מצטברים</em>
+          </MenuItem>
+          {months.map((month) => (
+            <MenuItem key={month} value={month}>
+              {month}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
           </div>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
@@ -90,7 +131,9 @@ export default function IncrementalOperation() {
                 <StyledTableCell align="right">פיריון</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - Fiber</StyledTableCell>
+                <StyledTableCell align="right">
+                  אחוז שימור - Fiber
+                </StyledTableCell>
                 <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
                 <StyledTableCell align="right">מכירות - Fiber</StyledTableCell>
                 <StyledTableCell align="right"> מכירות - TV</StyledTableCell>
@@ -98,98 +141,101 @@ export default function IncrementalOperation() {
                 <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
                 <StyledTableCell align="right">יעדים</StyledTableCell>
-                <StyledTableCell align="right">
-                  עדכון פרטים
-                </StyledTableCell>
+                <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(operations) && operations.map((operations , index) => (
-                <StyledTableRow key={index}>
-                <StyledTableCell component="th" scope="row">
-                    {moment(operations.createTime).format('DD/MM/YYYY')}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {operations.teamName}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {operations.nameAgent}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operations.numberCalls}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operations.productivity}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operations.tvDisconnection}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operations.fiberDisconnection}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    align="right"
-                    style={{
-                      backgroundColor:
-                        parseFloat(operations.simurFiber.replace("%", "")) / 100 >=
-                        0.79
-                          ? "#62a462"
-                          : parseFloat(operations.simurFiber.replace("%", "")) /
-                              100 >=
-                            0.67
-                          ? "#c1c16f"
-                          : "#ad6262",
-                    }}>
-                    {operations.simurFiber}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    align="right"
-                    style={{
-                      backgroundColor:
-                        parseFloat(operations.simurTV.replace("%", "")) /
-                          100 >=
-                        0.79
-                          ? "#62a462"
-                          : parseFloat(operations.simurTV.replace("%", "")) /
-                              100 >=
-                            0.67
-                          ? "#c1c16f"
-                          : "#ad6262",
-                    }}>
-                    {operations.simurTV}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    align="right">
-                    {operations.sellerFiber}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operations.sellerTV}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operations.easyMesh}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operations.upgradeProgress}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operations.satisfaction}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{operations.targets}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    <IconButton>
-                      <EditIcon />
-                    </IconButton>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
+              {Array.isArray(filteredOperations) &&
+                filteredOperations.map((operations, index) => (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell component="th" scope="row">
+                      {moment(operations.createTime).format("DD/MM/YYYY")}
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">
+                      {operations.teamName}
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">
+                      {operations.nameAgent}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.numberCalls}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.productivity}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.tvDisconnection}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.fiberDisconnection}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="right"
+                      style={{
+                        backgroundColor:
+                          parseFloat(operations.simurFiber.replace("%", "")) /
+                            100 >=
+                          0.79
+                            ? "#62a462"
+                            : parseFloat(
+                                operations.simurFiber.replace("%", "")
+                              ) /
+                                100 >=
+                              0.67
+                            ? "#c1c16f"
+                            : "#ad6262",
+                      }}>
+                      {operations.simurFiber}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="right"
+                      style={{
+                        backgroundColor:
+                          parseFloat(operations.simurTV.replace("%", "")) /
+                            100 >=
+                          0.79
+                            ? "#62a462"
+                            : parseFloat(operations.simurTV.replace("%", "")) /
+                                100 >=
+                              0.67
+                            ? "#c1c16f"
+                            : "#ad6262",
+                      }}>
+                      {operations.simurTV}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.sellerFiber}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.sellerTV}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.easyMesh}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.upgradeProgress}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.satisfaction}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operations.targets}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <IconButton>
+                        <EditIcon />
+                      </IconButton>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
             </TableBody>
           </Table>
           <div className="titleOperationAndAgents">
-            <h3 style={{fontSize:"20px"}}>תפעול מצטבר של החודש</h3>
+            <h3 style={{ fontSize: "20px" }}>תפעול מצטבר של החודש</h3>
           </div>
+          <OperatingAverage selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
         </TableContainer>
       }
-      <OperatingAverage />
     </>
   );
 }

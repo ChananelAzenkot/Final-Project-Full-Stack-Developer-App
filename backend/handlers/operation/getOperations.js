@@ -59,7 +59,7 @@ app.get("/api/incrementalOperatingAverage", guard, async (req, res) => {
       return res.status(403).json({ message: "User not authorized" });
     }
 
-    const incrementalOperations = await IncrementalOperation.find({ user_id: userId });
+let incrementalOperations = await IncrementalOperation.find({ user_id: userId });
 
     if (!incrementalOperations || incrementalOperations.length === 0) {
       return res
@@ -67,6 +67,29 @@ app.get("/api/incrementalOperatingAverage", guard, async (req, res) => {
         .json({ message: "No cards found for this user" });
     }
 
+        incrementalOperations = incrementalOperations.map((operation) => ({
+          ...operation._doc,
+          monthYear: new Date(operation.createTime).toLocaleDateString(
+            "en-US",
+            { month: "2-digit", year: "numeric" }
+          ),
+        }));
+
+            const operationsByMonth = incrementalOperations.reduce(
+              (groups, operation) => {
+                const monthYear = operation.monthYear;
+                if (!groups[monthYear]) {
+                  groups[monthYear] = [];
+                }
+                groups[monthYear].push(operation);
+                return groups;
+              },
+              {}
+            );
+
+            const averagesByMonth = {};
+for (const monthYear in operationsByMonth) {
+  const operations = operationsByMonth[monthYear]
     let totalNumberCalls = 0;
     let totalTvDisconnection = 0;
     let totalFiberDisconnection = 0;
@@ -79,7 +102,7 @@ app.get("/api/incrementalOperatingAverage", guard, async (req, res) => {
     let totalSimurTV = 0;
     let totalSatisfaction = 0;
 
-    incrementalOperations.forEach(operation => {
+    operations.forEach((operation) => {
       totalNumberCalls += operation.numberCalls;
       totalTvDisconnection += operation.tvDisconnection;
       totalFiberDisconnection += operation.fiberDisconnection;
@@ -93,21 +116,23 @@ app.get("/api/incrementalOperatingAverage", guard, async (req, res) => {
       totalSatisfaction += parseFloat(operation.satisfaction);
     });
 
-    const averages = {
-      totalNumberCalls: totalNumberCalls,
-      totalTvDisconnection: totalTvDisconnection,
-      totalFiberDisconnection: totalFiberDisconnection,
-      totalSellerFiber: totalSellerFiber,
-      totalSellerTV: totalSellerTV,
-      totalEasyMesh: totalEasyMesh,
-      totalUpgradeProgress: totalUpgradeProgress,
-totalProductivity: (totalProductivity / incrementalOperations.length).toFixed(2),
-totalSimurFiber: ((totalSimurFiber / incrementalOperations.length)).toFixed(2) + "%",
-totalSimurTV: ((totalSimurTV / incrementalOperations.length)).toFixed(2) + "%",
-totalSatisfaction: ((totalSatisfaction / incrementalOperations.length)).toFixed(2) + "%",
-    };
+  averagesByMonth[monthYear] = {
+    totalNumberCalls: totalNumberCalls,
+    totalTvDisconnection: totalTvDisconnection,
+    totalFiberDisconnection: totalFiberDisconnection,
+    totalSellerFiber: totalSellerFiber,
+    totalSellerTV: totalSellerTV,
+    totalEasyMesh: totalEasyMesh,
+    totalUpgradeProgress: totalUpgradeProgress,
+    totalProductivity: (totalProductivity / operations.length).toFixed(2),
+    totalSimurFiber: ((totalSimurFiber / operations.length)).toFixed(2) + "%",
+    totalSimurTV: ((totalSimurTV / operations.length)).toFixed(2) + "%",
+    totalSatisfaction: ((totalSatisfaction / operations.length)).toFixed(2) + "%",
+  };
+}
 
-    res.send(averages);
+    res.send(averagesByMonth);
+    console.log(averagesByMonth);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error", error: error.message });
