@@ -8,8 +8,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import { useEffect } from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import OperatingAverage from "./OperatingAverage";
 import "../styles/operation.css";
@@ -17,6 +15,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import EditOperation from "../Agent/EditOperation";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -220,14 +219,17 @@ export default function IncrementalOperation() {
                     <StyledTableCell align="right">
                       {operations.satisfaction}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.targets}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      <IconButton>
-                        <EditIcon />
-                      </IconButton>
-                    </StyledTableCell>
+                  <StyledTableCell
+                    align="right"
+                    style={{ color: operations.targets < 2 ? "red" : "green" }}>
+                    {`2 | ${operations.targets}`}
+                  </StyledTableCell>
+                 <StyledTableCell align="right">
+                    <EditOperation
+                      theIDoperation={operations.bizNumber}
+                      dataOperation={operations}
+                    />
+                  </StyledTableCell>
                   </StyledTableRow>
                 ))}
             </TableBody>

@@ -31,6 +31,7 @@ export default (app) => {
     req.body.sellerTV = 0;
     req.body.easyMesh = 0;
     req.body.upgradeProgress = 0;
+    req.body.targets = 0;
 
     const startDayOperation = new DailyOperation(req.body);
     const incrementalOperation = new IncrementalOperation(req.body);
