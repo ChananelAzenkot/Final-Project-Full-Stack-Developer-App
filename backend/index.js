@@ -19,9 +19,8 @@ import initialDataStart from "./initial-data/initial-data.service.js";
 import logout from "./handlers/users/logout.js";
 import LoggersErrors from './loggers/loggersError.js';
 import loggersOperations from './loggers/loggersOperation.js';
-
-
-
+import cron from 'node-cron';
+import { DailyOperation } from './handlers/operation/schemasOperations&Sales/operations.model.js';
 
 // Connect to MongoDB //
   async function main() {
@@ -56,6 +55,14 @@ app.use(express.static("public"));
 morgan.token("time", () => moment().format("YYYY-MM-DD HH:mm:ss"));
 const morganFormat = ":time :method :url :status :response-time ms";
 app.use(morgan(chalk.bgMagenta(morganFormat)));
+
+// "0 21 * * *"; // every day at 9 PM
+// "*/4 * * * *"; // every 4 minutes
+// for one hour "0 */1 * * *"
+cron.schedule("*/5 * * * *", async () => {
+  await DailyOperation.deleteMany({});
+  console.log(chalk.bgRedBright("Daily Operation collection has been deleted"));
+});
 
 
 login(app);

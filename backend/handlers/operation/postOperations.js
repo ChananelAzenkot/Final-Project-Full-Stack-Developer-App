@@ -10,8 +10,23 @@ import {
   IncrementalOperationSale,
 } from "./schemasOperations&Sales/operationSale.model.js";
 import { middlewareSales } from "../../middleware/middlewareSale.js";
+import rateLimit from "express-rate-limit";
+
 export default (app) => {
-  app.post("/api/dailyOperationAgentStart", guard, async (req, res) => {
+  const postLimit = rateLimit({
+    windowMs: 5 * 60 * 1000, // 1 hour
+    max: 1, // limit each IP to 10 requests per windowMs
+    handler: function (req, res /*next*/) {
+      res
+        .status(403)
+        .json({
+          message:
+            "One operation per 5 minutes is allowed, please try again later",
+        });
+    },
+  });
+
+  app.post("/api/dailyOperationAgentStart", guard,postLimit, async (req, res) => {
     const { userId } = getLoggedUserId(req, res);
 
     if (!userId) {

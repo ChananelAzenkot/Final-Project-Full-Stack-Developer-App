@@ -53,8 +53,6 @@ app.get("/api/incrementalOperatingAverage", guard, async (req, res) => {
   try {
     const { userId } = getLoggedUserId(req, res);
 
-    console.log(`userId: ${userId}`); // Log the userId
-
     if (!userId) {
       return res.status(403).json({ message: "User not authorized" });
     }
@@ -132,7 +130,6 @@ for (const monthYear in operationsByMonth) {
 }
 
     res.send(averagesByMonth);
-    console.log(averagesByMonth);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error", error: error.message });

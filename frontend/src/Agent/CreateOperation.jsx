@@ -32,7 +32,7 @@ export default function CreateOperation() {
   const handleClose = () => setOpen(false);
   const [errors, setErrors] = useState({});
   const [, setIsFormValid] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const { snackbar } = useContext(GeneralContext);
 
@@ -140,7 +140,7 @@ const onInputChange = (e) => {
         setTimeout(() => {
           window.location.href = "/dailyOperation";
         }, 1500);
-        setDisabled(true);
+        setIsDisabled(true);
         handleClose();
         calculatePercentageTVcreate(formData, setFormData);
         calculatePercentageFiberCreate(formData, setFormData);
@@ -153,10 +153,10 @@ const onInputChange = (e) => {
       const now = new Date();
       const timeDifference = now.getTime() - new Date(submitTime).getTime();
       const differenceInHours = timeDifference / (1000 * 60);
-if (differenceInHours < 10) {
-  setDisabled(true);
+if (differenceInHours < 5) {
+  setIsDisabled(true);
 } else {
-  setDisabled(false);
+  setIsDisabled(false);
   localStorage.removeItem('submitTime');
 }
     }
@@ -165,7 +165,7 @@ if (differenceInHours < 10) {
   return (
     <Box>
       <Button
-      disabled={disabled}
+      disabled={isDisabled}
       variant="contained"
         id="BtnStart"
         onClick={handleOpen}
