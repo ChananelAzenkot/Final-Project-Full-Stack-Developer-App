@@ -57,7 +57,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function IncrementalOperation() {
   const [operations, setOperations] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState(moment().format("MM/YYYY"));
   const [months, setMonths] = useState([]);
 
   useEffect(() => {
