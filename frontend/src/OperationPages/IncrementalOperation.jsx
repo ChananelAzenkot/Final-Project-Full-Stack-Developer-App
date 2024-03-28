@@ -122,8 +122,8 @@ export default function IncrementalOperation() {
         </FormControl>
       </div>
       {
-        <TableContainer component={Paper} id="container">
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableContainer component={Paper} id="container" style={{ maxHeight: '400px', overflowY: 'scroll' }}>
+          <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
                 <StyledTableCell>תאריך</StyledTableCell>
