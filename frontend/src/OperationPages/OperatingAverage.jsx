@@ -89,8 +89,7 @@ if (operationAverage[0]) {
 
   return (
     <>
-<select onChange={handleMonthChange}>
-  <option value="">Select a month</option>
+<select onChange={handleMonthChange} style={{display:"none"}}>
   {operationAverage[0] && Object.keys(operationAverage[0]).map((month, index) => <option key={index} value={month}>{month}</option>)}
 </select>
       {

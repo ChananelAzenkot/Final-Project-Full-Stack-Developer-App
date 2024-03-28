@@ -13,11 +13,10 @@ import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import OperatingAverage from "./OperatingAverage";
 import "../styles/operation.css";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -94,33 +93,36 @@ export default function IncrementalOperation() {
 
   return (
     <>
+      <div className="titleOperationAndAgents">
+        <h3>{`התפעול החודשי של חודש : ${moment(selectedMonth, "MM/YYYY").format(
+          "MM/YYYY"
+        )}`}</h3>
+        <FormControl
+          variant="standard"
+          sx={{ m: 1, minWidth: 120 }}
+          style={{ marginTop: "-5px" }}>
+          <InputLabel id="demo-simple-select-standard-label">
+            בחירת חודש
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={selectedMonth}
+            onChange={handleMonthChange}
+            label="בחירת חודש">
+            <MenuItem value="בכד">
+              <em>חודשים מצטברים</em>
+            </MenuItem>
+            {months.map((month) => (
+              <MenuItem key={month} value={month}>
+                {month}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
       {
         <TableContainer component={Paper} id="container">
-          <div className="titleOperationAndAgents" style={{height:"70px"}}>
-            <h1>{`התפעול החודשי של חודש : ${moment(
-              selectedMonth,
-              "MM/YYYY"
-            ).format("MM/YYYY")}`}</h1>
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }} style={{marginTop:"-5px"}}>
-        <InputLabel id="demo-simple-select-standard-label">בחירת חודש</InputLabel>
-        <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={selectedMonth}
-          onChange={handleMonthChange}
-          label="בחירת חודש"
-        >
-          <MenuItem value="בכד">
-            <em>חודשים מצטברים</em>
-          </MenuItem>
-          {months.map((month) => (
-            <MenuItem key={month} value={month}>
-              {month}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-          </div>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -147,7 +149,7 @@ export default function IncrementalOperation() {
             <TableBody>
               {Array.isArray(filteredOperations) &&
                 filteredOperations.map((operations, index) => (
-                  <StyledTableRow key={index}>
+                  <StyledTableRow key={index}  >
                     <StyledTableCell component="th" scope="row">
                       {moment(operations.createTime).format("DD/MM/YYYY")}
                     </StyledTableCell>
@@ -230,12 +232,15 @@ export default function IncrementalOperation() {
                 ))}
             </TableBody>
           </Table>
-          <div className="titleOperationAndAgents">
-            <h3 style={{ fontSize: "20px" }}>תפעול מצטבר של החודש</h3>
-          </div>
-          <OperatingAverage selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
         </TableContainer>
       }
+      <div className="titleOperationAndAgents">
+        <h3 style={{ fontSize: "20px" }}>תפעול מצטבר של החודש</h3>
+      </div>
+      <OperatingAverage
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
     </>
   );
 }
