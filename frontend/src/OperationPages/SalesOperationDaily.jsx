@@ -8,7 +8,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import { useEffect } from "react";
-import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import "../styles/operation.css";
 import EditSales from "../Agent/SalesProcess/EditSales";
@@ -124,14 +123,10 @@ export default function SalesOperationDaily() {
                       {seller.targets}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <IconButton>
                         <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
-                      </IconButton>
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <IconButton>
                         <DeleteSale theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
-                      </IconButton>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

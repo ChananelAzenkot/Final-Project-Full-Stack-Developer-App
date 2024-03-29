@@ -8,10 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import { useEffect } from "react";
-import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import "../styles/operation.css";
-import ModalCardsEdit from "../Agent/EditOperation";
+import EditSales from "../Agent/SalesProcess/EditSales";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -71,11 +70,12 @@ export default function SalesOperationIncremental() {
 
   return (
     <>
+          <div className="titleOperationAndAgents">
+        <h3>{`מכירות החודש המצטבר : ${moment().format("MM/YYYY")}`}</h3>
+      </div>
       {
-        <TableContainer component={Paper} id="container">
-          <div className="btnGroup">
-          </div>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableContainer component={Paper} id="container" style={{ maxHeight: '500px', overflowY: 'scroll' }}>
+          <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
                 <StyledTableCell>תאריך ביצוע</StyledTableCell>
@@ -122,9 +122,7 @@ export default function SalesOperationIncremental() {
                       {seller.targets}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <IconButton>
-                        <ModalCardsEdit theIDoperation={seller.bizNumber} dataOperation={seller} />
-                      </IconButton>
+                        <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

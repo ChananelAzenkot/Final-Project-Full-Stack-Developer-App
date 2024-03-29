@@ -32,7 +32,6 @@ saleDataUpDate, errors, onInputChange, save
         variant="outlined"
         fullWidth
         margin="normal"
-        nameAgent={saleDataUpDate.nameAgent}
         value={saleDataUpDate.nameAgent}
         onChange={onInputChange}
         error={Boolean(errors.nameAgent)}

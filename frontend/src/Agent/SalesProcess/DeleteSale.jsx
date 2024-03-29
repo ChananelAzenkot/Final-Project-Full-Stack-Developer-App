@@ -14,13 +14,13 @@ import { DeleteSaleProp } from "./DeleteSaleProp";
     dataOperationSale: PropTypes.shape({
       teamName: PropTypes.string,
       nameAgent: PropTypes.string,
-      sellerFiber: PropTypes.string,
-      sellerTV: PropTypes.string,
-      easyMesh: PropTypes.string,
-      upgradeProgress: PropTypes.string,
+      sellerFiber: PropTypes.number,
+      sellerTV: PropTypes.number,
+      easyMesh: PropTypes.number,
+      upgradeProgress: PropTypes.number,
       customerCode: PropTypes.string,
     }).isRequired,
-    theIDoperationSale: PropTypes.string.isRequired,
+    theIDoperationSale: PropTypes.number.isRequired,
   };
 
 export default function DeleteSale({ dataOperationSale, theIDoperationSale }) {

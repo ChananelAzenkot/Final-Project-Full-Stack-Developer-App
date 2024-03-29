@@ -109,7 +109,7 @@ export default function IncrementalOperation() {
             value={selectedMonth}
             onChange={handleMonthChange}
             label="בחירת חודש">
-            <MenuItem value="בכד">
+            <MenuItem value={selectedMonth}>
               <em>חודשים מצטברים</em>
             </MenuItem>
             {months.map((month) => (
