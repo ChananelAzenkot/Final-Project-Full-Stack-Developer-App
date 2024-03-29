@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import OperatingAverage from "./OperatingAverage";
@@ -16,6 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import EditOperation from "../Agent/EditOperation";
+import { GeneralContext } from "../App";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -59,6 +60,7 @@ export default function IncrementalOperation() {
   const [operations, setOperations] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(moment().format("MM/YYYY"));
   const [months, setMonths] = useState([]);
+  const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/incrementalOperation`, {
@@ -79,6 +81,7 @@ export default function IncrementalOperation() {
         ];
         setMonths(uniqueMonths);
         setOperations(data);
+           snackbar(data.message ? data.message : "התפעול של החודש המצטבר נטען בהצלחה !");
       });
   }, []);
 

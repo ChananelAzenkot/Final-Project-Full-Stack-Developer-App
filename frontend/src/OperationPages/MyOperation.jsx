@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import "../styles/operation.css";
@@ -16,6 +16,7 @@ import NewSale from "../Agent/SalesProcess/NewSale";
 import DeleteOperation from "../Agent/DeleteOperation";
 import SearchBar from "../components/SearchBar";
 import SearchBarOperation from "../components/SearchBarOperation";
+import { GeneralContext } from "../App";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -58,6 +59,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function MyOperation() {
   const [operation, setOperation] = useState([]);
+  const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/operationId`, {
@@ -71,6 +73,7 @@ export default function MyOperation() {
       .then((res) => res.json())
       .then((data) => {
         setOperation(data);
+        snackbar(data.message ? data.message : "התפעול נטען בהצלחה ! ");
       });
   }, []);
 

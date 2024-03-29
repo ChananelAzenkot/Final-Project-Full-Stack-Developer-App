@@ -6,11 +6,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import "../styles/operation.css";
 import EditSales from "../Agent/SalesProcess/EditSales";
+import { GeneralContext } from "../App";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -53,6 +54,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function SalesOperationIncremental() {
   const [seller, setSeller] = useState([]);
+  const { snackbar } = useContext(GeneralContext);
+  
   useEffect(() => {
     fetch(`http://localhost:4000/api/incrementalOperationSale`, {
       credentials: "include",
@@ -65,6 +68,7 @@ export default function SalesOperationIncremental() {
       .then((res) => res.json())
       .then((data) => {
         setSeller(data);
+        snackbar(data.message ? data.message : "המכירות של החודש המצטבר נטען בהצלחה !")
       });
   }, []);
 

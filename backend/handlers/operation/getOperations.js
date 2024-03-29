@@ -38,9 +38,7 @@ export default (app) => {
       });
 
       if (!incrementalOperations || incrementalOperations.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "No cards found for this user" });
+        return res.json({ message: "לא נמצא תפעול מצטבר של החודש הזה" });
       }
       res.send(incrementalOperations);
     } catch (error) {
@@ -60,9 +58,7 @@ app.get("/api/incrementalOperatingAverage", guard, async (req, res) => {
 let incrementalOperations = await IncrementalOperation.find({ user_id: userId });
 
     if (!incrementalOperations || incrementalOperations.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No cards found for this user" });
+      return res.json({ message: "עדין אין ממוצע מצטבר לחודש הזה" });
     }
 
         incrementalOperations = incrementalOperations.map((operation) => ({
@@ -153,9 +149,7 @@ for (const monthYear in operationsByMonth) {
         !incrementalOperationsSale ||
         incrementalOperationsSale.length === 0
       ) {
-        return res
-          .status(404)
-          .json({ message: "No cards found for this user" });
+        return res.json({ message: "אין מכירות לחודש המצטבר כרגע." });
       }
       res.send(incrementalOperationsSale);
     } catch (error) {
@@ -245,9 +239,7 @@ for (const monthYear in operationsByMonth) {
       const currentOperation = await DailyOperation.find({ user_id: userId });
 
       if (!currentOperation || currentOperation.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "No cards found for this user" });
+        return res.json({ message:`לא נמצא תפעול יום , יש ללחוץ "התחל נתונים"`});
       }
       res.send(currentOperation);
     } catch (error) {
@@ -268,9 +260,7 @@ for (const monthYear in operationsByMonth) {
       });
 
       if (!currentSale || currentSale.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "No cards found for this user" });
+        return res.json({ message: "לא נמצאו מכירות להיום !" });
       }
       res.send(currentSale);
     } catch (error) {

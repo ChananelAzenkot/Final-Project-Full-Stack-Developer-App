@@ -9,13 +9,13 @@
     position: fixed;
     z-index: 1;
     left: 50%;
-    bottom: 30px;
-    font-size: 17px;
+    bottom: 200px;
+    font-size: 18px;
 }
 
 #snackbar.show {
     visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 

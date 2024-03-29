@@ -6,11 +6,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import "../styles/operation.css";
 import PropTypes from 'prop-types';
+import { GeneralContext } from "../App";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -58,6 +59,7 @@ OperatingAverage.propTypes = {
 export default function OperatingAverage({ selectedMonth, setSelectedMonth }) {
 
   const [operationAverage, setOperationAverage] = useState([]);
+  const { snackbar } = useContext(GeneralContext);
 
 
     const handleMonthChange = (event) => { // Add this function
@@ -76,6 +78,7 @@ export default function OperatingAverage({ selectedMonth, setSelectedMonth }) {
       .then((res) => res.json())
       .then((data) => {
         setOperationAverage([data]);
+        snackbar(data.message ? data.message : "הממוצע תפעול של החודש נטען בהצלחה !");
       });
   }, []);
 
