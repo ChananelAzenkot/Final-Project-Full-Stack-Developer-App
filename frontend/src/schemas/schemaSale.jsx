@@ -22,7 +22,14 @@ export const schemaSales = Joi.object({
     .min(0)
     .max(15)
     .message("כמות השדרוגים חייבת להיות בין1 -2 ספרות"),
-    customerCode: Joi.string().required().min(3).max(100),
+      customerCode: Joi.string()
+    .required()
+    .min(9)
+    .max(9)
+    .messages({
+      "string.empty": "קוד לקוח חובה",
+      "string.min": "קוד לקוח חייב להיות בדיוק 9 תווים",
+    }),
   targets: Joi.number()
     .min(0)
     .max(30)

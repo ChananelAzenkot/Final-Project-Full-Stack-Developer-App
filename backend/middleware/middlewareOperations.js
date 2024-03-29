@@ -2,12 +2,12 @@ import Joi from "joi";
 // joi is a validation library of Cards //
 export const middlewareOperations = Joi.object({
   nameAgent: Joi.string().required().min(3).max(100),
-  numberCalls: Joi.number().required().min(2).max(100),
+  numberCalls: Joi.number().required().min(0).max(100),
 
   productivity: Joi.string()
     .required()
     .min(0)
-    .max(15)
+    .max(3)
     .message("פיריון חייב להיות בין1 -3 ספרות"),
   tvDisconnection: Joi.number()
     .required()
