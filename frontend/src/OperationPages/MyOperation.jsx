@@ -73,7 +73,9 @@ export default function MyOperation() {
       .then((res) => res.json())
       .then((data) => {
         setOperation(data);
-        snackbar(data.message ? data.message : "התפעול נטען בהצלחה ! ");
+        setTimeout(() => {
+          snackbar(data.message ? data.message : "התפעול נטען בהצלחה ! ");
+        }, 2000);
       });
   }, []);
 

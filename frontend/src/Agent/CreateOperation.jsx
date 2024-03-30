@@ -136,7 +136,7 @@ const onInputChange = (e) => {
       .then((data) => {
         setFormData(data);
         localStorage.setItem('submitTime', new Date());
-        snackbar("the card was created successfully !");
+        snackbar("התפעול נוצר בהצלחה !");
         setTimeout(() => {
           window.location.href = "/dailyOperation";
         }, 1500);

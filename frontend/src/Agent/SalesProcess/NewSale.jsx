@@ -196,7 +196,7 @@ const handleSubmit = (e) => {
     .then(([saleData]) => {
       setSaleData(saleData);
       handleClose();
-      snackbar("the card was created successfully !");
+      snackbar(`המכירה של קוד לקוח : ${updatedSaleData.customerCode} נוספה בהצלחה !`);
 
       const confettiCanvas = document.getElementById("confetti-canvas");
       confetti(confettiCanvas, {

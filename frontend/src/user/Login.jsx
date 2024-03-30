@@ -22,7 +22,7 @@ export default function Login(theme) {
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const navigate = useNavigate();
-  const { setUser, setLoader, setUserRoleType } = useContext(GeneralContext);
+  const { setUser, setLoader, setUserRoleType , snackbar } = useContext(GeneralContext);
 
   const schema = Joi.object({
     email: Joi.string().email({ tlds: false }).required(),
@@ -94,7 +94,7 @@ export default function Login(theme) {
         }
 
         // Add token to local storage
-
+        snackbar(`התחברות בוצעה בהצלחה! ברוך/ה הבא`);
         navigate("/dailyOperation");
       })
       .catch((err) => {
