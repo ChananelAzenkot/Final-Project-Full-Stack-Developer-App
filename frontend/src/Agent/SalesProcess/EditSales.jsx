@@ -97,6 +97,9 @@ const onInputChange = (e) => {
       }
       handleClose();
       snackbar(`המכירה עודכנה בהצלחה ! כל הכבוד ${saleDataUpDate.nameAgent}!`);
+      setTimeout(() => {
+        window.location.href = "/dailySalesOperation";
+      }, 1800);
     } catch (error) {
       console.error(
         "There was a problem with the fetch operation: " + error.message

@@ -13,6 +13,7 @@ import "../styles/operation.css";
 import EditSales from "../Agent/SalesProcess/EditSales";
 import DeleteSale from "../Agent/SalesProcess/DeleteSale";
 import { GeneralContext } from "../App";
+import OperatingAverageSale from "./SalesDailyTotal";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -137,6 +138,10 @@ export default function SalesOperationDaily() {
           </Table>
         </TableContainer>
       }
+      <div className="titleOperationAndAgents">
+        <h3 style={{ fontSize: "20px" }}>{`הפעולות של היום : ${moment().format("DD/MM/YYYY")}`}</h3>
+      </div>
+      <OperatingAverageSale />
     </>
   );
 }

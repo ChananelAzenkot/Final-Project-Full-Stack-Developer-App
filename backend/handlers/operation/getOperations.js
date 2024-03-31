@@ -131,6 +131,64 @@ for (const monthYear in operationsByMonth) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
+app.get("/api/dailyOperatingAverageSale", guard, async (req, res) => {
+  try {
+    const { userId } = getLoggedUserId(req, res);
+
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    }
+
+    let dailyOperations = await DailyOperationSale.find({ user_id: userId });
+
+    if (!dailyOperations || dailyOperations.length === 0) {
+      return res.json({ message: "No operations for today" });
+    }
+
+    dailyOperations = dailyOperations.map((operation) => ({
+      ...operation._doc,
+      date: new Date(operation.createTime).toLocaleDateString("en-US"),
+    }));
+
+    const operationsByDate = dailyOperations.reduce((groups, operation) => {
+      const date = operation.date;
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(operation);
+      return groups;
+    }, {});
+
+    const averagesByDate = {};
+    for (const date in operationsByDate) {
+      const operations = operationsByDate[date];
+      let totalSellerFiber = 0;
+      let totalSellerTV = 0;
+      let totalEasyMesh = 0;
+      let totalUpgradeProgress = 0;
+
+      operations.forEach((operation) => {
+        totalSellerFiber += operation.sellerFiber;
+        totalSellerTV += operation.sellerTV;
+        totalEasyMesh += operation.easyMesh;
+        totalUpgradeProgress += operation.upgradeProgress;
+      });
+
+      averagesByDate[date] = {
+        totalSellerFiber: totalSellerFiber,
+        totalSellerTV: totalSellerTV,
+        totalEasyMesh: totalEasyMesh,
+        totalUpgradeProgress: totalUpgradeProgress,
+      };
+    }
+
+    res.send(averagesByDate);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
   app.get("/api/incrementalOperationSale", guard, async (req, res) => {
     try {
       const { userId } = getLoggedUserId(req, res);
