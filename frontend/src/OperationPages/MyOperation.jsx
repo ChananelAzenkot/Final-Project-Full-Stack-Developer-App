@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import "../styles/operation.css";
@@ -79,6 +79,24 @@ export default function MyOperation() {
       });
   }, []);
 
+  const [operationAverageSale, setOperationAverageSale] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/dailyOperatingAverageSale`, {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: localStorage.token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setOperationAverageSale([data]);
+        snackbar(data.message ? data.message : "מכירות יומיות נטענו בהצלחה ! ");
+      });
+  }, []);
+
   return (
     <>
       <div className="btnGroup">
@@ -95,10 +113,16 @@ export default function MyOperation() {
                 setOperation={setOperation}
                 dataOperation={operation}
               />
-             <div className="searchUser" style={{display:"flex" , border:"1px solid black" , borderRadius:"10px"}}>
-               <SearchBar/>
-               <SearchBarOperation/>
-             </div>
+              <div
+                className="searchUser"
+                style={{
+                  display: "flex",
+                  border: "1px solid black",
+                  borderRadius: "10px",
+                }}>
+                <SearchBar />
+                <SearchBarOperation />
+              </div>
             </div>
           ))
         ) : (
@@ -137,8 +161,8 @@ export default function MyOperation() {
                 <StyledTableCell align="right">מכר - TV</StyledTableCell>
                 <StyledTableCell align="right">EasyMesh</StyledTableCell>
                 <StyledTableCell align="right">שדרוג</StyledTableCell>
-                <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
                 <StyledTableCell align="right">יעד פעולות</StyledTableCell>
+                <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
                 <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
                 <StyledTableCell align="right">מחיקת תפעול</StyledTableCell>
               </TableRow>
@@ -200,25 +224,64 @@ export default function MyOperation() {
                     }}>
                     {operation.simurFiber}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operation.sellerFiber}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operation.sellerTV}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operation.easyMesh}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operation.upgradeProgress}
-                  </StyledTableCell>
+                  {operationAverageSale[0] && (
+                    <Fragment>
+                      <StyledTableCell align="right" key={0}>
+                        {
+                          operationAverageSale[0][
+                            Object.keys(operationAverageSale[0])[0]
+                          ].totalSellerFiber
+                        }
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {
+                          operationAverageSale[0][
+                            Object.keys(operationAverageSale[0])[0]
+                          ].totalSellerTV
+                        }
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {
+                          operationAverageSale[0][
+                            Object.keys(operationAverageSale[0])[0]
+                          ].totalEasyMesh
+                        }
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {
+                          operationAverageSale[0][
+                            Object.keys(operationAverageSale[0])[0]
+                          ].totalUpgradeProgress
+                        }
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="right"
+                        style={{
+                          color:
+                            operationAverageSale[0] &&
+                            operationAverageSale[0][
+                              Object.keys(operationAverageSale[0])[0]
+                            ] &&
+                            Object.values(
+                              operationAverageSale[0][
+                                Object.keys(operationAverageSale[0])[0]
+                              ]
+                            ).reduce((a, b) => a + b, 0) > 3
+                              ? "green"
+                              : "red",
+                        }}>
+                        {operationAverageSale[0]
+                          ? `3 | ${Object.values(
+                              operationAverageSale[0][
+                                Object.keys(operationAverageSale[0])[0]
+                              ]
+                            ).reduce((a, b) => a + b, 0)}`
+                          : "Loading..."}
+                      </StyledTableCell>
+                    </Fragment>
+                  )}
                   <StyledTableCell align="right">
                     {operation.satisfaction}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    align="right"
-                    style={{ color: operation.targets < 2 ? "red" : "green" }}>
-                    {`2 | ${operation.targets}`}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <EditOperation

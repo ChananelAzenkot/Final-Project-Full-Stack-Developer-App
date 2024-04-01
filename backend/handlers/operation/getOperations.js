@@ -143,7 +143,7 @@ app.get("/api/dailyOperatingAverageSale", guard, async (req, res) => {
     let dailyOperations = await DailyOperationSale.find({ user_id: userId });
 
     if (!dailyOperations || dailyOperations.length === 0) {
-      return res.json({ message: "No operations for today" });
+      return res.json({ message: "" });
     }
 
     dailyOperations = dailyOperations.map((operation) => ({
