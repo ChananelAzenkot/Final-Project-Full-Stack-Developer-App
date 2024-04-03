@@ -107,7 +107,7 @@ export default function MyOperation() {
               className="btnGroup"
               style={{ flexDirection: "column" }}>
               <div className="titleOperationAndAgents">
-                <h1>{`התפעול היומי של : ${operation.nameAgent}`}</h1>
+                <h4>{`התפעול היומי של : ${operation.nameAgent}`}</h4>
               </div>
               <CreateOperation
                 setOperation={setOperation}

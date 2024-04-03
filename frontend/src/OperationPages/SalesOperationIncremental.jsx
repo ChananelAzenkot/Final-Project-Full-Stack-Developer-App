@@ -12,6 +12,7 @@ import moment from "moment";
 import "../styles/operation.css";
 import EditSales from "../Agent/SalesProcess/EditSales";
 import { GeneralContext } from "../App";
+import IncrementalOperatingAverageSale from "./SalesMonthyTotal";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -134,6 +135,10 @@ export default function SalesOperationIncremental() {
           </Table>
         </TableContainer>
       }
+      <div className="titleOperationAndAgents">
+        <h3 style={{ fontSize: "20px" }}>{`סך הפעולות של החודש המצטבר : ${moment().format("MM/YYYY")}`}</h3>
+      </div>
+      <IncrementalOperatingAverageSale />
     </>
   );
 }

@@ -54,12 +54,16 @@
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     border: 1px solid black;
     margin: 15px;
-    height: 70px;
+    height: 60px;
     font-size: 20px;
     background-color: azure;
     border-radius: 10px;
     padding: 10px;
     box-shadow: 1px 1px 16px 2px black;
+}
+
+.titleOperationAndAgents h4{
+    font-size: 20px;
 }
 #container{
     text-align: top;
@@ -80,7 +84,7 @@
         font-size: 16px;
     }
     .titleOperationAndAgents{
-        font-size: 14px;
+        font-size: 18px;
     }
     #BtnStart{
         margin: 5px;
