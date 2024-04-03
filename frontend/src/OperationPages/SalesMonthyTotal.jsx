@@ -8,9 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
-import moment from "moment";
 import "../styles/operation.css";
 import { GeneralContext } from "../App";
+import PropTypes from 'prop-types';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -51,10 +51,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function IncrementalOperatingAverageSale() {
+IncrementalOperatingAverageSale.propTypes = {
+  selectedMonthSales: PropTypes.string,
+  setSelectedMonthSales: PropTypes.func,
+}
 
-  const [incrementalAverageSale, incrementalSetOperationAverageSale] = useState([]);
-  const { snackbar } = useContext(GeneralContext);
+export default function IncrementalOperatingAverageSale({ selectedMonthSales, setSelectedMonthSales }) {
+
+    const [incrementalAverageSale, incrementalSetOperationAverageSale] = useState([]);
+    const { snackbar } = useContext(GeneralContext);
+    
+  const handleMonthChange = (event) => {
+    setSelectedMonthSales(event.target.value);
+  };
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/incrementalOperatingAverageSale`, {
@@ -72,93 +81,56 @@ export default function IncrementalOperatingAverageSale() {
       });
   }, []);
 
-    const [operation, setOperation] = useState([]);
-
-  useEffect(() => {
-    fetch(`http://localhost:4000/api/operationId`, {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setOperation(data);
-        setTimeout(() => {
-          snackbar(data.message ? data.message : "התפעול נטען בהצלחה ! ");
-        }, 2000);
-      });
-  }, []);
-
-  const theOperation = operation[0]?.bizNumber;
-
-useEffect(() => {
-  if (incrementalAverageSale.length > 0) {
-const updateData = {
-  sellerFiber: incrementalAverageSale[0][Object.keys(incrementalAverageSale[0])[0]].totalSellerFiber,
-  sellerTV: incrementalAverageSale[0][Object.keys(incrementalAverageSale[0])[0]].totalSellerTV,
-  easyMesh: incrementalAverageSale[0][Object.keys(incrementalAverageSale[0])[0]].totalEasyMesh,
-  upgradeProgress: incrementalAverageSale[0][Object.keys(incrementalAverageSale[0])[0]].totalUpgradeProgress,
-};
-
-if (theOperation === undefined){
-  snackbar(`אין תפעול יומי זמין כרגע`)
-}else{
-      fetch(`http://localhost:4000/api/dailyOperationAgentUpdateForSale/${theOperation}`, {
-      credentials: "include",
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.token,
-      },
-      body: JSON.stringify(updateData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        snackbar(data.message ? data.message : `המכירות עודכנו בהצלחה ! ${moment().format("HH:mm")}`);
-      });
+let operationAverageSale = [];
+if (incrementalAverageSale[0]) {
+  operationAverageSale = Object.entries(incrementalAverageSale[0]).map(([monthYear, totals]) => ({
+    monthYear,
+    ...totals,
+  }));
 }
-  }
-}, [incrementalAverageSale[0]]);
 
   return (
     <>
+<select onChange={handleMonthChange} style={{display:"none"}}>
+  {incrementalAverageSale[0] && Object.keys(incrementalAverageSale[0]).map((month, index) =>
+  <option key={index} value={month}>{month}
+  </option>)}
+</select>
       {
         <TableContainer component={Paper} id="container">
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>ס׳׳כ פעולות</StyledTableCell>
+                <StyledTableCell>החודש הנוכחי </StyledTableCell>
                 <StyledTableCell align="right">מכירות - Fiber מצטבר</StyledTableCell>
                 <StyledTableCell align="right"> מכירות - TV מצטבר</StyledTableCell>
                 <StyledTableCell align="right">EasyMesh - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
               </TableRow>
             </TableHead>
-       <TableBody>
-  {incrementalAverageSale[0] && (
-    <StyledTableRow key={0}>
+<TableBody>
+  {Array.isArray(operationAverageSale) && 
+  operationAverageSale.filter(operation => operation.monthYear === selectedMonthSales).map((operationAverage, index) => (
+    <StyledTableRow key={index}>
       <StyledTableCell component="th" scope="row">
-         {Object.values(incrementalAverageSale[0][Object.keys(incrementalAverageSale[0])[0]]).reduce((a, b) => a + b, 0)}
+        {selectedMonthSales}
       </StyledTableCell>
       <StyledTableCell align="right">
-        {incrementalAverageSale[0][Object.keys(incrementalAverageSale[0])[0]].totalSellerFiber}
+        {operationAverage.totalSellerFiber}
       </StyledTableCell>
       <StyledTableCell align="right">
-        {incrementalAverageSale[0][Object.keys(incrementalAverageSale[0])[0]].totalSellerTV}
+        {operationAverage.totalSellerTV}
       </StyledTableCell>
       <StyledTableCell align="right">
-        {incrementalAverageSale[0][Object.keys(incrementalAverageSale[0])[0]].totalEasyMesh}
+        {operationAverage.totalEasyMesh}
       </StyledTableCell>
       <StyledTableCell align="right">
-        {incrementalAverageSale[0][Object.keys(incrementalAverageSale[0])[0]].totalUpgradeProgress}
+        {operationAverage.totalUpgradeProgress}
       </StyledTableCell>
     </StyledTableRow>
-  )}
+  ))}
 </TableBody>
-          </Table>
+</Table>
     </TableContainer>
       }
     </>

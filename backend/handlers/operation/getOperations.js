@@ -204,23 +204,29 @@ app.get("/api/incrementalOperatingAverageSale", guard, async (req, res) => {
       return res.json({ message: "" });
     }
 
-    incrementalOperations = incrementalOperations.map((operation) => ({
-      ...operation._doc,
-      date: new Date(operation.createTime).toLocaleDateString("en-US"),
-    }));
+       incrementalOperations = incrementalOperations.map((operation) => ({
+         ...operation._doc,
+         monthYear: new Date(operation.createTime).toLocaleDateString("en-US", {
+           month: "2-digit",
+           year: "numeric",
+         }),
+       }));
 
-    const operationsByDate = incrementalOperations.reduce((groups, operation) => {
-      const date = operation.date;
-      if (!groups[date]) {
-        groups[date] = [];
-      }
-      groups[date].push(operation);
-      return groups;
-    }, {});
+            const operationsByMonth = incrementalOperations.reduce(
+              (groups, operation) => {
+                const monthYear = operation.monthYear;
+                if (!groups[monthYear]) {
+                  groups[monthYear] = [];
+                }
+                groups[monthYear].push(operation);
+                return groups;
+              },
+              {}
+            );
 
-    const averagesByDate = {};
-    for (const date in operationsByDate) {
-      const operations = operationsByDate[date];
+    const averagesByMonth = {};
+    for (const monthYear in operationsByMonth) {
+      const operations = operationsByMonth[monthYear];
       let totalSellerFiber = 0;
       let totalSellerTV = 0;
       let totalEasyMesh = 0;
@@ -233,7 +239,7 @@ app.get("/api/incrementalOperatingAverageSale", guard, async (req, res) => {
         totalUpgradeProgress += operation.upgradeProgress;
       });
 
-      averagesByDate[date] = {
+      averagesByMonth[monthYear] = {
         totalSellerFiber: totalSellerFiber,
         totalSellerTV: totalSellerTV,
         totalEasyMesh: totalEasyMesh,
@@ -241,7 +247,7 @@ app.get("/api/incrementalOperatingAverageSale", guard, async (req, res) => {
       };
     }
 
-    res.send(averagesByDate);
+    res.send(averagesByMonth);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error", error: error.message });

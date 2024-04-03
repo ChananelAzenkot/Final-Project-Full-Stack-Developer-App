@@ -8,7 +8,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
-import moment from "moment";
 import "../styles/operation.css";
 import PropTypes from 'prop-types';
 import { GeneralContext } from "../App";
@@ -62,7 +61,7 @@ export default function OperatingAverage({ selectedMonth, setSelectedMonth }) {
   const { snackbar } = useContext(GeneralContext);
 
 
-    const handleMonthChange = (event) => { // Add this function
+    const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
   };
 

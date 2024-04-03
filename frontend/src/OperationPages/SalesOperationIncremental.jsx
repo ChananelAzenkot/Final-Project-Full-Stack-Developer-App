@@ -13,7 +13,10 @@ import "../styles/operation.css";
 import EditSales from "../Agent/SalesProcess/EditSales";
 import { GeneralContext } from "../App";
 import IncrementalOperatingAverageSale from "./SalesMonthyTotal";
-
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -55,6 +58,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function SalesOperationIncremental() {
   const [seller, setSeller] = useState([]);
+    const [selectedMonthSales, setSelectedMonthSales] = useState(moment().format("MM/YYYY"));
+    const [months, setMonths] = useState([]);
   const { snackbar } = useContext(GeneralContext);
   
   useEffect(() => {
@@ -68,15 +73,56 @@ export default function SalesOperationIncremental() {
     })
       .then((res) => res.json())
       .then((data) => {
+        const uniqueMonths = [
+          ...new Set(
+            data.map((seller) =>
+              moment(seller.createTime).format("MM/YYYY")
+            )
+          ),
+        ];
+        setMonths(uniqueMonths);
         setSeller(data);
         snackbar(data.message ? data.message : "המכירות של החודש המצטבר נטען בהצלחה !")
       });
   }, []);
 
+    const handleMonthChange = (event) => {
+    setSelectedMonthSales(event.target.value);
+  };
+
+  const filterOperationSales = seller.filter((seller) => {
+ return moment(seller.createTime).format("MM/YYYY") === selectedMonthSales;
+  }); 
+
   return (
     <>
-          <div className="titleOperationAndAgents">
-        <h3>{`מכירות החודש המצטבר : ${moment().format("MM/YYYY")}`}</h3>
+      <div className="titleOperationAndAgents">
+        <h3>{`תפעול מכירות של חודש : ${moment(selectedMonthSales, "MM/YYYY").format(
+          "MM/YYYY"
+        )}`}</h3>
+        <FormControl
+          variant="standard"
+          sx={{ m: 1, minWidth: 120 }}
+          style={{ marginTop: "-5px" }}>
+          <InputLabel id="demo-simple-select-standard-label">
+            בחירת חודש
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={selectedMonthSales}
+            onChange={handleMonthChange}
+            label="בחירת חודש">
+            <MenuItem value={selectedMonthSales}>
+              <em>חודשים מצטברים</em>
+            </MenuItem>
+            {months.map((month) => (
+              <MenuItem key={month} value={month}>
+                {month}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
       {
         <TableContainer component={Paper} id="container" style={{ maxHeight: '500px', overflowY: 'scroll' }}>
@@ -96,9 +142,9 @@ export default function SalesOperationIncremental() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(seller) &&
-                seller.map((seller, index) => (
-                  <StyledTableRow key={seller.id || index}>
+              {Array.isArray(filterOperationSales) &&
+                filterOperationSales.map((seller, index) => (
+                  <StyledTableRow key={index}>
                     <StyledTableCell component="th" scope="row">
                       {moment(seller.createTime).format("DD/MM/YYYY")}
                     </StyledTableCell>
@@ -136,9 +182,12 @@ export default function SalesOperationIncremental() {
         </TableContainer>
       }
       <div className="titleOperationAndAgents">
-        <h3 style={{ fontSize: "20px" }}>{`סך הפעולות של החודש המצטבר : ${moment().format("MM/YYYY")}`}</h3>
+        <h3 style={{ fontSize: "20px" }}>{`שלום, ${seller[0]?.nameAgent} . סך הביצועים של החודש :)`}</h3>
       </div>
-      <IncrementalOperatingAverageSale />
+      <IncrementalOperatingAverageSale
+        selectedMonthSales={selectedMonthSales}
+        setSelectedMonthSales={setSelectedMonthSales}
+      />
     </>
   );
 }
