@@ -93,7 +93,7 @@ export default function MyOperation() {
       .then((res) => res.json())
       .then((data) => {
         setOperationAverageSale([data]);
-        snackbar(data.message ? data.message : "מכירות יומיות נטענו בהצלחה ! ");
+        snackbar(data.message);
       });
   }, []);
 

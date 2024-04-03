@@ -102,8 +102,11 @@ const updateData = {
   easyMesh: operationAverageSale[0][Object.keys(operationAverageSale[0])[0]].totalEasyMesh,
   upgradeProgress: operationAverageSale[0][Object.keys(operationAverageSale[0])[0]].totalUpgradeProgress,
 };
-console.log(updateData);
-    fetch(`http://localhost:4000/api/dailyOperationAgentUpdateForSale/${theOperation}`, {
+
+if (theOperation === undefined){
+  snackbar(`אין תפעול יומי זמין כרגע`)
+}else{
+      fetch(`http://localhost:4000/api/dailyOperationAgentUpdateForSale/${theOperation}`, {
       credentials: "include",
       method: "PUT",
       headers: {
@@ -116,13 +119,9 @@ console.log(updateData);
       .then((data) => {
         snackbar(data.message ? data.message : `המכירות עודכנו בהצלחה ! ${moment().format("HH:mm")}`);
       });
+}
   }
 }, [operationAverageSale[0]]);
-
-  
-  console.log(theOperation);
-
-  console.log(operationAverageSale[0]);
 
   return (
     <>
