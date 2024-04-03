@@ -23,10 +23,10 @@ export const middlewareSales = Joi.object({
     .max(15)
     .message("כמות השדרוגים חייבת להיות בין1 -2 ספרות"),
   customerCode: Joi.string()
-    .required()
     .min(9)
     .max(9)
-    .message("קוד הלקוח חייב להיות בין -9 ספרות"),
+    .message("קוד הלקוח חייב להיות בין -9 ספרות")
+    .allow(""),
   targets: Joi.number()
     .min(0)
     .max(30)
