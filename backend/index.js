@@ -9,6 +9,7 @@ import moment from 'moment';
 
 import login from './handlers/users/login.js';
 import signup from "./handlers/users/signup.js";
+import myAccount from "./handlers/users/account.js";
 import getOperations from "./handlers/operation/getOperations.js";
 import postOperations from "./handlers/operation/postOperations.js";
 import putOperations from "./handlers/operation/putOperations.js";
@@ -71,6 +72,7 @@ cron.schedule("0 */1 * * *", async () => {
 
 login(app);
 signup(app);
+myAccount(app);
 getOperations(app);
 postOperations(app);
 putOperations(app);

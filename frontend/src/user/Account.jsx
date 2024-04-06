@@ -1,6 +1,5 @@
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -8,43 +7,131 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GeneralContext } from "../App";
 import Switch from "@mui/material/Switch";
 import { FormControlLabel } from "@mui/material";
-import clientStructure from './ClientStructure';
+import clientStructure from "./ClientStructure";
+import { useNavigate } from "react-router-dom";
+import schema from "./TextFieldAndJoi";
 
 export default function Account({ theme }) {
   const { user, setUser, setLoader } = useContext(GeneralContext);
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    name: {
+      first: user?.name?.first || "",
+      middle: user?.name?.middle || "",
+      last: user?.name?.last || "",
+    },
+    IsBusiness: user?.IsBusiness || false,
+    serviceDepartment: user?.serviceDepartment || false,
+    conservationDepartment: user?.conservationDepartment || true,
+    teamName: user?.teamName || "",
+    phone: user?.phone || "",
+    email: user?.email || "",
+    password: user?.password || "",
+    image: {
+      url: user?.image?.url || "",
+      alt: user?.image?.alt || "",
+    },
+  });
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  console.log(user?._id);
+
+  const handelChange = (ev) => {
+    const { name, value } = ev.target;
+    let obj = { ...formData };
+
+    if (name === "phone") {
+      obj[name] = value.replace(/\D/g, "");
+    } else if (name.includes(".")) {
+      const [parent, child] = name.split(".");
+      obj[parent] = { ...obj[parent], [child]: value };
+    } else {
+      obj = { ...obj, [name]: value };
+    }
+
+    setFormData(obj);
+
+    const validate = schema.validate(obj, { abortEarly: false });
+    const tempErrors = { ...errors };
+    delete tempErrors[name];
+
+    if (validate.error) {
+      let item;
+      if (name.includes(".")) {
+        item = validate.error.details.find(
+          (e) => e.context.key === name.split(".")[1]
+        );
+      } else {
+        item = validate.error.details.find((e) => e.context.key === name);
+      }
+
+      if (item) {
+        tempErrors[name] = item.message;
+      }
+    }
+
+    setIsFormValid(!validate.error);
+    setErrors(tempErrors);
+    setUser({ ...user, [name]: ev.target.value });
+  };
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
     const obj = {};
     const elements = ev.target.elements;
 
-    clientStructure
-      .filter((s) => !s.initialOnly)
-      .forEach((s) => {
+    clientStructure.forEach((s) => {
+      if (s.fields) {
+        const nestedObj = {};
+        s.fields.forEach((field) => {
+          if (field.type === "boolean") {
+            nestedObj[field.name] = elements[`${s.name}.${field.name}`].checked;
+          } else {
+            nestedObj[field.name] = elements[`${s.name}.${field.name}`].value;
+          }
+        });
+        obj[s.name] = nestedObj;
+      } else {
         if (s.type === "boolean") {
           obj[s.name] = elements[s.name].checked;
         } else {
           obj[s.name] = elements[s.name].value;
         }
-      });
+      }
+    });
 
     setLoader(true);
 
-    fetch(
-      `https://api.shipap.co.il/clients/update?token=d215263e-78c2-11ee-8f3c-14dda9d4a5f0`,
-      {
-        credentials: "include",
-        method: "PUT",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(obj),
-      }
-    ).then(() => {
-      setLoader(false);
-    });
+    fetch(`http://localhost:4000/api/user/${user._id}`, {
+      credentials: "include",
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(obj),
+    })
+      .then((res) => res.text())
+      .then((text) => {
+        try {
+          return JSON.parse(text);
+        } catch {
+          return text;
+        }
+      })
+      .then((data) => {
+        if (typeof data === "object") {
+          navigate("/login");
+        } else {
+          throw new Error(data);
+        }
+      })
+      .catch((err) => alert(err.message))
+      .finally(() => setLoader(false));
+    navigate("/login");
   };
 
   return (
@@ -53,7 +140,6 @@ export default function Account({ theme }) {
         <ThemeProvider theme={theme}>
           {user ? (
             <Container component="main" maxWidth="xs">
-              <CssBaseline />
               <Box
                 sx={{
                   marginTop: 8,
@@ -65,8 +151,7 @@ export default function Account({ theme }) {
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  {" "}
-                  The Account{" "}
+                  {`פרטי המשתמש שלך : ${user?.name?.first}`}{" "}
                 </Typography>
                 <Box
                   component="form"
@@ -74,54 +159,121 @@ export default function Account({ theme }) {
                   noValidate
                   sx={{ mt: 1 }}>
                   <Grid container spacing={2}>
-                    {clientStructure
-                      .filter((s) => !s.initialOnly)
-                      .map((s) => (
-                        <Grid key={s.name} item xs={12} sm={s.block ? 12 : 6}>
-                          {s.type === "boolean" ? (
-                            <FormControlLabel
-                              control={
-                                <Switch
-                                  color="primary"
-                                  name={s.name}
-                                  checked={user[s.name]}
-                                />
-                              }
-                              label={s.label}
-                              labelPlacement="start"
-                            />
-                          ) : (
-                            <TextField
-                              margin="normal"
-                              required={s.required}
-                              fullWidth
-                              id={s.name}
-                              label={s.label}
-                              name={s.name}
-                              type={s.type}
-                              autoComplete={s.name}
-                              value={user[s.name]}
-                              onChange={(ev) =>
-                                setUser({ ...user, [s.name]: ev.target.value })
-                              }
-                              disabled={user.admin ? true : false}
-                            />
-                          )}
-                        </Grid>
-                      ))}
+                    {clientStructure.map((s) => {
+                      if (s.fields) {
+                        return s.fields.map((field) => (
+                          <Grid
+                            key={field.name}
+                            item
+                            xs={12}
+                            sm={field.block ? 12 : 6}>
+                            {field.type === "boolean" ? (
+                              <FormControlLabel
+                                control={
+                                  <Switch
+                                    color="primary"
+                                    name={`${s.name}.${field.name}`}
+                                    checked={user[s.name] || false}
+                                  />
+                                }
+                                label={field.label}
+                                labelPlacement="start"
+                              />
+                            ) : (
+                              <TextField
+                                size="small"
+                                error={!!errors[`${s.name}.${field.name}`]}
+                                helperText={errors[`${s.name}.${field.name}`]}
+                                margin="normal"
+                                required={field.required}
+                                fullWidth
+                                id={`${s.name}.${field.name}`}
+                                label={field.label}
+                                name={`${s.name}.${field.name}`}
+                                value={
+                                  user[s.name] && user[s.name][field.name]
+                                    ? user[s.name][field.name]
+                                    : ""
+                                }
+                                type={field.type}
+                                autoComplete={`${s.name}.${field.name}`}
+                                onChange={handelChange}
+                                disabled={
+                                  !user.isAdmin &&
+                                  ["first", "last", "middle", "email"].includes(
+                                    field.name
+                                  )
+                                }
+                              />
+                            )}
+                          </Grid>
+                        ));
+                      } else {
+                        return (
+                          <Grid key={s.name} item xs={12} sm={s.block ? 12 : 6}>
+                            {s.type === "boolean" ? (
+                              <FormControlLabel
+                                control={
+                                  <Switch
+                                    color="primary"
+                                    checked={user[s.name] || false}
+                                    name={s.name}
+                                    disabled={!user.isAdmin}
+                                  />
+                                }
+                                label={s.label}
+                                labelPlacement="start"
+                              />
+                            ) : (
+                              <TextField
+                                size="small"
+                                error={!!errors[`${s.name}`]}
+                                helperText={errors[`${s.name}`]}
+                                margin="normal"
+                                required={s.required}
+                                fullWidth
+                                id={s.name}
+                                label={
+                                  s.label === "סיסמא" ? "לשנות סיסמא" : s.label
+                                }
+                                type={s.type}
+                                name={s.name}
+                                value={user[s.name] ? user[s.name] : ""}
+                                autoComplete={s.name}
+                                onChange={handelChange}
+                                disabled={
+                                  !user.isAdmin &&
+                                  [
+                                    "first",
+                                    "last",
+                                    "middle",
+                                    "email",
+                                    "phone",
+                                    "teamName",
+                                  ].includes(s.name)
+                                }
+                              />
+                            )}
+                          </Grid>
+                        );
+                      }
+                    })}
                   </Grid>
                   <Button
                     type="submit"
                     fullWidth
                     variant="contained"
+                    disabled={!isFormValid}
                     sx={{ mt: 3, mb: 2 }}>
-                    Save
+                    עדכן פרטים
                   </Button>
                 </Box>
               </Box>
             </Container>
           ) : (
-            ""
+            <Typography variant="h5" align="center">
+              עליך להתחבר כדי לצפות בדף זה
+            </Typography>
           )}
           <br /> <br /> <br /> <br />
         </ThemeProvider>
