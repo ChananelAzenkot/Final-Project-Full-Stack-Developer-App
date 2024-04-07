@@ -197,7 +197,16 @@ export default function Account({ theme }) {
                                 }
                                 type={field.type}
                                 autoComplete={`${s.name}.${field.name}`}
-                                onChange={handelChange}
+                                onChange={(ev) => {
+                                  handelChange(ev);
+                                  setUser({
+                                    ...user,
+                                    [s.name]: {
+                                      ...(user[s.name] || {}),
+                                      [field.name]: ev.target.value,
+                                    },
+                                  });
+                                }}
                                 disabled={
                                   !user.isAdmin &&
                                   ["first", "last", "middle", "email"].includes(
@@ -240,7 +249,10 @@ export default function Account({ theme }) {
                                 name={s.name}
                                 value={user[s.name] ? user[s.name] : ""}
                                 autoComplete={s.name}
-                                onChange={handelChange}
+onChange={(e) => {
+  handelChange(e);
+  setUser({ ...user, [s.name]: e.target.value });
+}}
                                 disabled={
                                   !user.isAdmin &&
                                   [
