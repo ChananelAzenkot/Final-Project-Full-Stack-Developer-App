@@ -157,7 +157,7 @@ export default function Login(theme) {
                   value={formData.password}
                 />
                 <Button
-                style={{backgroundColor: "rgba(78, 210, 193, 255)"}}
+                style={{backgroundColor: "#4ed2c1"}}
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -166,7 +166,7 @@ export default function Login(theme) {
                   הכנס
                 </Button>
                 <Button
-                style={{backgroundColor: "rgba(78, 210, 193, 255)"}}
+                style={{backgroundColor: "#4ed2c1"}}
                   type="button"
                   fullWidth
                   variant="contained"

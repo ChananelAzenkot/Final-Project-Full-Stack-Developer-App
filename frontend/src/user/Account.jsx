@@ -174,6 +174,10 @@ export default function Account({ theme }) {
                                     color="primary"
                                     name={`${s.name}.${field.name}`}
                                     checked={user[s.name] || false}
+                                    style={{
+                                      backgroundColor:
+                                        "rgba(78, 210, 193, 255)",
+                                    }}
                                   />
                                 }
                                 label={field.label}
@@ -249,10 +253,13 @@ export default function Account({ theme }) {
                                 name={s.name}
                                 value={user[s.name] ? user[s.name] : ""}
                                 autoComplete={s.name}
-onChange={(e) => {
-  handelChange(e);
-  setUser({ ...user, [s.name]: e.target.value });
-}}
+                                onChange={(e) => {
+                                  handelChange(e);
+                                  setUser({
+                                    ...user,
+                                    [s.name]: e.target.value,
+                                  });
+                                }}
                                 disabled={
                                   !user.isAdmin &&
                                   [
@@ -260,7 +267,7 @@ onChange={(e) => {
                                     "last",
                                     "middle",
                                     "email",
-                                    "",
+                                    "phone",
                                     "teamName",
                                   ].includes(s.name)
                                 }
@@ -276,6 +283,11 @@ onChange={(e) => {
                     fullWidth
                     variant="contained"
                     disabled={!isFormValid}
+                    style={{
+                      backgroundColor: isFormValid
+                        ? "#4ed2c1"
+                        : "#4ed2c180",
+                    }}
                     sx={{ mt: 3, mb: 2 }}>
                     עדכן פרטים
                   </Button>
