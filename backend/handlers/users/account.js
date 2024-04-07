@@ -12,21 +12,28 @@ app.put("/api/user/:id", async (req, res) => {
         }
 
         const userInfo = req.body;
-        const passUser = await bcrypt.hash(userInfo.password, 10);
-        userInfo.password = passUser;
 
-        // Find the user by id and update
+        // Find the user by id
         const user = await User.findById(req.params.id);
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
+        // Check if the provided password is correct
+        const isPasswordCorrect = bcrypt.compare(userInfo.password, user.password);
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ message: "הסיסמא לא נכונה כדי לעדכן את הפרטים" });
+        }
+
+        // Don't update the password
+        delete userInfo.password;
+
         // Update the user
         Object.assign(user, userInfo);
         await user.save();
 
-        res.status(200).send("User updated successfully");
+        res.status(200).send(`הפרטים עודכנו בהצלחה ${user.name.first} !!`);
     } catch (error) {
         if (error.code === 11000) {
             res.status(409).json({ message: "Email already exists" });
