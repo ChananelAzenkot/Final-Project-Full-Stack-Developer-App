@@ -260,7 +260,7 @@ onChange={(e) => {
                                     "last",
                                     "middle",
                                     "email",
-                                    "phone",
+                                    "",
                                     "teamName",
                                   ].includes(s.name)
                                 }
