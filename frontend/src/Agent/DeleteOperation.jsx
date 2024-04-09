@@ -76,7 +76,7 @@ export default function DeleteOperation({ dataOperation, theIDoperation }) {
       }
       handleClose();
       snackbar(`תפעול של ${item.nameAgent} נמחק בהצלחה`, "success");setTimeout(() => {
-        window.location.href = "/dailyOperation";
+        window.location.reload();
       }, 1500);
     } catch (err) {
       snackbar(err.message, "error");

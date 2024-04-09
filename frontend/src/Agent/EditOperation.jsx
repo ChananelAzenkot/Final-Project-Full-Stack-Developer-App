@@ -118,7 +118,7 @@ const onInputChange = (e) => {
       handleClose();
       snackbar("the card is updated success !");
       setTimeout(() => {
-        window.location.href = "/dailyOperation";
+        window.location.reload();
       }, 1500);
     } catch (error) {
       console.error(

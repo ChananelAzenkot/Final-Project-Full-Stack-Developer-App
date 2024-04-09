@@ -9,23 +9,36 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import IconButton from "@mui/material/IconButton";
 import moment from 'moment';
+import OperatingAverageTeam from "./OperatingAverageTeam";
+import EditOperation from "../Agent/EditOperation";
+import DeleteOperation from "../Agent/DeleteOperation";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
-    textAlign: 'center',
-    border: '1px solid white',
-    borderRadius: '8px 8px 0 0',
+    fontSize: "15px",
+    padding: "5px",
+    margin: "5px",
+    textAlign: "center",
+    width: "100px",
+    border: "1px solid white",
+    borderRadius: "8px 8px 0 0",
+    textShadow: "1px 1px 6px white",
+    boxShadow: "1px 1px 3px 1px white",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-    textAlign: 'center',
-    border: '1px solid black',
+    padding: "5px",
+    margin: "5px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    width: "100px",
+    textAlign: "center",
+    border: "1px solid black",
+    boxShadow: "1px 1px 8px  1px black",
+    textShadow: "1px 1px 6px black",
   },
 }));
 
@@ -35,8 +48,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 
   "&:last-child td, &:last-child th": {
-    border: '1px solid black',
-    textAlign: 'center',
+    border: "1px solid black",
+    textAlign: "center",
+    fontSize: "16px",
   },
 }));
 
@@ -63,6 +77,9 @@ export default function OperationTeams() {
 
   return (
     <>
+      <div className="titleOperationAndAgents">
+        <h3>{`התפעול של צוות ${operationsTeam[0]?.teamName} היום : ${moment().format("DD/MM/YY")}`}</h3>
+      </div>
       {
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -75,8 +92,8 @@ export default function OperationTeams() {
                 <StyledTableCell align="right">פיריון</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - Fiber</StyledTableCell>
                 <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
+                <StyledTableCell align="right">אחוז שימור - Fiber</StyledTableCell>
                 <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
                 <StyledTableCell align="right">מכר - TV</StyledTableCell>
                 <StyledTableCell align="right">EasyMesh</StyledTableCell>
@@ -85,6 +102,9 @@ export default function OperationTeams() {
                 <StyledTableCell align="right">יעדים</StyledTableCell>
                 <StyledTableCell align="right">
                   עדכון פרטים
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  מחיקת תפעול נציג
                 </StyledTableCell>
               </TableRow>
             </TableHead>
@@ -112,11 +132,36 @@ export default function OperationTeams() {
                   <StyledTableCell align="right">
                     {operationsTeam.fiberDisconnection}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {operationsTeam.simurFiber}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
+                  <StyledTableCell
+                    align="right"
+                    style={{
+                      backgroundColor:
+                        parseFloat(operationsTeam.simurTV.replace("%", "")) / 100 >=
+                        0.79
+                          ? "#62a462"
+                          : parseFloat(operationsTeam.simurTV.replace("%", "")) /
+                              100 >=
+                            0.67
+                          ? "#c1c16f"
+                          : "#ad6262",
+                    }}>
                     {operationsTeam.simurTV}
+                  </StyledTableCell>
+                                    <StyledTableCell
+                    align="right"
+                    style={{
+                      backgroundColor:
+                        parseFloat(operationsTeam.simurFiber.replace("%", "")) /
+                          100 >=
+                        0.79
+                          ? "#62a462"
+                          : parseFloat(operationsTeam.simurFiber.replace("%", "")) /
+                              100 >=
+                            0.67
+                          ? "#c1c16f"
+                          : "#ad6262",
+                    }}>
+                    {operationsTeam.simurFiber}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {operationsTeam.sellerFiber}
@@ -135,9 +180,16 @@ export default function OperationTeams() {
                   </StyledTableCell>
                   <StyledTableCell align="right">{operationsTeam.targets}</StyledTableCell>
                   <StyledTableCell align="right">
-                    <IconButton>
-                      <EditIcon />
-                    </IconButton>
+                  <EditOperation
+                      theIDoperation={operationsTeam.bizNumber}
+                      dataOperation={operationsTeam}
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    <DeleteOperation
+                      theIDoperation={operationsTeam.bizNumber}
+                      dataOperation={operationsTeam}
+                    />
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
@@ -145,6 +197,10 @@ export default function OperationTeams() {
           </Table>
         </TableContainer>
       }
+            <div className="titleOperationAndAgents">
+        <h3 style={{ fontSize: "20px" }}>תפעול מצטבר צוותי</h3>
+      </div>
+      <OperatingAverageTeam/>
     </>
   );
 }

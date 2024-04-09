@@ -135,10 +135,10 @@ export default function IncrementalOperation() {
                 <StyledTableCell align="right">פיריון</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
+                <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
                 <StyledTableCell align="right">
                   אחוז שימור - Fiber
                 </StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
                 <StyledTableCell align="right">מכירות - Fiber</StyledTableCell>
                 <StyledTableCell align="right"> מכירות - TV</StyledTableCell>
                 <StyledTableCell align="right">EasyMesh</StyledTableCell>
@@ -177,6 +177,22 @@ export default function IncrementalOperation() {
                       align="right"
                       style={{
                         backgroundColor:
+                          parseFloat(operations.simurTV.replace("%", "")) /
+                            100 >=
+                          0.79
+                            ? "#62a462"
+                            : parseFloat(operations.simurTV.replace("%", "")) /
+                                100 >=
+                              0.67
+                            ? "#c1c16f"
+                            : "#ad6262",
+                      }}>
+                      {operations.simurTV}
+                    </StyledTableCell>
+                                        <StyledTableCell
+                      align="right"
+                      style={{
+                        backgroundColor:
                           parseFloat(operations.simurFiber.replace("%", "")) /
                             100 >=
                           0.79
@@ -190,22 +206,6 @@ export default function IncrementalOperation() {
                             : "#ad6262",
                       }}>
                       {operations.simurFiber}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      align="right"
-                      style={{
-                        backgroundColor:
-                          parseFloat(operations.simurTV.replace("%", "")) /
-                            100 >=
-                          0.79
-                            ? "#62a462"
-                            : parseFloat(operations.simurTV.replace("%", "")) /
-                                100 >=
-                              0.67
-                            ? "#c1c16f"
-                            : "#ad6262",
-                      }}>
-                      {operations.simurTV}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {operations.sellerFiber}

@@ -8,24 +8,37 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import { useEffect } from "react";
-import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import "../styles/operation.css";
-import ModalCardsEdit from "../Agent/EditOperation";
+import EditSales from "../Agent/SalesProcess/EditSales";
+import DeleteSale from "../Agent/SalesProcess/DeleteSale";
+import OperatingAverageSaleTeam from "./OperatingAverageSaleTeam";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    fontSize: "15px",
+    padding: "5px",
+    margin: "5px",
     textAlign: "center",
+    width: "100px",
     border: "1px solid white",
     borderRadius: "8px 8px 0 0",
+    textShadow: "1px 1px 6px white",
+    boxShadow: "1px 1px 3px 1px white",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    padding: "5px",
+    margin: "5px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    width: "100px",
     textAlign: "center",
     border: "1px solid black",
+    boxShadow: "1px 1px 8px  1px black",
+    textShadow: "1px 1px 6px black",
   },
 }));
 
@@ -59,6 +72,9 @@ export default function SalesIncrementalTeams() {
 
   return (
     <>
+          <div className="titleOperationAndAgents">
+        <h3>{`המכירות של צוות ${seller[0]?.teamName} היום : ${moment().format("DD/MM/YY")}`}</h3>
+      </div>
       {
         <TableContainer component={Paper} id="container">
           <div className="btnGroup">
@@ -76,6 +92,7 @@ export default function SalesIncrementalTeams() {
                 <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">יעדים</StyledTableCell>
                 <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
+                <StyledTableCell align="right">מחיקת מכירה</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -110,9 +127,10 @@ export default function SalesIncrementalTeams() {
                       {seller.targets}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <IconButton>
-                        <ModalCardsEdit theIDoperation={seller.bizNumber} dataOperation={seller} />
-                      </IconButton>
+                        <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                        <DeleteSale theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
@@ -120,6 +138,10 @@ export default function SalesIncrementalTeams() {
           </Table>
         </TableContainer>
       }
+      <div className="titleOperationAndAgents">
+        <h3 style={{ fontSize: "20px" }}>{`פעולות הצוות היום : ${moment().format("DD/MM/YYYY")}`}</h3>
+      </div>
+      <OperatingAverageSaleTeam />
     </>
   );
 }

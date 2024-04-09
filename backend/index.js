@@ -61,7 +61,7 @@ app.use(morgan(chalk.bgMagenta(morganFormat)));
 // "0 21 * * *"; // every day at 9 PM
 // "*/4 * * * *"; // every 4 minutes
 // for one hour "0 */1 * * *"
-cron.schedule("0 */1 * * *", async () => {
+cron.schedule("0 21 * * *", async () => {
   await DailyOperation.deleteMany({});
   await DailyOperationSale.deleteMany({});
   console.log(

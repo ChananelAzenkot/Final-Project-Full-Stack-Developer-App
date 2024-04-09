@@ -14,48 +14,51 @@ import { middlewareSales } from "../../middleware/middlewareSale.js";
 
 export default (app) => {
   // update a card by id number //
-  app.put(
-    "/api/dailyOperationAgentUpdate/:bizNumber",
-    guard,
-    async (req, res) => {
-      const { userId } = getLoggedUserId(req, res);
+app.put(
+  "/api/dailyOperationAgentUpdate/:bizNumber",
+  guard,
+  async (req, res) => {
+    const { userId, IsBusiness } = getLoggedUserId(req, res);
 
-      if (!userId) {
-        return res.status(403).json({ message: "User not authorized" });
-      }
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    }
 
-      req.body.user_id = userId;
+    let updateData = req.body;
+    if (IsBusiness) {
+      const { user_id, ...rest } = req.body; // Exclude user_id from the update data for business users
+      updateData = rest;
+    }
 
-      const { error } = middlewareOperations.validate(req.body);
-      if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-      }
+    const { error } = middlewareOperations.validate(updateData);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
 
-      try {
-        const toIncrementalOperation =
-          await IncrementalOperation.findOneAndUpdate(
-            { bizNumber: req.params.bizNumber },
-            req.body,
-            { new: true }
-          );
-
-        const toDailyOperation = await DailyOperation.findOneAndUpdate(
+    try {
+      const toIncrementalOperation =
+        await IncrementalOperation.findOneAndUpdate(
           { bizNumber: req.params.bizNumber },
-          req.body,
+          updateData, // Use the update data without user_id for business users
           { new: true }
         );
 
-        if (!toIncrementalOperation && !toDailyOperation) {
-          return res.status(404).json({ message: "Operation not found" });
-        }
+      const toDailyOperation = await DailyOperation.findOneAndUpdate(
+        { bizNumber: req.params.bizNumber },
+        updateData, // Use the update data without user_id for business users
+        { new: true }
+      );
 
-        res.send({ toDailyOperation, toIncrementalOperation });
-      } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
+      if (!toIncrementalOperation && !toDailyOperation) {
+        return res.status(404).json({ message: "Operation not found" });
       }
-    }
-  );
 
+      res.send({ toDailyOperation, toIncrementalOperation });
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  }
+);
   app.put(
     "/api/dailyOperationAgentUpdateForSale/:bizNumber",
     guard,
@@ -98,47 +101,53 @@ export default (app) => {
     }
   );
 
-  app.put(
-    "/api/dailyOperationUpdateSale/:bizNumber",
-    guard,
-    async (req, res) => {
-      const { userId } = getLoggedUserId(req, res);
+app.put(
+  "/api/dailyOperationUpdateSale/:bizNumber",
+  guard,
+  async (req, res) => {
+    const { userId, IsBusiness } = getLoggedUserId(req, res);
 
-      if (!userId) {
-        return res.status(403).json({ message: "User not authorized" });
-      }
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    }
 
-      req.body.user_id = userId;
+    let updateData = req.body;
+    if (IsBusiness) {
+      const { user_id, ...rest } = req.body;
+      updateData = rest;
+    } else {
+      updateData.user_id = userId;
+    }
 
-      const { error } = middlewareSales.validate(req.body);
-      if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-      }
+    const { error } = middlewareSales.validate(updateData);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
 
-      try {
-        const toIncrementalOperationSale =
-          await IncrementalOperationSale.findOneAndUpdate(
-            { bizNumber: req.params.bizNumber },
-            req.body,
-            { new: true }
-          );
-
-        const toDailyOperationSale = await DailyOperationSale.findOneAndUpdate(
+    try {
+      const toIncrementalOperationSale =
+        await IncrementalOperationSale.findOneAndUpdate(
           { bizNumber: req.params.bizNumber },
-          req.body,
+          updateData, // Use the update data without user_id for business users
           { new: true }
         );
 
-        if (!toIncrementalOperationSale && !toDailyOperationSale) {
-          return res.status(404).json({ message: "Operation not found" });
-        }
+      const toDailyOperationSale = await DailyOperationSale.findOneAndUpdate(
+        { bizNumber: req.params.bizNumber },
+        updateData, // Use the update data without user_id for business users
+        { new: true }
+      );
 
-        res.send({ toDailyOperationSale, toIncrementalOperationSale });
-      } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
+      if (!toIncrementalOperationSale && !toDailyOperationSale) {
+        return res.status(404).json({ message: "Operation not found" });
       }
+
+      res.send({ toDailyOperationSale, toIncrementalOperationSale });
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
     }
-  );
+  }
+);
   // update a card bizNumber by id number //
   app.put("/api/bizNumber/:id", adminGuard, async (req, res) => {
     const newBizNumber = req.body.bizNumber;

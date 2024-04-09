@@ -98,7 +98,7 @@ const onInputChange = (e) => {
       handleClose();
       snackbar(`המכירה עודכנה בהצלחה ! כל הכבוד ${saleDataUpDate.nameAgent}!`);
       setTimeout(() => {
-        window.location.href = "/dailySalesOperation";
+        window.location.reload();
       }, 1800);
     } catch (error) {
       console.error(
