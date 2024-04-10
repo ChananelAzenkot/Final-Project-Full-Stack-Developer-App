@@ -39,13 +39,13 @@ app.put(
       const toIncrementalOperation =
         await IncrementalOperation.findOneAndUpdate(
           { bizNumber: req.params.bizNumber },
-          updateData, // Use the update data without user_id for business users
+          updateData, 
           { new: true }
         );
 
       const toDailyOperation = await DailyOperation.findOneAndUpdate(
         { bizNumber: req.params.bizNumber },
-        updateData, // Use the update data without user_id for business users
+        updateData,
         { new: true }
       );
 
@@ -126,23 +126,47 @@ app.put(
 
     try {
       const toIncrementalOperationSale =
-        await IncrementalOperationSale.findOneAndUpdate(
-          { bizNumber: req.params.bizNumber },
-          updateData, // Use the update data without user_id for business users
-          { new: true }
-        );
+        await IncrementalOperationSale.findOne({ bizNumber: req.params.bizNumber });
 
-      const toDailyOperationSale = await DailyOperationSale.findOneAndUpdate(
-        { bizNumber: req.params.bizNumber },
-        updateData, // Use the update data without user_id for business users
-        { new: true }
-      );
+      const toDailyOperationSale = await DailyOperationSale.findOne({ bizNumber: req.params.bizNumber });
 
       if (!toIncrementalOperationSale && !toDailyOperationSale) {
         return res.status(404).json({ message: "Operation not found" });
       }
 
-      res.send({ toDailyOperationSale, toIncrementalOperationSale });
+      if (toIncrementalOperationSale.user_id.toString() !== userId && !IsBusiness) {
+        return res.status(403).json({ message: "User not authorized to update this operation" });
+      }
+
+      if (toDailyOperationSale.user_id.toString() !== userId && !IsBusiness) {
+        return res.status(403).json({ message: "User not authorized to update this operation" });
+      }
+
+      const updatedIncrementalOperationSale = await IncrementalOperationSale.findOneAndUpdate(
+        { bizNumber: req.params.bizNumber },
+        updateData,
+        { new: true }
+      );
+
+      const updatedDailyOperationSale = await DailyOperationSale.findOneAndUpdate(
+        { bizNumber: req.params.bizNumber },
+        updateData, 
+        { new: true }
+      );
+
+      const updatedIncrementalOperation = await IncrementalOperation.findOneAndUpdate(
+        { user_id: updatedIncrementalOperationSale.user_id },
+        updateData, 
+        { new: true }
+      );
+
+      const updatedDailyOperation = await DailyOperation.findOneAndUpdate(
+        { user_id: updatedDailyOperationSale.user_id },
+        updateData, 
+        { new: true }
+      );
+
+      res.send({ updatedDailyOperationSale, updatedIncrementalOperationSale, updatedDailyOperation, updatedIncrementalOperation });
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
     }

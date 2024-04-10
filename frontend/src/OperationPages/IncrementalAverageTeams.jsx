@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import "../styles/operation.css";
+import PropTypes from 'prop-types';
 import { GeneralContext } from "../App";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -50,42 +51,57 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+IncrementalAverageTeams.propTypes = {
+  selectedMonth: PropTypes.string,
+  setSelectedMonth: PropTypes.func,
+}
+export default function IncrementalAverageTeams({ selectedMonth, setSelectedMonth }) {
 
-export default function OperatingAverageTeam() {
-
-    const [operationAverageTeam, setOperationAverageTeam] = useState([]);
-    const { snackbar } = useContext(GeneralContext);
-
-    useEffect(() => {
-        fetch(`http://localhost:4000/api/dailyOperatingAverageByTeam`, {
-            credentials: "include",
-            method: "GET",
-            headers: {
-                "Content-type": "application/json",
-                Authorization: localStorage.token,
-            },
-        })
-        .then((res) => res.json())
-        .then((data) => {
-            setOperationAverageTeam([data]);
-            snackbar(data.message ? data.message : "התפעול הצוותי היומי נטען בהצלחה !");
-        });
-    }, []);
-    
-
-useEffect(() => {
-}, [operationAverageTeam]); 
+  const [operationAverage, setOperationAverage] = useState([]);
+  const { snackbar } = useContext(GeneralContext);
 
 
+    const handleMonthChange = (event) => {
+    setSelectedMonth(event.target.value);
+  };
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/incrementalOperationTeamAvg`, {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: localStorage.token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setOperationAverage([data]);
+        snackbar(data.message ? data.message : "הממוצע תפעול של החודש נטען בהצלחה !");
+      });
+  }, []);
+
+let operationAverageArray = [];
+if (operationAverage[0]) {
+  operationAverageArray[0] = Object.entries(operationAverage[0]).map(([monthYear, totals]) => ({
+    monthYear,
+    ...totals,
+  }));
+}
+
+console.log(operationAverageArray);
 
   return (
     <>
+<select onChange={handleMonthChange} style={{display:"none"}}>
+  {operationAverage[0] && Object.keys(operationAverage[0]).map((month, index) => <option key={index} value={month}>{month}</option>)}
+</select>
       {
         <TableContainer component={Paper} id="container">
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>יום הצוות</StyledTableCell>
+                <StyledTableCell>חודש</StyledTableCell>
                 <StyledTableCell align="right">כמות שיחות מצטבר</StyledTableCell>
                 <StyledTableCell align="right">פיריון מצטבר</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV מצטבר</StyledTableCell>
@@ -100,7 +116,7 @@ useEffect(() => {
               </TableRow>
             </TableHead>
             <TableBody>
-{Array.isArray(operationAverageTeam) && operationAverageTeam.map((operation, index) => {
+{Array.isArray(operationAverageArray) && operationAverageArray.map((operation, index) => {
   const operationData = operation[Object.keys(operation)[0]];
   return (
     <StyledTableRow key={index}>
@@ -108,50 +124,50 @@ useEffect(() => {
         {Object.keys(operation)[0]}
       </StyledTableCell>
       <StyledTableCell align="right">
-        {operationData.totalNumberCalls}
+        {operationData.numberCalls}
       </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.totalProductivity}
+            {operationData.productivity}
         </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.totalTvDisconnection}
+            {operationData.tvDisconnection}
         </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.totalFiberDisconnection}
+            {operationData.fiberDisconnection}
         </StyledTableCell>
         <StyledTableCell align="right" style={{
-            backgroundColor: parseFloat(operationData.totalSimurTV) / 100 >= 0.79 ? "#62a462" : parseFloat(operationData.totalSimurTV) / 100 >= 0.67 ? "#c1c16f" : "#ad6262",
+            backgroundColor: parseFloat(operationData.simurTV) / 100 >= 0.79 ? "#62a462" : parseFloat(operationData.simurTV) / 100 >= 0.67 ? "#c1c16f" : "#ad6262",
         }}>
-            {operationData.totalSimurTV}
+            {(operationData.simurTV.toFixed(2)) + "%"}
         </StyledTableCell>
-          <StyledTableCell align="right" style={{
-            backgroundColor: parseFloat(operationData.totalSimurFiber) / 100 >= 0.79 ? "#62a462" : parseFloat(operationData.totalSimurFiber) / 100 >= 0.67 ? "#c1c16f" : "#ad6262",
+                <StyledTableCell align="right" style={{
+            backgroundColor: parseFloat(operationData.simurFiber) / 100 >= 0.79 ? "#62a462" : parseFloat(operationData.simurFiber) / 100 >= 0.67 ? "#c1c16f" : "#ad6262",
         }}>
-            {operationData.totalSimurFiber}
+            {(operationData.simurFiber.toFixed(2)) + "%"}
         </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.totalSellerFiber}
+            {operationData.sellerFiber}
         </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.totalSellerTV}
+            {operationData.sellerTV}
         </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.totalEasyMesh}
+            {operationData.easyMesh}
         </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.totalUpgradeProgress}
+            {operationData.upgradeProgress}
         </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.totalSatisfaction}
+            {operationData.satisfaction}
         </StyledTableCell>
 
     </StyledTableRow>
   );
 })}
 </TableBody>
-</Table>
-</TableContainer>
-}
+          </Table>
+    </TableContainer>
+      }
     </>
   );
 }

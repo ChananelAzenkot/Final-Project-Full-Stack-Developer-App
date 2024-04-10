@@ -8,7 +8,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
-import moment from "moment";
 import "../styles/operation.css";
 import { GeneralContext } from "../App";
 
@@ -72,12 +71,12 @@ export default function OperatingAverageSaleTeam() {
       });
   }, []);
 
-  console.log(operationAverageSaleTeam);
+  console.log(operationAverageSaleTeam[0]);
 
     const [operation, setOperation] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/operationId`, {
+    fetch(`http://localhost:4000/api/operationTeam`, {
       credentials: "include",
       method: "GET",
       headers: {
@@ -89,42 +88,12 @@ export default function OperatingAverageSaleTeam() {
       .then((data) => {
         setOperation(data);
         setTimeout(() => {
-          snackbar(data.message ? data.message : "התפעול נטען בהצלחה ! ");
+          snackbar(data.message ? data.message : "הממצוע של הצוות נטען בהצלחה !");
         }, 2000);
       });
   }, []);
 
-  const theOperation = operation[0]?.bizNumber;
-
-useEffect(() => {
-  if (operationAverageSaleTeam.length > 0) {
-const updateData = {
-  sellerFiber: operationAverageSaleTeam[0][Object.keys(operationAverageSaleTeam[0])[0]].totalSellerFiber,
-  sellerTV: operationAverageSaleTeam[0][Object.keys(operationAverageSaleTeam[0])[0]].totalSellerTV,
-  easyMesh: operationAverageSaleTeam[0][Object.keys(operationAverageSaleTeam[0])[0]].totalEasyMesh,
-  upgradeProgress: operationAverageSaleTeam[0][Object.keys(operationAverageSaleTeam[0])[0]].totalUpgradeProgress,
-};
-
-if (theOperation === undefined){
-  snackbar(`אין תפעול יומי זמין כרגע`)
-}else{
-      fetch(`http://localhost:4000/api/dailyOperationAgentUpdateForSale/${theOperation}`, {
-      credentials: "include",
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.token,
-      },
-      body: JSON.stringify(updateData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        snackbar(data.message ? data.message : `המכירות עודכנו בהצלחה ! ${moment().format("HH:mm")}`);
-      });
-}
-  }
-}, [operationAverageSaleTeam[0]]);
-
+  console.log(operation[0]);
   return (
     <>
       {

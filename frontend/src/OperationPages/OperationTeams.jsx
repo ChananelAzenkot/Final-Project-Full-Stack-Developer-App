@@ -76,8 +76,14 @@ export default function OperationTeams() {
   }, []);
 
   return (
+    <> 
+    {!operationsTeam.length ? 
+    <div className="titleOperationAndAgents">
+      <h3>{`אין תפעול ראשוני לצוות עדין`}</h3>
+    </div>
+     :
     <>
-      <div className="titleOperationAndAgents">
+         <div className="titleOperationAndAgents">
         <h3>{`התפעול של צוות ${operationsTeam[0]?.teamName} היום : ${moment().format("DD/MM/YY")}`}</h3>
       </div>
       {
@@ -201,6 +207,8 @@ export default function OperationTeams() {
         <h3 style={{ fontSize: "20px" }}>תפעול מצטבר צוותי</h3>
       </div>
       <OperatingAverageTeam/>
+    </>
+    }
     </>
   );
 }

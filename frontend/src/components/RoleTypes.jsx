@@ -49,6 +49,11 @@ export const pages = [
     title: "מכירות הצוות",
     permissions: [RoleTypes.IsBusiness, RoleTypes.isAdmin],
   },
+    {
+    route: "/incrementalOperationTeams",
+    title: "תפעול צוות מצטבר",
+    permissions: [RoleTypes.IsBusiness],
+  },
   { route: "/centralizedOperation", title: "תפעול מוקדי", permissions: [RoleTypes.isAdmin] },
     { route: "/about", title: "יעדים" },
 ];

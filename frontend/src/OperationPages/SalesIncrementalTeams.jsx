@@ -6,13 +6,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import "../styles/operation.css";
 import EditSales from "../Agent/SalesProcess/EditSales";
 import DeleteSale from "../Agent/SalesProcess/DeleteSale";
 import OperatingAverageSaleTeam from "./OperatingAverageSaleTeam";
+import { GeneralContext } from "../App";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -55,6 +56,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function SalesIncrementalTeams() {
   const [seller, setSeller] = useState([]);
+  const { snackbar } = useContext(GeneralContext);
   useEffect(() => {
     fetch(`http://localhost:4000/api/operationTeamSale`, {
       credentials: "include",
@@ -67,10 +69,17 @@ export default function SalesIncrementalTeams() {
       .then((res) => res.json())
       .then((data) => {
         setSeller(data);
+        snackbar(data.message ? data.message : `המכירות של הצוות ${seller[0]?.teamName} נטענו בהצלחה !`);
       });
   }, []);
 
   return (
+    <>
+    {!seller.length ?
+        <div className="titleOperationAndAgents">
+      <h3>{`אין עדין מכירות להיום`}</h3>
+    </div>
+    :
     <>
           <div className="titleOperationAndAgents">
         <h3>{`המכירות של צוות ${seller[0]?.teamName} היום : ${moment().format("DD/MM/YY")}`}</h3>
@@ -143,5 +152,7 @@ export default function SalesIncrementalTeams() {
       </div>
       <OperatingAverageSaleTeam />
     </>
+        }
+        </>
   );
 }
