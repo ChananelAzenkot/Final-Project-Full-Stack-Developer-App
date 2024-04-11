@@ -130,15 +130,15 @@ app.put(
 
       const toDailyOperationSale = await DailyOperationSale.findOne({ bizNumber: req.params.bizNumber });
 
-      if (!toIncrementalOperationSale && !toDailyOperationSale) {
+      if (!toIncrementalOperationSale) {
         return res.status(404).json({ message: "Operation not found" });
       }
 
-      if (toIncrementalOperationSale.user_id.toString() !== userId && !IsBusiness) {
+      if (toIncrementalOperationSale && toIncrementalOperationSale.user_id.toString() !== userId && !IsBusiness) {
         return res.status(403).json({ message: "User not authorized to update this operation" });
       }
 
-      if (toDailyOperationSale.user_id.toString() !== userId && !IsBusiness) {
+      if (toDailyOperationSale && toDailyOperationSale.user_id && toDailyOperationSale.user_id.toString() !== userId && !IsBusiness) {
         return res.status(403).json({ message: "User not authorized to update this operation" });
       }
 
@@ -153,18 +153,22 @@ app.put(
         updateData, 
         { new: true }
       );
-
-      const updatedIncrementalOperation = await IncrementalOperation.findOneAndUpdate(
-        { user_id: updatedIncrementalOperationSale.user_id },
-        updateData, 
-        { new: true }
-      );
-
-      const updatedDailyOperation = await DailyOperation.findOneAndUpdate(
-        { user_id: updatedDailyOperationSale.user_id },
-        updateData, 
-        { new: true }
-      );
+      let updatedIncrementalOperation;
+      if (updatedIncrementalOperationSale) {
+        updatedIncrementalOperation = await IncrementalOperation.findOneAndUpdate(
+          { user_id: updatedIncrementalOperationSale.user_id },
+          updateData, 
+          { new: true }
+        );
+      }
+      let updatedDailyOperation;
+      if (updatedDailyOperationSale && updatedDailyOperationSale.user_id) {
+         updatedDailyOperation = await DailyOperation.findOneAndUpdate(
+          { user_id: updatedDailyOperationSale.user_id},
+          updateData, 
+          { new: true }
+        );
+      }
 
       res.send({ updatedDailyOperationSale, updatedIncrementalOperationSale, updatedDailyOperation, updatedIncrementalOperation });
     } catch (error) {
