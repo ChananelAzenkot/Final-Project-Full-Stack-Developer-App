@@ -11,6 +11,7 @@ import {
   IncrementalOperationSale,
 } from "./schemasOperations&Sales/operationSale.model.js";
 import { middlewareSales } from "../../middleware/middlewareSale.js";
+import moment from "moment";
 
 export default (app) => {
   // update a card by id number //
@@ -153,22 +154,32 @@ app.put(
         updateData, 
         { new: true }
       );
-      let updatedIncrementalOperation;
-      if (updatedIncrementalOperationSale) {
-        updatedIncrementalOperation = await IncrementalOperation.findOneAndUpdate(
-          { user_id: updatedIncrementalOperationSale.user_id },
-          updateData, 
-          { new: true }
-        );
-      }
-      let updatedDailyOperation;
-      if (updatedDailyOperationSale && updatedDailyOperationSale.user_id) {
-         updatedDailyOperation = await DailyOperation.findOneAndUpdate(
-          { user_id: updatedDailyOperationSale.user_id},
-          updateData, 
-          { new: true }
-        );
-      }
+
+let updatedIncrementalOperation;
+if (updatedIncrementalOperationSale) {
+  const createTime = moment(updatedIncrementalOperationSale.createTime).format('YYYY-MM-DD');
+  updatedIncrementalOperation = await IncrementalOperation.findOneAndUpdate(
+    { 
+      user_id: updatedIncrementalOperationSale.user_id, 
+      createTime: { $gte: new Date(createTime), $lt: new Date(moment(createTime).add(1, 'days')) } 
+    },
+    updateData, 
+    { new: true }
+  );
+}
+
+let updatedDailyOperation;
+if (updatedDailyOperationSale && updatedDailyOperationSale.user_id) {
+  const createTime = moment(updatedDailyOperationSale.createTime).format('YYYY-MM-DD');
+  updatedDailyOperation = await DailyOperation.findOneAndUpdate(
+    { 
+      user_id: updatedDailyOperationSale.user_id, 
+      createTime: { $gte: new Date(createTime), $lt: new Date(moment(createTime).add(1, 'days')) } 
+    },
+    updateData, 
+    { new: true }
+  );
+}
 
       res.send({ updatedDailyOperationSale, updatedIncrementalOperationSale, updatedDailyOperation, updatedIncrementalOperation });
     } catch (error) {
