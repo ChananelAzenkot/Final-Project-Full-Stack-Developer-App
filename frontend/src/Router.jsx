@@ -12,6 +12,7 @@ import SalesOperationDaily from './OperationPages/SalesOperationDaily';
 import SalesOperationIncremental from './OperationPages/SalesOperationIncremental';
 import SalesIncrementalTeams from './OperationPages/SalesIncrementalTeams';
 import IncrementalOperationTeams from './OperationPages/IncrementalOperationTeams';
+import IncrementalOperationTeamPerAgent from './OperationPages/IncrementalOperationTeamPerAgent';
 
 export default function Router(theme) {
 
@@ -25,6 +26,7 @@ export default function Router(theme) {
             <Route path="/incrementalSalesOperation" element={<SalesOperationIncremental theme={theme} />} />
             <Route path="/incrementalSalesOperationTeams" element={<SalesIncrementalTeams theme={theme} />} />
             <Route path="/incrementalOperationTeams" element={<IncrementalOperationTeams theme={theme} />} />
+            <Route path="/incrementalOperationTeamsPerAgent" element={<IncrementalOperationTeamPerAgent theme={theme} />} />
             <Route path="/operationTeams" element={<OperationTeams theme={theme} />} />
             <Route path="/centralizedOperation" element={<UserManagement theme={theme} />} />
             <Route path="/login" element={<Login theme={theme} />} />
