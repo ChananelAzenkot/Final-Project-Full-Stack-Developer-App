@@ -49,6 +49,7 @@ export default (app) => {
                   ],
                 },
                 to: "double",
+                onError: 0.0,
               },
             },
             simurFiber: {
