@@ -808,9 +808,9 @@ export default (app) => {
         });
 
         if (!dailyOperationTeam || dailyOperationTeam.length === 0) {
-          return res
-            .status(404)
-            .json({ message: "No cards found for this team" });
+        return res.json({
+          message: `לא נמצא תפעול יום לצוות ${user.teamName} עדיין`,
+        });
         }
         res.send(dailyOperationTeam);
       } else {

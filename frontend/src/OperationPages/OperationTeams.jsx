@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "../styles/CreateCards.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -13,6 +13,7 @@ import moment from 'moment';
 import OperatingAverageTeam from "./OperatingAverageTeam";
 import EditOperation from "../Agent/EditOperation";
 import DeleteOperation from "../Agent/DeleteOperation";
+import { GeneralContext } from "../App";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -57,6 +58,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function OperationTeams() {
   const [operationsTeam , setOperationsTeam] = useState([]);
+    const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {
     fetch(
@@ -72,6 +74,7 @@ export default function OperationTeams() {
       .then((res) => res.json())
       .then((data) => {
         setOperationsTeam(data);
+        snackbar(data.message ? data.message : "הממוצע תפעול של החודש נטען בהצלחה !");
       });
   }, []);
 

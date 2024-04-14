@@ -89,8 +89,6 @@ if (operationAverage[0]) {
   }));
 }
 
-console.log(operationAverageArray);
-
   return (
     <>
 <select onChange={handleMonthChange} style={{display:"none"}}>
