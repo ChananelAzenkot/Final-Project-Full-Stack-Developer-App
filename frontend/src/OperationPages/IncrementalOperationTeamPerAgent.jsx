@@ -16,6 +16,7 @@ import Select from "@mui/material/Select";
 import EditOperation from "../Agent/EditOperation";
 import { GeneralContext } from "../App";
 import OperatingAverageTeamPerAgent from "./OperatingAverageTeamPerAgent";
+import InputLabel from "@mui/material/InputLabel";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -103,11 +104,15 @@ const filteredOperations = operations.filter((operation) => {
   return (
     <>
       <div className="titleOperationAndAgents">
-        <h3>{`התפעול החודשי של חודש : ${moment(selectedMonth, "MM/YYYY").format(
-          "MM/YYYY"
-        )}`}</h3>
+        <h3>{`בחירת הציג מצטבר על פי חודש : ${moment(selectedMonth, "MM/YYYY").format("MM/YYYY")}`}</h3>
 <div>
-  <FormControl>
+  <FormControl
+            variant="standard"
+          sx={{ m: 1, minWidth: 120 }}
+          style={{ marginTop: "-5px" }}>
+        <InputLabel id="demo-simple-select-standard-label">
+            בחירת סוכן
+          </InputLabel>
     <Select
       labelId="demo-simple-select-standard-label"
       id="demo-simple-select-standard"
@@ -124,7 +129,14 @@ const filteredOperations = operations.filter((operation) => {
       ))}
     </Select>
   </FormControl>
-  <FormControl>
+  <FormControl
+            variant="standard"
+          sx={{ m: 1, minWidth: 120 }}
+          style={{ marginTop: "-5px" }}>
+        <InputLabel id="demo-simple-select-standard-label">
+            בחירת חודש
+          </InputLabel>
+    
     <Select
       labelId="demo-simple-select-standard-label"
       id="demo-simple-select-standard"
@@ -267,7 +279,7 @@ const filteredOperations = operations.filter((operation) => {
         </TableContainer>
     }
       <div className="titleOperationAndAgents">
-        <h3 style={{ fontSize: "20px" }}>תפעול מצטבר של החודש</h3>
+        <h3 style={{ fontSize: "20px" }}>{`ממוצע של ${selectedAgent} בחודש הזה : ${selectedMonth}`}</h3>
       </div>
       <OperatingAverageTeamPerAgent
       selectedMonth={selectedMonth}
