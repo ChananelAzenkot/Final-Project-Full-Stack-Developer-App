@@ -7,6 +7,8 @@ import { Routes, Route } from 'react-router-dom';
 import OperationTeams from "./OperationTeams";
 import UserManagement from "../admin/UserManagement";
 import { GeneralContext } from "../App";
+import { RoleTypes } from "../components/RoleTypes.jsx";
+import ProtectedRoute from "../user/ProtectedRoute";
 
 export default function CheckUser() {
   const { user, setUser } = useContext(GeneralContext);
@@ -21,18 +23,48 @@ export default function CheckUser() {
     }
   }, []);
 
-  return (
-    <>
-      {user ? (
-        <Routes>
-          {user.userRoleType === "IsBusiness" && <Route path="/operationTeams" component={OperationTeams} />}
-          {user.userRoleType === "isAdmin" && <Route path="/centralizedOperation" component={UserManagement} />}
-          {user.userRoleType === "user" && <Route path="/dailyOperation" component={MyOperation} />}
-          <Route/>
-        </Routes>
-      ) : (
-        <Login />
-      )}
-    </>
-  );
+  console.log(RoleTypes);
+
+return (
+  <>
+    {user ? (
+      <Routes>
+        <Route
+          path="/operationTeams"
+          element={
+            <ProtectedRoute permission={[RoleTypes.IsBusiness]}>
+              <OperationTeams />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/centralizedOperation"
+          element={
+            <ProtectedRoute permission={[RoleTypes.isAdmin]}>
+              <UserManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dailyOperation"
+          element={
+            <ProtectedRoute permission={[RoleTypes.user]}>
+              <MyOperation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            user.IsBusiness ? <OperationTeams /> :
+            user.isAdmin ? <UserManagement /> :
+            <MyOperation />
+          }
+        />
+      </Routes>
+    ) : (
+      <Login />
+    )}
+  </>
+);
 }
