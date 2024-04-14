@@ -85,18 +85,21 @@ export default function Login(theme) {
 
         setUser(user);
 
-        if (user.isAdmin) {
-          setUserRoleType(RoleTypes.isAdmin);
-        } else if (user.IsBusiness) {
-          setUserRoleType(RoleTypes.IsBusiness);
-        } else {
-          setUserRoleType(RoleTypes.user);
-        }
+  let navigateTo = "/login";
 
-        // Add token to local storage
-        snackbar(`התחברות בוצעה בהצלחה! ברוך/ה הבא`);
-        navigate("/dailyOperation");
-      })
+  if (user.isAdmin) {
+    setUserRoleType(RoleTypes.isAdmin);
+    navigateTo = "/centralizedOperation";
+  } else if (user.IsBusiness) {
+    setUserRoleType(RoleTypes.IsBusiness);
+    navigateTo = "/operationTeams";
+  } else {
+    setUserRoleType(RoleTypes.user);
+  }
+
+  snackbar(`התחברות בוצעה בהצלחה! ברוך/ה הבא`);
+  navigate(navigateTo);
+})
       .catch((err) => {
         alert(err.message);
       })
