@@ -1,34 +1,38 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { useEffect } from "react";
 import Login from "../user/Login";
 import MyOperation from "./MyOperation";
 import { jwtDecode } from "jwt-decode";
+import { Routes, Route } from 'react-router-dom';
+import OperationTeams from "./OperationTeams";
+import UserManagement from "../admin/UserManagement";
+import { GeneralContext } from "../App";
 
 export default function CheckUser() {
+  const { user, setUser } = useContext(GeneralContext);
 
-  const [userConnected, setUserConnected] = useState(false);
-  const [, setUser] = useState(null);
-  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
        const user = jwtDecode(token);
-      setUser(user);
-      setUserConnected(true);
+       if(user) {
+          setUser(user);
+       }
     }
   }, []);
 
-  const handleUserStatus = () => {
-    if (userConnected) {
-      return <MyOperation />;
-    } else {
-      return <Login />;
-    }
-  };
-
   return (
     <>
-      {handleUserStatus()}
+      {user ? (
+        <Routes>
+          {user.userRoleType === "IsBusiness" && <Route path="/operationTeams" component={OperationTeams} />}
+          {user.userRoleType === "isAdmin" && <Route path="/centralizedOperation" component={UserManagement} />}
+          {user.userRoleType === "user" && <Route path="/dailyOperation" component={MyOperation} />}
+          <Route/>
+        </Routes>
+      ) : (
+        <Login />
+      )}
     </>
   );
 }

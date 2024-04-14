@@ -95,6 +95,7 @@ export default function Login(theme) {
     navigateTo = "/operationTeams";
   } else {
     setUserRoleType(RoleTypes.user);
+    navigateTo = "/dailyOperation";
   }
 
   snackbar(`התחברות בוצעה בהצלחה! ברוך/ה הבא`);

@@ -86,7 +86,7 @@ export default function Router(theme) {
         path="/centralizedOperation"
         element={
             <ProtectedRoute permission={[RoleTypes.isAdmin]}>
-            <OperationTeams theme={theme} />
+            <UserManagement theme={theme} />
             </ProtectedRoute>
         }
       />
