@@ -156,31 +156,91 @@ app.put(
       );
 
 let updatedIncrementalOperation;
-if (updatedIncrementalOperationSale) {
-  const createTime = moment(updatedIncrementalOperationSale.createTime).format('YYYY-MM-DD');
-  updatedIncrementalOperation = await IncrementalOperation.findOneAndUpdate(
-    { 
-      user_id: updatedIncrementalOperationSale.user_id, 
-      createTime: { $gte: new Date(createTime), $lt: new Date(moment(createTime).add(1, 'days')) } 
-    },
-    updateData, 
-    { new: true }
+if (updatedIncrementalOperationSale && updatedIncrementalOperationSale.user_id) {
+  const createTime = moment(updatedIncrementalOperationSale.createTime).format(
+    "YYYY-MM-DD"
   );
+  const incrementalOperationSales = await IncrementalOperationSale.find({
+    user_id: updatedIncrementalOperationSale.user_id,
+    createTime: {
+      $gte: new Date(createTime),
+      $lt: new Date(moment(createTime).add(1, "days")),
+    },
+  });
+  if (incrementalOperationSales && incrementalOperationSales.length > 0) {
+    const totalSellerFiber = incrementalOperationSales.reduce((total, sale) => total + sale.sellerFiber, 0);
+    const totalSellerTV = incrementalOperationSales.reduce((total, sale) => total + sale.sellerTV, 0);
+    const totalEasyMesh = incrementalOperationSales.reduce((total, sale) => total + sale.easyMesh, 0);
+    const totalUpgradeProgress = incrementalOperationSales.reduce((total, sale) => total + sale.upgradeProgress, 0);
+    updatedIncrementalOperation = await IncrementalOperation.findOneAndUpdate(
+      {
+        user_id: updatedIncrementalOperationSale.user_id,
+        createTime: {
+          $gte: new Date(createTime),
+          $lt: new Date(moment(createTime).add(1, "days")),
+        },
+      },
+      { 
+        ...updateData, 
+        sellerFiber: totalSellerFiber,
+        sellerTV: totalSellerTV,
+        easyMesh: totalEasyMesh,
+        upgradeProgress: totalUpgradeProgress
+      },
+      { new: true }
+    );
+  }
 }
 
 let updatedDailyOperation;
 if (updatedDailyOperationSale && updatedDailyOperationSale.user_id) {
-  const createTime = moment(updatedDailyOperationSale.createTime).format('YYYY-MM-DD');
-  updatedDailyOperation = await DailyOperation.findOneAndUpdate(
-    { 
-      user_id: updatedDailyOperationSale.user_id, 
-      createTime: { $gte: new Date(createTime), $lt: new Date(moment(createTime).add(1, 'days')) } 
-    },
-    updateData, 
-    { new: true }
+  const createTime = moment(updatedDailyOperationSale.createTime).format(
+    "YYYY-MM-DD"
   );
-}
+  const dailyOperationSales = await DailyOperationSale.find({
+    user_id: updatedDailyOperationSale.user_id,
+    createTime: {
+      $gte: new Date(createTime),
+      $lt: new Date(moment(createTime).add(1, "days")),
+    },
+  });
 
+  if (dailyOperationSales && dailyOperationSales.length > 0) {
+    const totalSellerFiber = dailyOperationSales.reduce(
+      (total, sale) => total + sale.sellerFiber,
+      0
+    );
+    const totalSellerTV = dailyOperationSales.reduce(
+      (total, sale) => total + sale.sellerTV,
+      0
+    );
+    const totalEasyMesh = dailyOperationSales.reduce(
+      (total, sale) => total + sale.easyMesh,
+      0
+    );
+    const totalUpgradeProgress = dailyOperationSales.reduce(
+      (total, sale) => total + sale.upgradeProgress,
+      0
+    );
+    updatedDailyOperation = await DailyOperation.findOneAndUpdate(
+      {
+        user_id: updatedDailyOperationSale.user_id,
+        createTime: {
+          $gte: new Date(createTime),
+          $lt: new Date(moment(createTime).add(1, "days")),
+        },
+      },
+      {
+        ...updateData,
+        sellerFiber: totalSellerFiber,
+        sellerTV: totalSellerTV,
+        easyMesh: totalEasyMesh,
+        upgradeProgress: totalUpgradeProgress,
+      },
+      { new: true }
+    );
+  }
+}
       res.send({ updatedDailyOperationSale, updatedIncrementalOperationSale, updatedDailyOperation, updatedIncrementalOperation });
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });

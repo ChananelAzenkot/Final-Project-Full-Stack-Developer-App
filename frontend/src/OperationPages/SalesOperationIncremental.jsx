@@ -16,6 +16,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import EditSales from "../Agent/SalesProcess/EditSales";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -143,6 +144,7 @@ export default function SalesOperationIncremental() {
                 <StyledTableCell align="right">EasyMesh</StyledTableCell>
                 <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">יעדים</StyledTableCell>
+                <StyledTableCell align="right">עדכון מכירה</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -175,6 +177,9 @@ export default function SalesOperationIncremental() {
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {seller.sellerFiber + seller.sellerTV + seller.easyMesh + seller.upgradeProgress}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                        <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
