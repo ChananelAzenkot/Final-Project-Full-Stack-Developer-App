@@ -111,6 +111,7 @@ if (operationAverage[0]) {
                 <StyledTableCell align="right">EasyMesh - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט - מצטבר</StyledTableCell>
+                <StyledTableCell align="right">פעולות הצוות</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -125,7 +126,7 @@ if (operationAverage[0]) {
         {operationData.numberCalls}
       </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.productivity}
+            {operationData.productivity.toFixed(2)}
         </StyledTableCell>
         <StyledTableCell align="right">
             {operationData.tvDisconnection}
@@ -157,6 +158,9 @@ if (operationAverage[0]) {
         </StyledTableCell>
         <StyledTableCell align="right">
             {operationData.satisfaction}
+        </StyledTableCell>
+                <StyledTableCell align="right">
+            {operationData.easyMesh+operationData.upgradeProgress+operationData.sellerFiber+operationData.sellerTV}
         </StyledTableCell>
 
     </StyledTableRow>

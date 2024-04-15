@@ -96,6 +96,7 @@ useEffect(() => {
                 <StyledTableCell align="right"> מכירות - TV מצטבר</StyledTableCell>
                 <StyledTableCell align="right">EasyMesh - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
+                <StyledTableCell align="right"> פעולות הצוות</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט - מצטבר</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -140,6 +141,9 @@ useEffect(() => {
         </StyledTableCell>
         <StyledTableCell align="right">
             {operationData.totalUpgradeProgress}
+        </StyledTableCell>
+                <StyledTableCell align="right">
+            {operationData.totalEasyMesh + operationData.totalUpgradeProgress + operationData.totalSellerTV + operationData.totalSellerFiber}
         </StyledTableCell>
         <StyledTableCell align="right">
             {operationData.totalSatisfaction}

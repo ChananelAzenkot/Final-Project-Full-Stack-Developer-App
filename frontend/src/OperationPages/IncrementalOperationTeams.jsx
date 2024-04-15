@@ -149,7 +149,7 @@ export default function IncrementalOperationTeams() {
                 <StyledTableCell align="right">EasyMesh</StyledTableCell>
                 <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
-                <StyledTableCell align="right">יעדים</StyledTableCell>
+                <StyledTableCell align="right">פעולות מכר</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -218,11 +218,14 @@ export default function IncrementalOperationTeams() {
                     <StyledTableCell align="right">
                       {operations.satisfaction + "%"}
                     </StyledTableCell>
-                  <StyledTableCell
-                    align="right"
-                    style={{ color: operations.targets < 2 ? "red" : "green" }}>
-                    {`2 | ${operations.targets}`}
-                  </StyledTableCell>
+<StyledTableCell 
+  align="right" 
+  style={{
+    backgroundColor: operations.sellerFiber + operations.easyMesh + operations.upgradeProgress + operations.sellerTV > 44 ? '#62a462' : '#ad6262'
+  }}
+>
+  {operations.sellerFiber + operations.easyMesh + operations.upgradeProgress + operations.sellerTV}
+</StyledTableCell>
                   </StyledTableRow>
                 ))}
             </TableBody>

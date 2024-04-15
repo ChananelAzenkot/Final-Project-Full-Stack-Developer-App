@@ -187,7 +187,12 @@ export default function OperationTeams() {
                   <StyledTableCell align="right">
                     {operationsTeam.satisfaction}
                   </StyledTableCell>
-                  <StyledTableCell align="right">{operationsTeam.targets}</StyledTableCell>
+                  <StyledTableCell 
+                  align="right" 
+                  style={{
+                    backgroundColor: operationsTeam.sellerFiber + operationsTeam.easyMesh + operationsTeam.upgradeProgress + operationsTeam.sellerTV > 3 ? '#62a462' : '#ad6262'}}>
+                      {operationsTeam.sellerFiber + operationsTeam.easyMesh + operationsTeam.upgradeProgress + operationsTeam.sellerTV}
+                      </StyledTableCell>
                   <StyledTableCell align="right">
                   <EditOperation
                       theIDoperation={operationsTeam.bizNumber}

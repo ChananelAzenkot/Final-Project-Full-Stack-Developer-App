@@ -106,6 +106,7 @@ if (incrementalAverageSale[0]) {
                 <StyledTableCell align="right"> מכירות - TV מצטבר</StyledTableCell>
                 <StyledTableCell align="right">EasyMesh - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
+                <StyledTableCell align="right">סך הפעולות</StyledTableCell>
               </TableRow>
             </TableHead>
 <TableBody>
@@ -126,6 +127,9 @@ if (incrementalAverageSale[0]) {
       </StyledTableCell>
       <StyledTableCell align="right">
         {operationAverage.totalUpgradeProgress}
+      </StyledTableCell>
+            <StyledTableCell align="right">
+        {operationAverage.totalUpgradeProgress + operationAverage.totalSellerFiber + operationAverage.totalSellerTV + operationAverage.totalEasyMesh}
       </StyledTableCell>
     </StyledTableRow>
   ))}

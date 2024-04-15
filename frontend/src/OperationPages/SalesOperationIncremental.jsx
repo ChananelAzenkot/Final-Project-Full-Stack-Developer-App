@@ -10,7 +10,6 @@ import { useContext, useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import "../styles/operation.css";
-import EditSales from "../Agent/SalesProcess/EditSales";
 import { GeneralContext } from "../App";
 import IncrementalOperatingAverageSale from "./SalesMonthyTotal";
 import InputLabel from "@mui/material/InputLabel";
@@ -73,6 +72,7 @@ export default function SalesOperationIncremental() {
     })
       .then((res) => res.json())
       .then((data) => {
+        snackbar(data.message ? data.message : "המכירות של החודש המצטבר נטען בהצלחה !");
         const uniqueMonths = [
           ...new Set(
             data.map((seller) =>
@@ -82,7 +82,6 @@ export default function SalesOperationIncremental() {
         ];
         setMonths(uniqueMonths);
         setSeller(data);
-        snackbar(data.message ? data.message : "המכירות של החודש המצטבר נטען בהצלחה !")
       });
   }, []);
 
@@ -95,6 +94,12 @@ export default function SalesOperationIncremental() {
   }); 
 
   return (
+    <>
+    {!seller.length ?
+        <div className="titleOperationAndAgents">
+      <h3>{`אין עדין מכירות לחודש הנוכחי`}</h3>
+    </div>
+    :
     <>
       <div className="titleOperationAndAgents">
         <h3>{`תפעול מכירות של חודש : ${moment(selectedMonthSales, "MM/YYYY").format(
@@ -138,7 +143,6 @@ export default function SalesOperationIncremental() {
                 <StyledTableCell align="right">EasyMesh</StyledTableCell>
                 <StyledTableCell align="right">שדרוג</StyledTableCell>
                 <StyledTableCell align="right">יעדים</StyledTableCell>
-                <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -170,10 +174,7 @@ export default function SalesOperationIncremental() {
                       {seller.upgradeProgress}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {seller.targets}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                        <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
+                      {seller.sellerFiber + seller.sellerTV + seller.easyMesh + seller.upgradeProgress}
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
@@ -188,6 +189,8 @@ export default function SalesOperationIncremental() {
         selectedMonthSales={selectedMonthSales}
         setSelectedMonthSales={setSelectedMonthSales}
       />
+    </>
+    }
     </>
   );
 }

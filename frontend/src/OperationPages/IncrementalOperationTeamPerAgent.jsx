@@ -261,11 +261,14 @@ const filteredOperations = operations.filter((operation) => {
                     <StyledTableCell align="right">
                       {operations.satisfaction}
                     </StyledTableCell>
-                  <StyledTableCell
-                    align="right"
-                    style={{ color: operations.targets < 2 ? "red" : "green" }}>
-                    {`2 | ${operations.targets}`}
-                  </StyledTableCell>
+  <StyledTableCell 
+  align="right" 
+  style={{
+    backgroundColor: operations.sellerFiber + operations.easyMesh + operations.upgradeProgress + operations.sellerTV > 3 ? '#62a462' : '#ad6262'
+  }}
+>
+  {operations.sellerFiber + operations.easyMesh + operations.upgradeProgress + operations.sellerTV}
+</StyledTableCell>
                  <StyledTableCell align="right">
                     <EditOperation
                       theIDoperation={operations.bizNumber}

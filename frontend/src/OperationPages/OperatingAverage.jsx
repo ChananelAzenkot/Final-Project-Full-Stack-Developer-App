@@ -110,6 +110,7 @@ if (operationAverage[0]) {
                 <StyledTableCell align="right"> מכירות - TV מצטבר</StyledTableCell>
                 <StyledTableCell align="right">EasyMesh - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
+                <StyledTableCell align="right">כמות פעולות החודש</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט - מצטבר</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -174,6 +175,9 @@ if (operationAverage[0]) {
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {operationAverage.totalUpgradeProgress}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {operationAverage.totalUpgradeProgress + operationAverage.totalSellerFiber + operationAverage.totalSellerTV + operationAverage.totalEasyMesh}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {operationAverage.totalSatisfaction}

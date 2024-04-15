@@ -133,7 +133,7 @@ export default function SalesIncrementalTeams() {
                       {seller.upgradeProgress}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {seller.targets}
+                      {seller.sellerFiber + seller.sellerTV + seller.easyMesh + seller.upgradeProgress}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                         <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />

@@ -24,14 +24,14 @@ export const pages = [
     title: "תפעול יומי",
     permissions: [RoleTypes.user],
   },
-  {
-    route: "/incrementalOperation",
-    title: "תפעול מצטבר",
+    {
+    route: "/dailySalesOperation",
+    title: "מכירות יומי",
     permissions: [RoleTypes.user],
   },
   {
-    route: "/dailySalesOperation",
-    title: "מכירות יומי",
+    route: "/incrementalOperation",
+    title: "תפעול מצטבר",
     permissions: [RoleTypes.user],
   },
     {

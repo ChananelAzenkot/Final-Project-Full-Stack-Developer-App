@@ -95,6 +95,13 @@ export default function IncrementalOperation() {
 
   return (
     <>
+    { !operations.length ?
+            <div className="titleOperationAndAgents">
+      <h3>{`אין תפעול מצטבר כרגע`}</h3>
+    </div>
+    :
+    <>
+    
       <div className="titleOperationAndAgents">
         <h3>{`התפעול החודשי של חודש : ${moment(selectedMonth, "MM/YYYY").format(
           "MM/YYYY"
@@ -222,11 +229,14 @@ export default function IncrementalOperation() {
                     <StyledTableCell align="right">
                       {operations.satisfaction}
                     </StyledTableCell>
-                  <StyledTableCell
-                    align="right"
-                    style={{ color: operations.targets < 2 ? "red" : "green" }}>
-                    {`2 | ${operations.targets}`}
-                  </StyledTableCell>
+                    <StyledTableCell 
+                    align="right" 
+                    style={{
+                      backgroundColor: operations.sellerFiber + operations.easyMesh + operations.upgradeProgress + operations.sellerTV > 3 ? '#62a462' : '#ad6262'
+                      }}
+                      >
+                        {operations.sellerFiber + operations.easyMesh + operations.upgradeProgress + operations.sellerTV + " / 4"}
+                        </StyledTableCell>
                  <StyledTableCell align="right">
                     <EditOperation
                       theIDoperation={operations.bizNumber}
@@ -246,6 +256,8 @@ export default function IncrementalOperation() {
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
       />
+      </>
+    }
     </>
   );
 }

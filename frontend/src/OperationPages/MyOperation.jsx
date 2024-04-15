@@ -79,23 +79,7 @@ export default function MyOperation() {
       });
   }, []);
 
-  const [operationAverageSale, setOperationAverageSale] = useState([]);
 
-  useEffect(() => {
-    fetch(`http://localhost:4000/api/dailyOperatingAverageSale`, {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setOperationAverageSale([data]);
-        snackbar(data.message);
-      });
-  }, []);
 
   return (
     <>
@@ -224,62 +208,25 @@ export default function MyOperation() {
                     }}>
                     {operation.simurFiber}
                   </StyledTableCell>
-                  {operationAverageSale[0] && (
-                    <Fragment>
-                      <StyledTableCell align="right" key={0}>
-                        {
-                          operationAverageSale[0][
-                            Object.keys(operationAverageSale[0])[0]
-                          ].totalSellerFiber
-                        }
+                      <StyledTableCell align="right">
+                        {operation.sellerFiber}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {
-                          operationAverageSale[0][
-                            Object.keys(operationAverageSale[0])[0]
-                          ].totalSellerTV
-                        }
+                        {operation.sellerTV}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {
-                          operationAverageSale[0][
-                            Object.keys(operationAverageSale[0])[0]
-                          ].totalEasyMesh
-                        }
+                        {operation.easyMesh}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {
-                          operationAverageSale[0][
-                            Object.keys(operationAverageSale[0])[0]
-                          ].totalUpgradeProgress
-                        }
+                        {operation.upgradeProgress}
                       </StyledTableCell>
-                      <StyledTableCell
-                        align="right"
-                        style={{
-                          color:
-                            operationAverageSale[0] &&
-                            operationAverageSale[0][
-                              Object.keys(operationAverageSale[0])[0]
-                            ] &&
-                            Object.values(
-                              operationAverageSale[0][
-                                Object.keys(operationAverageSale[0])[0]
-                              ]
-                            ).reduce((a, b) => a + b, 0) > 3
-                              ? "green"
-                              : "red",
+                      <StyledTableCell 
+                      align="right" 
+                      style={{
+                        backgroundColor: operation.sellerFiber + operation.easyMesh + operation.upgradeProgress + operation.sellerTV > 3 ? '#62a462' : '#ad6262'
                         }}>
-                        {operationAverageSale[0]
-                          ? `3 | ${Object.values(
-                              operationAverageSale[0][
-                                Object.keys(operationAverageSale[0])[0]
-                              ]
-                            ).reduce((a, b) => a + b, 0)}`
-                          : "Loading..."}
-                      </StyledTableCell>
-                    </Fragment>
-                  )}
+                          {operation.sellerFiber + operation.easyMesh + operation.upgradeProgress + operation.sellerTV + " / 4"}
+                          </StyledTableCell>
                   <StyledTableCell align="right">
                     {operation.satisfaction}
                   </StyledTableCell>

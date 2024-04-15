@@ -178,7 +178,6 @@ const handleSubmit = (e) => {
   sellerTV: parseFloat(dataOperation.sellerTV) + parseFloat(saleData.sellerTV),
   easyMesh: parseFloat(dataOperation.easyMesh) + parseFloat(saleData.easyMesh),
   upgradeProgress: parseFloat(dataOperation.upgradeProgress) + parseFloat(saleData.upgradeProgress),
-  targets: parseFloat(dataOperation.sellerFiber) + parseFloat(saleData.sellerFiber) + parseFloat(dataOperation.sellerTV) + parseFloat(saleData.sellerTV) + parseFloat(dataOperation.easyMesh) + parseFloat(saleData.easyMesh) + parseFloat(dataOperation.upgradeProgress) + parseFloat(saleData.upgradeProgress),
   customerCode: saleData.customerCode,
 };
 

@@ -74,6 +74,12 @@ export default function SalesOperationDaily() {
   }, []);
 
   return (
+        <>
+    {!seller.length ?
+        <div className="titleOperationAndAgents">
+      <h3>{`אין עדין מכירות להיום`}</h3>
+    </div>
+    :
     <>
       {
         <TableContainer component={Paper} id="container">
@@ -124,7 +130,7 @@ export default function SalesOperationDaily() {
                       {seller.upgradeProgress}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {seller.targets}
+                      {seller.sellerFiber+ seller.sellerTV + seller.easyMesh + seller.upgradeProgress}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                         <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
@@ -142,6 +148,8 @@ export default function SalesOperationDaily() {
         <h3 style={{ fontSize: "20px" }}>{`הפעולות של היום : ${moment().format("DD/MM/YYYY")}`}</h3>
       </div>
       <OperatingAverageSale />
+    </>
+    }
     </>
   );
 }
