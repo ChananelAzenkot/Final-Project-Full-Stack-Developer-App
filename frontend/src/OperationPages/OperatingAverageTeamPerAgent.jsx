@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import "../styles/operation.css";
 import PropTypes from "prop-types";
 import { GeneralContext } from "../App";
+import moment from "moment";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -75,7 +76,7 @@ export default function OperatingAverageTeamPerAgent({
   };
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/incrementalOperatingAveragePerAgent`, {
+    fetch(`http://localhost:4000/api/incrementalOperationTeam`, {
       credentials: "include",
       method: "GET",
       headers: {
@@ -101,7 +102,11 @@ export default function OperatingAverageTeamPerAgent({
       })
     );
   }
-  console.log(operationAverageArray);
+
+const filteredOperations = operationAverageArray.filter((operation) => {
+  const operationMonth = moment(operation.createTime).format("MM/YYYY");
+  return operation.nameAgent === selectedAgent && operationMonth === selectedMonth;
+});
 
   return (
     <>
@@ -126,10 +131,7 @@ export default function OperatingAverageTeamPerAgent({
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>חודש</StyledTableCell>
-                <StyledTableCell align="right">
-                  כמות שיחות מצטבר
-                </StyledTableCell>
+                <StyledTableCell> כמות שיחות מצטבר</StyledTableCell>
                 <StyledTableCell align="right">פיריון מצטבר</StyledTableCell>
                 <StyledTableCell align="right">
                   ניתוק - TV מצטבר
@@ -158,92 +160,84 @@ export default function OperatingAverageTeamPerAgent({
                 <StyledTableCell align="right">מכר - מצטבר</StyledTableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {Array.isArray(operationAverageArray) &&
-                operationAverageArray
-                  .filter(
-                    (operation) =>
-                      operation.monthYear === selectedMonth && selectedAgent
-                  )
-                  .map((operationAverage, index) => (
-                    <StyledTableRow key={index}>
-                      <StyledTableCell component="th" scope="row">
-                        {selectedMonth}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operationAverage.totalNumberCalls}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operationAverage.totalProductivity}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operationAverage.totalTvDisconnection}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operationAverage.totalFiberDisconnection}
-                      </StyledTableCell>
+<TableBody>
+  {Array.isArray(filteredOperations) && filteredOperations.map((operationAverage, index) => (
+        console.log(filteredOperations),
+        <StyledTableRow key={index}>
+          <StyledTableCell component="th" scope="row">
+            {operationAverage.numberCalls}
+          </StyledTableCell>
+          <StyledTableCell align="right">
+            {operationAverage.productivity}
+          </StyledTableCell>
+          <StyledTableCell align="right">
+            {operationAverage.tvDisconnection}
+          </StyledTableCell>
+          <StyledTableCell align="right">
+            {operationAverage.fiberDisconnection}
+          </StyledTableCell>
                       <StyledTableCell
                         align="right"
                         style={{
                           backgroundColor:
-                            parseFloat(operationAverage.totalSimurFiber) /
+                            parseFloat(operationAverage.simurFiber) /
                               100 >=
                             0.79
                               ? "#62a462"
-                              : parseFloat(operationAverage.totalSimurFiber) /
+                              : parseFloat(operationAverage.simurFiber) /
                                   100 >=
                                 0.67
                               ? "#c1c16f"
                               : "#ad6262",
                         }}>
-                        {operationAverage.totalSimurFiber}
+                        {operationAverage.simurFiber.toFixed(2)+"%"}
                       </StyledTableCell>
                       <StyledTableCell
                         align="right"
                         style={{
                           backgroundColor:
-                            parseFloat(operationAverage.totalSimurTV) / 100 >=
+                            parseFloat(operationAverage.simurTV) / 100 >=
                             0.79
                               ? "#62a462"
-                              : parseFloat(operationAverage.totalSimurTV) /
+                              : parseFloat(operationAverage.simurTV) /
                                   100 >=
                                 0.67
                               ? "#c1c16f"
                               : "#ad6262",
                         }}>
-                        {operationAverage.totalSimurTV}
+                        {operationAverage.simurTV.toFixed(2)+"%"}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {operationAverage.totalSellerFiber}
+                        {operationAverage.sellerFiber}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {operationAverage.totalSellerTV}
+                        {operationAverage.sellerTV}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {operationAverage.totalEasyMesh}
+                        {operationAverage.easyMesh}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {operationAverage.totalUpgradeProgress}
+                        {operationAverage.upgradeProgress}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {operationAverage.totalSatisfaction}
+                        {operationAverage.satisfaction}
                       </StyledTableCell>
                       <StyledTableCell
                         align="right"
                         style={{
                           backgroundColor:
-                            operationAverage.totalSellerFiber +
-                              operationAverage.totalEasyMesh +
-                              operationAverage.totalUpgradeProgress +
-                              operationAverage.totalSellerTV >
+                            operationAverage.sellerFiber +
+                              operationAverage.easyMesh +
+                              operationAverage.upgradeProgress +
+                              operationAverage.sellerTV >
                             44
                               ? "#62a462"
                               : "#ad6262",
                         }}>
-                        {operationAverage.totalSellerFiber +
-                          operationAverage.totalEasyMesh +
-                          operationAverage.totalUpgradeProgress +
-                          operationAverage.totalSellerTV}
+                        {operationAverage.sellerFiber +
+                          operationAverage.easyMesh +
+                          operationAverage.upgradeProgress +
+                          operationAverage.sellerTV}
                       </StyledTableCell>
                     </StyledTableRow>
                   ))}
