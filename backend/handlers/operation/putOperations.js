@@ -149,17 +149,20 @@ app.put(
         { new: true }
       );
 
-      const updatedDailyOperationSale = await DailyOperationSale.findOneAndUpdate(
-        { bizNumber: req.params.bizNumber },
-        updateData, 
-        { new: true }
-      );
+  let updatedDailyOperationSale;
+  if (toDailyOperationSale) {
+    updatedDailyOperationSale = await DailyOperationSale.findOneAndUpdate(
+      { bizNumber: req.params.bizNumber },
+      updateData, 
+      { new: true }
+    );
+  }else{
+    updatedDailyOperationSale = await DailyOperationSale.create(updateData);
+  }
 
 let updatedIncrementalOperation;
 if (updatedIncrementalOperationSale && updatedIncrementalOperationSale.user_id) {
-  const createTime = moment(updatedIncrementalOperationSale.createTime).format(
-    "YYYY-MM-DD"
-  );
+const createTime = moment(updatedDailyOperationSale.createTime).startOf("day");
   const incrementalOperationSales = await IncrementalOperationSale.find({
     user_id: updatedIncrementalOperationSale.user_id,
     createTime: {
@@ -194,9 +197,7 @@ if (updatedIncrementalOperationSale && updatedIncrementalOperationSale.user_id) 
 
 let updatedDailyOperation;
 if (updatedDailyOperationSale && updatedDailyOperationSale.user_id) {
-  const createTime = moment(updatedDailyOperationSale.createTime).format(
-    "YYYY-MM-DD"
-  );
+const createTime = moment(updatedDailyOperationSale.createTime).startOf("day");
   const dailyOperationSales = await DailyOperationSale.find({
     user_id: updatedDailyOperationSale.user_id,
     createTime: {
@@ -222,6 +223,9 @@ if (updatedDailyOperationSale && updatedDailyOperationSale.user_id) {
       (total, sale) => total + sale.upgradeProgress,
       0
     );
+    console.log(
+      `user_id: ${updatedDailyOperationSale.user_id}, createTime: ${createTime}`
+    );
     updatedDailyOperation = await DailyOperation.findOneAndUpdate(
       {
         user_id: updatedDailyOperationSale.user_id,
@@ -241,6 +245,7 @@ if (updatedDailyOperationSale && updatedDailyOperationSale.user_id) {
     );
   }
 }
+console.log(updatedDailyOperation, updatedIncrementalOperation);
       res.send({ updatedDailyOperationSale, updatedIncrementalOperationSale, updatedDailyOperation, updatedIncrementalOperation });
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
