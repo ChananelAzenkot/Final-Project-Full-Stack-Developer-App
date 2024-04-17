@@ -60,8 +60,10 @@ export default function IncrementalOperationTeamPerAgent() {
   const [operations, setOperations] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(moment().format("MM/YYYY"));
   const [months, setMonths] = useState([]);
+
   const [selectedAgent, setSelectedAgent] = useState("");
   const [agents, setAgents] = useState([]);
+  
   const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {

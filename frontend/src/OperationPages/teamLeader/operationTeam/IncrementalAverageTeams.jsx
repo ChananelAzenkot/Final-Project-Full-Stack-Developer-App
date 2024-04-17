@@ -153,7 +153,7 @@ if (operationAverage[0]) {
             {operationData.upgradeProgress}
         </StyledTableCell>
         <StyledTableCell align="right">
-            {operationData.satisfaction}
+            {operationData.satisfaction+"%"}
         </StyledTableCell>
                 <StyledTableCell align="right">
             {operationData.easyMesh+operationData.upgradeProgress+operationData.sellerFiber+operationData.sellerTV}
