@@ -37,4 +37,27 @@ export default (app) => {
       }
     }
   });
+    app.patch("/api/cardLike/:id", guard, async (req, res) => {
+    const { userId } = getLoggedUserId(req, res);
+    if (!userId) {
+      return res.status(403).json({ message: "User not authorized" });
+    } else {
+      try {
+        const card = await Operation.findById(req.params.id);
+        if (!card) {
+          return res.status(404).json({ message: "Card not found" });
+        }
+        const index = card.likes.indexOf(userId);
+        if (index === -1) {
+          card.likes.push(userId);
+        } else {
+          card.likes.splice(index, 1);
+        }
+        await card.save();
+        res.send("Card updated " + card.likes);
+      } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+      }
+    }
+  });
 };

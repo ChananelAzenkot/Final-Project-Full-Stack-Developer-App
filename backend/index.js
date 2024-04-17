@@ -6,13 +6,10 @@ import mongoose from 'mongoose';
 import chalk from 'chalk';
 import morgan from 'morgan';
 import moment from 'moment';
-
 import login from './handlers/users/login.js';
 import signup from "./handlers/users/signup.js";
 import myAccount from "./handlers/users/account.js";
-import getOperations from "./handlers/operation/getOperations.js";
 import postOperations from "./handlers/operation/postOperations.js";
-import putOperations from "./handlers/operation/putOperations.js";
 import patchOperations from "./handlers/operation/patchOperations.js";
 import deleteOperations from "./handlers/operation/deleteOperations.js";
 import users from "./handlers/users/models/users.js";
@@ -23,6 +20,12 @@ import loggersOperations from './loggers/loggersOperation.js';
 import cron from 'node-cron';
 import { DailyOperation } from './handlers/operation/schemasOperations&Sales/operations.model.js';
 import {DailyOperationSale} from './handlers/operation/schemasOperations&Sales/operationSale.model.js';
+import getOperationAgent from './handlers/operation/getAgent/getOperationAgent.js';
+import getSaleAgent from './handlers/operation/getAgent/getSaleAgent.js';
+import getSaleTeamLeader from './handlers/operation/getTeamLeader/getSaleTeamLeader.js';
+import gerOperationTeamLeader from './handlers/operation/getTeamLeader/gerOperationTeamLeader.js';
+import putOperationAgent_Leader from './handlers/operation/putAgent_Leader/putOperationAgent_Leader.js';
+import putSaleAgent_Leader from './handlers/operation/putAgent_Leader/putSaleAgent_Leader.js';
 
 // Connect to MongoDB //
   async function main() {
@@ -73,9 +76,18 @@ cron.schedule("0 21 * * *", async () => {
 login(app);
 signup(app);
 myAccount(app);
-getOperations(app);
+
+getOperationAgent(app);
+gerOperationTeamLeader(app);
+
+getSaleAgent(app); 
+getSaleTeamLeader(app);
+
 postOperations(app);
-putOperations(app);
+
+putOperationAgent_Leader(app);
+putSaleAgent_Leader(app);
+
 patchOperations(app);
 deleteOperations(app);
 
@@ -90,17 +102,3 @@ app.use(loggersOperations);
 app.use((req, res) => {
   res.status(404).json({ message: "Sorry, page not found 404" });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
