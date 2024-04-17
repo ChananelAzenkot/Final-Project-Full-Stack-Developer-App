@@ -23,9 +23,11 @@ import {DailyOperationSale} from './handlers/operation/schemasOperations&Sales/o
 import getOperationAgent from './handlers/operation/getAgent/getOperationAgent.js';
 import getSaleAgent from './handlers/operation/getAgent/getSaleAgent.js';
 import getSaleTeamLeader from './handlers/operation/getTeamLeader/getSaleTeamLeader.js';
-import gerOperationTeamLeader from './handlers/operation/getTeamLeader/gerOperationTeamLeader.js';
+import gerOperationTeamLeader from './handlers/operation/getTeamLeader/getOperationTeamLeader.js';
 import putOperationAgent_Leader from './handlers/operation/putAgent_Leader/putOperationAgent_Leader.js';
 import putSaleAgent_Leader from './handlers/operation/putAgent_Leader/putSaleAgent_Leader.js';
+import gerOperationCenterManger from './handlers/operation/getCenterManager/gerOperationCenterManger.js';
+import getSaleCenterManger from './handlers/operation/getCenterManager/getSaleCenterManger.js';
 
 // Connect to MongoDB //
   async function main() {
@@ -79,9 +81,11 @@ myAccount(app);
 
 getOperationAgent(app);
 gerOperationTeamLeader(app);
+gerOperationCenterManger(app);
 
 getSaleAgent(app); 
 getSaleTeamLeader(app);
+getSaleCenterManger(app);
 
 postOperations(app);
 

@@ -57,12 +57,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function CentralizedOperation() {
-  const [operationsTeam , setOperationsTeam] = useState([]);
+  const [operationsCenter , setOperationsCenter] = useState([]);
     const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {
     fetch(
-      `http://localhost:4000/api/operationTeam`,
+      `http://localhost:4000/api/getOperationCenterManager`,
       {
         credentials: "include",
         method: "GET",
@@ -73,21 +73,21 @@ export default function CentralizedOperation() {
     )
       .then((res) => res.json())
       .then((data) => {
-        setOperationsTeam(data);
+        setOperationsCenter(data);
         snackbar(data.message ? data.message : "הממוצע תפעול של החודש נטען בהצלחה !");
       });
   }, []);
 
   return (
     <> 
-    {!operationsTeam.length ? 
+    {!operationsCenter.length ? 
     <div className="titleOperationAndAgents">
-      <h3>{`אין תפעול ראשוני לצוות עדין`}</h3>
+      <h3>{`אין תפעול ראשוני למוקד עדין`}</h3>
     </div>
      :
     <>
          <div className="titleOperationAndAgents">
-        <h3>{`התפעול של צוות ${operationsTeam[0]?.teamName} היום : ${moment().format("DD/MM/YY")}`}</h3>
+        <h3>{`התפעול של המוקד היום : ${moment().format("DD/MM/YY")}`}</h3>
       </div>
       {
         <TableContainer component={Paper}>
@@ -118,91 +118,91 @@ export default function CentralizedOperation() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(operationsTeam) && operationsTeam.map((operationsTeam , index) => (
+              {Array.isArray(operationsCenter) && operationsCenter.map((operationsCenter , index) => (
                 <StyledTableRow key={index}>
                 <StyledTableCell component="th" scope="row">
-                    {moment(operationsTeam.createTime).format('DD/MM/YYYY')}
+                    {moment(operationsCenter.createTime).format('DD/MM/YYYY')}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    {operationsTeam.teamName}
+                    {operationsCenter.teamName}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    {operationsTeam.nameAgent}
+                    {operationsCenter.nameAgent}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operationsTeam.numberCalls}
+                    {operationsCenter.numberCalls}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operationsTeam.productivity}
+                    {operationsCenter.productivity}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operationsTeam.tvDisconnection}
+                    {operationsCenter.tvDisconnection}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operationsTeam.fiberDisconnection}
+                    {operationsCenter.fiberDisconnection}
                   </StyledTableCell>
                   <StyledTableCell
                     align="right"
                     style={{
                       backgroundColor:
-                        parseFloat(operationsTeam.simurTV.replace("%", "")) / 100 >=
+                        parseFloat(operationsCenter.simurTV.replace("%", "")) / 100 >=
                         0.79
                           ? "#62a462"
-                          : parseFloat(operationsTeam.simurTV.replace("%", "")) /
+                          : parseFloat(operationsCenter.simurTV.replace("%", "")) /
                               100 >=
                             0.67
                           ? "#c1c16f"
                           : "#ad6262",
                     }}>
-                    {operationsTeam.simurTV}
+                    {operationsCenter.simurTV}
                   </StyledTableCell>
                                     <StyledTableCell
                     align="right"
                     style={{
                       backgroundColor:
-                        parseFloat(operationsTeam.simurFiber.replace("%", "")) /
+                        parseFloat(operationsCenter.simurFiber.replace("%", "")) /
                           100 >=
                         0.79
                           ? "#62a462"
-                          : parseFloat(operationsTeam.simurFiber.replace("%", "")) /
+                          : parseFloat(operationsCenter.simurFiber.replace("%", "")) /
                               100 >=
                             0.67
                           ? "#c1c16f"
                           : "#ad6262",
                     }}>
-                    {operationsTeam.simurFiber}
+                    {operationsCenter.simurFiber}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operationsTeam.sellerFiber}
+                    {operationsCenter.sellerFiber}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operationsTeam.sellerTV}
+                    {operationsCenter.sellerTV}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operationsTeam.easyMesh}
+                    {operationsCenter.easyMesh}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operationsTeam.upgradeProgress}
+                    {operationsCenter.upgradeProgress}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {operationsTeam.satisfaction}
+                    {operationsCenter.satisfaction}
                   </StyledTableCell>
                   <StyledTableCell 
                   align="right" 
                   style={{
-                    backgroundColor: operationsTeam.sellerFiber + operationsTeam.easyMesh + operationsTeam.upgradeProgress + operationsTeam.sellerTV > 3 ? '#62a462' : '#ad6262'}}>
-                      {operationsTeam.sellerFiber + operationsTeam.easyMesh + operationsTeam.upgradeProgress + operationsTeam.sellerTV}
+                    backgroundColor: operationsCenter.sellerFiber + operationsCenter.easyMesh + operationsCenter.upgradeProgress + operationsCenter.sellerTV > 3 ? '#62a462' : '#ad6262'}}>
+                      {operationsCenter.sellerFiber + operationsCenter.easyMesh + operationsCenter.upgradeProgress + operationsCenter.sellerTV}
                       </StyledTableCell>
                   <StyledTableCell align="right">
                   <EditOperation
-                      theIDoperation={operationsTeam.bizNumber}
-                      dataOperation={operationsTeam}
+                      theIDoperation={operationsCenter.bizNumber}
+                      dataOperation={operationsCenter}
                     />
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <DeleteOperation
-                      theIDoperation={operationsTeam.bizNumber}
-                      dataOperation={operationsTeam}
+                      theIDoperation={operationsCenter.bizNumber}
+                      dataOperation={operationsCenter}
                     />
                   </StyledTableCell>
                 </StyledTableRow>
@@ -212,7 +212,7 @@ export default function CentralizedOperation() {
         </TableContainer>
       }
             <div className="titleOperationAndAgents">
-        <h3 style={{ fontSize: "20px" }}>תפעול מצטבר צוותי</h3>
+        <h3 style={{ fontSize: "20px" }}>ממוצע מוקדי של היום</h3>
       </div>
       <OperatingAverageCentralized/>
     </>

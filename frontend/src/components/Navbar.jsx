@@ -187,7 +187,7 @@ export default function Navbar() {
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
                         id="avatarPageNav"
-                        alt={user ? user.isAdmin || user.none : ""}
+                        alt={`https://ideogram.ai/api/images/direct/Lgf0yImGRqetiFUUf67b4g.jpg`}
                         src={
                           user && user.isAdmin
                             ? "https://ideogram.ai/api/images/direct/nXIhWw6ER_eLGigiACob8g.png"

@@ -10,6 +10,7 @@ import { useContext, useState } from "react";
 import { useEffect } from "react";
 import "../../styles/operation.css";
 import { GeneralContext } from "../../App";
+import moment from 'moment';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -53,11 +54,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function OperatingAverageCentralized() {
 
-    const [operationAverageTeam, setOperationAverageTeam] = useState([]);
+    const [operationAverageByCenter, setOperationAverageByCenter] = useState([]);
     const { snackbar } = useContext(GeneralContext);
 
     useEffect(() => {
-        fetch(`http://localhost:4000/api/dailyOperatingAverageByTeam`, {
+        fetch(`http://localhost:4000/api/dailyOperatingAverageByCenter`, {
             credentials: "include",
             method: "GET",
             headers: {
@@ -67,14 +68,14 @@ export default function OperatingAverageCentralized() {
         })
         .then((res) => res.json())
         .then((data) => {
-            setOperationAverageTeam([data]);
+            setOperationAverageByCenter([data]);
             snackbar(data.message ? data.message : "התפעול הצוותי היומי נטען בהצלחה !");
         });
     }, []);
     
 
 useEffect(() => {
-}, [operationAverageTeam]); 
+}, [operationAverageByCenter]); 
 
 
 
@@ -85,7 +86,7 @@ useEffect(() => {
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>יום הצוות</StyledTableCell>
+                <StyledTableCell>נתון מוקדי</StyledTableCell>
                 <StyledTableCell align="right">כמות שיחות מצטבר</StyledTableCell>
                 <StyledTableCell align="right">פיריון מצטבר</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV מצטבר</StyledTableCell>
@@ -101,12 +102,12 @@ useEffect(() => {
               </TableRow>
             </TableHead>
             <TableBody>
-{Array.isArray(operationAverageTeam) && operationAverageTeam.map((operation, index) => {
+{Array.isArray(operationAverageByCenter) && operationAverageByCenter.map((operation, index) => {
   const operationData = operation[Object.keys(operation)[0]];
   return (
     <StyledTableRow key={index}>
       <StyledTableCell component="th" scope="row">
-        {Object.keys(operation)[0]}
+                    {moment(operationData.createTime).format('DD/MM/YYYY')}
       </StyledTableCell>
       <StyledTableCell align="right">
         {operationData.totalNumberCalls}
