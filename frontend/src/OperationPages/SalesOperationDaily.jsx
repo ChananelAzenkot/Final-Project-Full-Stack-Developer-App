@@ -81,6 +81,9 @@ export default function SalesOperationDaily() {
     </div>
     :
     <>
+      <div className="titleOperationAndAgents">
+          <h3 style={{ fontSize: "20px" }}>{` הלקוחות של היום : ${moment().format("DD/MM/YYYY")}`}</h3>
+        </div>
       {
         <TableContainer component={Paper} id="container">
           <div className="btnGroup">
@@ -145,7 +148,7 @@ export default function SalesOperationDaily() {
         </TableContainer>
       }
       <div className="titleOperationAndAgents">
-        <h3 style={{ fontSize: "20px" }}>{`הפעולות של היום : ${moment().format("DD/MM/YYYY")}`}</h3>
+        <h3 style={{ fontSize: "20px" }}>{`סך הפעולות של היום : ${moment().format("DD/MM/YYYY")}`}</h3>
       </div>
       <OperatingAverageSale />
     </>
