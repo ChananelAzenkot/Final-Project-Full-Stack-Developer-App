@@ -99,8 +99,7 @@ if (operationAverage[0]) {
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>חודש</StyledTableCell>
-                <StyledTableCell align="right">כמות שיחות מצטבר</StyledTableCell>
+                <StyledTableCell>כמות שיחות מצטבר</StyledTableCell>
                 <StyledTableCell align="right">פיריון מצטבר</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - TV מצטבר</StyledTableCell>
                 <StyledTableCell align="right">ניתוק - Fiber מצטבר</StyledTableCell>
@@ -120,10 +119,7 @@ if (operationAverage[0]) {
   return (
     <StyledTableRow key={index}>
       <StyledTableCell component="th" scope="row">
-        {Object.keys(operation)[0]}
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        {operationData.numberCalls}
+                {operationData.numberCalls}
       </StyledTableCell>
         <StyledTableCell align="right">
             {operationData.productivity.toFixed(2)}

@@ -94,12 +94,7 @@ export default function IncrementalOperationTeams() {
 
   return (
     <>
-        {!operationsTeam.length ? 
-    <div className="titleOperationAndAgents">
-      <h3>{`אין תפעול מצטבר / חודשי לצוות עדין`}</h3>
-    </div>
-     :
-    <>
+
       <div className="titleOperationAndAgents">
         <h3>{` תפעול צוות ${operationsTeam[0]?.teamName} של חודש : ${moment(selectedMonth, "MM/YYYY").format(
           "MM/YYYY"
@@ -128,6 +123,12 @@ export default function IncrementalOperationTeams() {
           </Select>
         </FormControl>
       </div>
+              {!filteredOperations.length ? 
+    <div className="titleOperationAndAgents">
+      <h3>{`אין תפעול מצטבר / חודשי לצוות עדין`}</h3>
+    </div>
+     :
+    <>
       {
         <TableContainer component={Paper} id="container" style={{ maxHeight: '400px', overflowY: 'scroll' }}>
           <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">

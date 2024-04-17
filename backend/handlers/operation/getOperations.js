@@ -94,6 +94,7 @@ export default (app) => {
           $group: {
             _id: { user_id: "$user_id" },
             nameAgent: { $first: "$nameAgent" },
+            createTime: { $first: "$createTime" },
             teamName: { $first: "$teamName" },
             numberCalls: { $sum: "$numberCalls" },
             tvDisconnection: { $sum: "$tvDisconnection" },
