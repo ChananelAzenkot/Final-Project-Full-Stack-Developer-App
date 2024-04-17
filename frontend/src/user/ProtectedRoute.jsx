@@ -28,7 +28,7 @@ export default function ProtectedRoute({ children, permission }) {
               </IconButton>
             </li>
           )}
-          {user?.IsUser && (
+          {!user?.IsBusiness && !user?.isAdmin && (
             <li onClick={() => navigate("/dailyOperation")}>
               <IconButton id="btnCreateAndPress" style={{ color: "black" }}>
                 תפעול היומי שלי
