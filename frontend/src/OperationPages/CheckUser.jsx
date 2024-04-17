@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import { useEffect } from "react";
-import Login from "../user/Login";
-import MyOperation from "./MyOperation";
+import Login from "../userIntegrated/Login.jsx";
+import MyOperation from "./agent/operation/MyOperation.jsx";
 import { jwtDecode } from "jwt-decode";
 import { Routes, Route } from 'react-router-dom';
-import OperationTeams from "./OperationTeams";
-import UserManagement from "../admin/UserManagement";
+import OperationTeams from "./teamLeader/operationTeam/OperationTeams.jsx";
+import UserManagement from "./centerManager/CentralizedOperation.jsx";
 import { GeneralContext } from "../App";
 import { RoleTypes } from "../components/RoleTypes.jsx";
-import ProtectedRoute from "../user/ProtectedRoute";
+import ProtectedRoute from "../userIntegrated/ProtectedRoute.jsx";
 
 export default function CheckUser() {
   const { user, setUser } = useContext(GeneralContext);

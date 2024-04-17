@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FooterPage from "./components/FooterPage";
 import CssBaseline from "@mui/material/CssBaseline";
 import { RoleTypes } from './components/RoleTypes';
-import { useAuth } from './user/useAuth';
+import { useAuth } from './userIntegrated/useAuth';
 
 export const GeneralContext = createContext();
 

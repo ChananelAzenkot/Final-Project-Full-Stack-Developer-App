@@ -42,12 +42,12 @@ export const pages = [
   {
     route: "/operationTeams",
     title: "תפעול צוותי",
-    permissions: [RoleTypes.IsBusiness, RoleTypes.isAdmin],
+    permissions: [RoleTypes.IsBusiness],
   },
     {
     route: "/incrementalSalesOperationTeams",
     title: "מכירות הצוות",
-    permissions: [RoleTypes.IsBusiness, RoleTypes.isAdmin],
+    permissions: [RoleTypes.IsBusiness],
   },
     {
     route: "/incrementalOperationTeams",
@@ -60,8 +60,13 @@ export const pages = [
     permissions: [RoleTypes.IsBusiness],
   },
   { route: "/centralizedOperation", title: "תפעול מוקדי", permissions: [RoleTypes.isAdmin] },
+  { route: "/myTeamSupervisor", title: "תפעול צוותים", permissions: [RoleTypes.isAdmin] },
+  { route: "/myAgentSupervisor", title: "תפעול תפעול נציג", permissions: [RoleTypes.isAdmin] },
+  { route: "/mySalesSupervisor", title: "מכירות מוקד", permissions: [RoleTypes.isAdmin] },
+  { route: "/myEmployeeSupervisor", title: "ניהול עובדים", permissions: [RoleTypes.isAdmin] },
     { route: "/about", title: "יעדים" },
 ];
+
 
 export const useLogout = (setUser, setUserRoleType, setLoader, navigate, handleCloseUserMenu) => {
   const logout = () => {

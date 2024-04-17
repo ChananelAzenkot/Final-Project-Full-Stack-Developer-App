@@ -1,20 +1,24 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "./user/Login";
-import SignUp from "./user/SignUp";
-import Account from "./user/Account";
-import OperationTeams from "./OperationPages/OperationTeams.jsx";
-import UserManagement from "./admin/UserManagement.jsx";
+import Login from "./userIntegrated/Login.jsx";
+import SignUp from "./userIntegrated/SignUp.jsx";
+import Account from "./userIntegrated/Account.jsx";
+import OperationTeams from "./OperationPages/teamLeader/operationTeam/OperationTeams.jsx";
 import About from "./pages/About.jsx";
-import MyOperation from "./OperationPages/MyOperation.jsx";
-import IncrementalOperation from "./OperationPages/IncrementalOperation.jsx";
+import MyOperation from "./OperationPages/agent/operation/MyOperation.jsx";
+import IncrementalOperation from "./OperationPages/agent/operation/IncrementalOperation.jsx";
 import CheckUser from "./OperationPages/CheckUser.jsx";
-import SalesOperationDaily from "./OperationPages/SalesOperationDaily.jsx";
-import SalesOperationIncremental from "./OperationPages/SalesOperationIncremental.jsx";
-import SalesIncrementalTeams from "./OperationPages/SalesIncrementalTeams.jsx";
-import IncrementalOperationTeams from "./OperationPages/IncrementalOperationTeams.jsx";
-import IncrementalOperationTeamPerAgent from "./OperationPages/IncrementalOperationTeamPerAgent.jsx";
+import SalesOperationDaily from "./OperationPages/agent/sales/SalesOperationDaily.jsx";
+import SalesOperationIncremental from "./OperationPages/agent/sales/SalesOperationIncremental.jsx";
+import SalesIncrementalTeams from "./OperationPages/teamLeader/salesTeam/SalesIncrementalTeams.jsx";
+import IncrementalOperationTeams from "./OperationPages/teamLeader/operationTeam/IncrementalOperationTeams.jsx";
+import IncrementalOperationTeamPerAgent from "./OperationPages/teamLeader/operationTeam/IncrementalOperationTeamPerAgent.jsx";
 import { RoleTypes } from "./components/RoleTypes.jsx";
-import ProtectedRoute from "./user/ProtectedRoute.jsx";
+import ProtectedRoute from "./userIntegrated/ProtectedRoute.jsx";
+import CentralizedOperation from "./OperationPages/centerManager/CentralizedOperation.jsx";
+import MyAgentSupervisor from "./OperationPages/centerManager/MyAgentSupervisor.jsx";
+import MyEmployeeSupervisor from "./OperationPages/centerManager/MyEmployeeSupervisor.jsx";
+import MyTeamSupervisor from "./OperationPages/centerManager/MyTeamSupervisor.jsx";
+import MySalesSupervisor from "./OperationPages/centerManager/MySalesSupervisor.jsx";
 
 export default function Router(theme) {
   return (
@@ -86,15 +90,39 @@ export default function Router(theme) {
         path="/centralizedOperation"
         element={
             <ProtectedRoute permission={[RoleTypes.isAdmin]}>
-            <UserManagement theme={theme} />
+            <CentralizedOperation theme={theme} />
             </ProtectedRoute>
         }
       />
         <Route
-            path="/userManagement"
+            path="/myTeamSupervisor"
             element={
                 <ProtectedRoute permission={[RoleTypes.isAdmin]}>
-                <UserManagement theme={theme} />
+                <MyTeamSupervisor theme={theme} />
+                </ProtectedRoute>
+            }
+        />
+                <Route
+            path="/myAgentSupervisor"
+            element={
+                <ProtectedRoute permission={[RoleTypes.isAdmin]}>
+                <MyAgentSupervisor theme={theme} />
+                </ProtectedRoute>
+            }
+        />
+                <Route
+            path="/mySalesSupervisor"
+            element={
+                <ProtectedRoute permission={[RoleTypes.isAdmin]}>
+                <MySalesSupervisor theme={theme} />
+                </ProtectedRoute>
+            }
+        />
+                <Route
+            path="/myEmployeeSupervisor"
+            element={
+                <ProtectedRoute permission={[RoleTypes.isAdmin]}>
+                <MyEmployeeSupervisor theme={theme} />
                 </ProtectedRoute>
             }
         />
