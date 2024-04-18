@@ -367,4 +367,42 @@ export default (app) => {
               }
             }
           );
+                      app.get(
+                        "/api/incrementalOperationPerAgentCenterManager",
+                        guard,
+                        async (req, res) => {
+                          try {
+                            const { userId } = getLoggedUserId(req, res);
+
+                            if (!userId) {
+                              return res
+                                .status(403)
+                                .json({ message: "User not authorized" });
+                            }
+
+                            const user = await User.findById(userId);
+
+                            const incrementalOperations =
+                              await IncrementalOperation.find({});
+
+                            if (
+                              !incrementalOperations ||
+                              incrementalOperations.length === 0
+                            ) {
+                              return res.json({
+                                message: "לא נמצא תפעול מצטבר של החודש הזה",
+                              });
+                            }
+                            res.send(incrementalOperations);
+                          } catch (error) {
+                            console.log(error);
+                            res
+                              .status(500)
+                              .json({
+                                message: "Server error",
+                                error: error.message,
+                              });
+                          }
+                        }
+                      );
 };
