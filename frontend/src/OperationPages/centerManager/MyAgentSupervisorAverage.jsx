@@ -164,7 +164,6 @@ console.log(filteredOperations);
             </TableHead>
 <TableBody>
   {Array.isArray(filteredOperations) && filteredOperations.map((operationAverage, index) => (
-        console.log(filteredOperations),
         <StyledTableRow key={index}>
           <StyledTableCell component="th" scope="row">
             {operationAverage.numberCalls}
@@ -222,7 +221,7 @@ console.log(filteredOperations);
                         {operationAverage.upgradeProgress}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {operationAverage.satisfaction}
+                      {operationAverage.satisfaction.toFixed(2) + "%"}
                       </StyledTableCell>
                       <StyledTableCell
                         align="right"
