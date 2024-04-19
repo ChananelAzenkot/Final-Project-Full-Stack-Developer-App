@@ -108,8 +108,6 @@ const filteredOperations = operationAverageArray.filter((operation) => {
   return operation.nameAgent === selectedAgent && operationMonth === selectedMonth;
 });
 
-console.log(filteredOperations);
-
   return (
     <>
       <select onChange={handleMonthChange} style={{ display: "none" }}>

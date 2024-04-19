@@ -227,7 +227,7 @@ export default function MyTeamSupervisorAverage({
                         {operationData.upgradeProgress}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {operationData.satisfaction+"%"}
+                        {operationData.satisfaction.toFixed(2) + "%"}
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         {operationData.easyMesh +

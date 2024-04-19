@@ -282,7 +282,7 @@ export default function MyTeamSupervisor() {
                           {operations.upgradeProgress}
                         </StyledTableCell>
                         <StyledTableCell align="right">
-                          {operations.satisfaction + "%"}
+                          {operations.satisfaction.toFixed(2) + "%"}
                         </StyledTableCell>
                         <StyledTableCell
                           align="right"
