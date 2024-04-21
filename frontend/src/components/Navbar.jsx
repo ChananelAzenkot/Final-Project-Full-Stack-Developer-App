@@ -89,7 +89,7 @@ export default function Navbar() {
                   textDecoration: "none",
                 }}>
                 <b id="myNavBarBtn" style={{ fontFamily: "initial" }}>
-                  ⚡️GoPerfect
+                  ⚡️DataInsight
                 </b>
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -144,7 +144,7 @@ export default function Navbar() {
                   color: "inherit",
                   textDecoration: "none",
                 }}>
-                <b style={{ fontFamily: "initial" }}> ⚡️GoPerfect</b>
+                <b style={{ fontFamily: "initial" }}> ⚡️DataInsight</b>
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages

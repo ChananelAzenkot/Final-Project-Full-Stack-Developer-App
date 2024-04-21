@@ -123,7 +123,7 @@ export default function Login(theme) {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                ברוך/ה הבא ל - GoPerfect ⚡️
+                ברוך/ה הבא ל - DataInsight ⚡️
               </Typography>
               <Box
                 component="form"

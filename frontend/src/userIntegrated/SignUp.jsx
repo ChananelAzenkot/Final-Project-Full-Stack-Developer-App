@@ -146,7 +146,7 @@ navigate("/login");
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-              הרשמה למערכת - GoPerfect⚡️
+              הרשמה למערכת - DataInsight⚡️
               </Typography>
               <Box
                 component="form"

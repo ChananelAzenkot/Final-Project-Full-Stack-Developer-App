@@ -13,7 +13,7 @@ export default function About(theme) {
               <div>הדרכה קצרה</div>
             </Typography>
             <Typography variant="h1">
-              GoPerfect
+              DataInsight
             </Typography>
             <Box className="underlineAbout"></Box>
             <Typography component="div" variant="body1" className="containerAboutText">
