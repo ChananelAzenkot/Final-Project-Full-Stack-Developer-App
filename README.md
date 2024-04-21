@@ -106,6 +106,5 @@ Admin side can edit users and track teams if they have sent data or track the da
 - **Morgan**: Request logging.
 - **Cors**: Cross-Origin Resource Sharing.
 - **Chalk**: Console output styling.
-- **Multer**: Adding image from front-end
 - **Moment**: Date formatting
 
