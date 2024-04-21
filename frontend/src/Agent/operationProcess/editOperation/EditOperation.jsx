@@ -115,7 +115,7 @@ export default function EditOperation({ dataOperation, theIDoperation }) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       handleClose();
-      snackbar("the card is updated success !");
+      snackbar("התפעול עודכן בהצלחה ! ");
       setTimeout(() => {
         window.location.reload();
       }, 1500);
