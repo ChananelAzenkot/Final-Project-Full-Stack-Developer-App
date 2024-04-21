@@ -148,6 +148,7 @@ export function EditPropClients({
                             autoComplete={s.name}
                             onChange={handelChange}
                             value={agentDataUpDate[s.name]}
+                            style={{display: s.name === "password" ? "none" : "block" }}
                           />
                         )}
                       </Grid>

@@ -250,9 +250,7 @@ export default function Account({ theme }) {
                                 required={s.required}
                                 fullWidth
                                 id={s.name}
-                                label={
-                                  s.label === "סיסמא" ? "לשנות סיסמא" : s.label
-                                }
+                                label={s.label}
                                 type={s.type}
                                 name={s.name}
                                 value={user[s.name] ? user[s.name] : ""}
