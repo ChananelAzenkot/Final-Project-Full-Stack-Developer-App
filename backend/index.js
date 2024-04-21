@@ -26,6 +26,7 @@ import putOperationAgent_Leader from './handlers/operation/putAgent_Leader/putOp
 import putSaleAgent_Leader from './handlers/operation/putAgent_Leader/putSaleAgent_Leader.js';
 import gerOperationCenterManger from './handlers/operation/getCenterManager/gerOperationCenterManger.js';
 import getSaleCenterManger from './handlers/operation/getCenterManager/getSaleCenterManger.js';
+import avg_for_team from './handlers/operation/getCenterManager/avg_for_team.js';
 
 // Connect to MongoDB //
   async function main() {
@@ -81,7 +82,7 @@ gerOperationCenterManger(app);
 getSaleAgent(app); 
 getSaleTeamLeader(app);
 getSaleCenterManger(app);
-
+avg_for_team(app);
 postOperations(app);
 
 putOperationAgent_Leader(app);
