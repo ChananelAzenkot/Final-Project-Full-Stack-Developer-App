@@ -220,7 +220,7 @@ export default function NewSale({ dataOperation, theIDoperation }) {
           origin: { y: 0.6 },
         });
         setTimeout(() => {
-          window.location.href = "/dailyOperation";
+          window.location.reload();
         }, 1800);
       })
       .catch((error) => {

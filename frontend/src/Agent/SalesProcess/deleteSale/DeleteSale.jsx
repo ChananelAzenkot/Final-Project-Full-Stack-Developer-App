@@ -84,7 +84,7 @@ export default function DeleteSale({ dataOperationSale, theIDoperationSale }) {
       handleClose();
       snackbar(`מכירה של ${item.customerCode} נמחק בהצלחה`, "success");
       setTimeout(() => {
-        window.location.href = "/dailyOperation";
+        window.location.reload();
       }, 1500);
     } catch (err) {
       snackbar(err.message, "error");

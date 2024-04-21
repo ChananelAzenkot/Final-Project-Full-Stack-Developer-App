@@ -8,8 +8,10 @@ import {
   DailyOperationSale,
   IncrementalOperationSale,
 } from "./schemasOperations&Sales/operationSale.model.js";
-export default (app) => {
+import { middlewareSales } from "../../middleware/middlewareSale.js";
+import moment from "moment";
 
+export default (app) => {
   app.delete(
     "/api/dailyOperationAgentEnd/:bizNumber",
     guard,
@@ -48,30 +50,82 @@ export default (app) => {
     "/api/dailyOperationStartSale/:bizNumber",
     guard,
     async (req, res) => {
-      const { userId } = getLoggedUserId(req, res);
+      const { userId, IsBusiness } = getLoggedUserId(req, res);
 
       if (!userId) {
         return res.status(403).json({ message: "User not authorized" });
       }
 
-      const bizNumber = req.params.bizNumber;
-
       try {
-        const dailyOperationSale = await DailyOperationSale.findOne({
-          bizNumber: bizNumber,
+        const toIncrementalOperationSale =
+          await IncrementalOperationSale.findOne({
+            bizNumber: req.params.bizNumber,
+          });
+        const toDailyOperationSale = await DailyOperationSale.findOne({
+          bizNumber: req.params.bizNumber,
         });
-        const incrementalOperationSale = await IncrementalOperationSale.findOne(
-          {
-            bizNumber: bizNumber,
-          }
-        );
 
-        if (!dailyOperationSale || !incrementalOperationSale) {
+        if (!toIncrementalOperationSale || !toDailyOperationSale) {
           return res.status(404).json({ message: "Operation not found" });
         }
 
-        await DailyOperationSale.deleteOne({ bizNumber: bizNumber });
-        await IncrementalOperationSale.deleteOne({ bizNumber: bizNumber });
+        if (
+          (toIncrementalOperationSale &&
+            toIncrementalOperationSale.user_id.toString() !== userId &&
+            !IsBusiness) ||
+          (toDailyOperationSale &&
+            toDailyOperationSale.user_id.toString() !== userId &&
+            !IsBusiness)
+        ) {
+          return res
+            .status(403)
+            .json({ message: "User not authorized to delete this operation" });
+        }
+
+        const createTime = moment(
+          toIncrementalOperationSale.createTime
+        ).startOf("day");
+        const incrementalOperation = await IncrementalOperation.findOne({
+          user_id: toIncrementalOperationSale.user_id,
+          createTime: {
+            $gte: new Date(createTime),
+            $lt: new Date(moment(createTime).add(1, "days")),
+          },
+        });
+
+        const dailyOperation = await DailyOperation.findOne({
+          user_id: toDailyOperationSale.user_id,
+          createTime: {
+            $gte: new Date(createTime),
+            $lt: new Date(moment(createTime).add(1, "days")),
+          },
+        });
+
+        if (incrementalOperation) {
+          incrementalOperation.sellerFiber -=
+            toIncrementalOperationSale.sellerFiber;
+          incrementalOperation.sellerTV -= toIncrementalOperationSale.sellerTV;
+          incrementalOperation.easyMesh -= toIncrementalOperationSale.easyMesh;
+          incrementalOperation.upgradeProgress -=
+            toIncrementalOperationSale.upgradeProgress;
+          await incrementalOperation.save();
+        }
+
+        if (dailyOperation) {
+          dailyOperation.sellerFiber -= toDailyOperationSale.sellerFiber;
+          dailyOperation.sellerTV -= toDailyOperationSale.sellerTV;
+          dailyOperation.easyMesh -= toDailyOperationSale.easyMesh;
+          dailyOperation.upgradeProgress -=
+            toDailyOperationSale.upgradeProgress;
+          await dailyOperation.save();
+        }
+
+        await IncrementalOperationSale.findOneAndDelete({
+          bizNumber: req.params.bizNumber,
+        });
+        await DailyOperationSale.findOneAndDelete({
+          bizNumber: req.params.bizNumber,
+        });
 
         res.send({ message: "Operation deleted successfully" });
       } catch (error) {
@@ -80,6 +134,3 @@ export default (app) => {
     }
   );
 };
-
-
-
