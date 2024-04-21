@@ -1,4 +1,4 @@
-import { guard, adminGuard, businessGuard } from "../../../guards.js";
+import { adminGuard } from "../../../guards.js";
 import {
   IncrementalOperation,
   DailyOperation,
@@ -8,7 +8,7 @@ import { User } from "../../users/models/user.model.js";
 export default (app) => {
 app.get(
   "/api/incrementalOperationByCenterManagerAvgTeam",
-  guard,
+  adminGuard,
   async (req, res) => {
     try {
       const { userId } = getLoggedUserId(req, res);
@@ -79,7 +79,7 @@ app.get(
         },
         {
           $group: {
-            _id: {teamName: "$teamName"},
+            _id: { teamName: "$teamName" },
             nameAgent: { $first: "$nameAgent" },
             createTime: { $first: "$createTime" },
             teamName: { $first: "$teamName" },

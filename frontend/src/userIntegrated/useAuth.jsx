@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-import { RoleTypes } from '../components/RoleTypes';
+import { RoleTypes } from "../components/RoleTypes";
 
 export const useAuth = (setUserRoleType, setLoader) => {
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
       setUserRoleType(RoleTypes.none);
       setLoader(false);
@@ -15,9 +15,9 @@ export const useAuth = (setUserRoleType, setLoader) => {
 
     const currentTime = Date.now().valueOf() / 1000;
     if (user.exp < currentTime) {
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       setUserRoleType(RoleTypes.none);
-      window.location.href = '/login';
+      window.location.href = "/login";
       setLoader(false);
       return;
     }

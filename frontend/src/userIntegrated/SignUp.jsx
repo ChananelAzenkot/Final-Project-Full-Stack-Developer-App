@@ -38,98 +38,97 @@ export default function SignUp(theme) {
     },
   });
   const [errors, setErrors] = useState({});
-  const [isFormValid , setIsFormValid] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
-const handelChange = (ev) => {
-  const { name, value } = ev.target;
-  let obj = { ...formData };
+  const handelChange = (ev) => {
+    const { name, value } = ev.target;
+    let obj = { ...formData };
 
-  if (name === 'phone') {
-    obj[name] = value.replace(/\D/g, ''); // remove non-digit characters
-  } else if (name.includes('.')) {
-    const [parent, child] = name.split('.');
-    obj[parent] = { ...obj[parent], [child]: value };
-  } else {
-    obj = { ...obj, [name]: value };
-  }
-
-  setFormData(obj);
-
-  const validate = schema.validate(obj, { abortEarly: false });
-  const tempErrors = { ...errors };
-  delete tempErrors[name];
-
-  if (validate.error) {
-    let item;
-    if (name.includes('.')) {
-      item = validate.error.details.find((e) => e.context.key === name.split('.')[1]);
+    if (name === "phone") {
+      obj[name] = value.replace(/\D/g, ""); // remove non-digit characters
+    } else if (name.includes(".")) {
+      const [parent, child] = name.split(".");
+      obj[parent] = { ...obj[parent], [child]: value };
     } else {
-      item = validate.error.details.find((e) => e.context.key === name);
+      obj = { ...obj, [name]: value };
     }
 
-    if (item) {
-      tempErrors[name] = item.message;
-    }
-  }
+    setFormData(obj);
 
-  setIsFormValid(!validate.error);
-  setErrors(tempErrors);
-};
-const handleSubmit = (ev) => {
-  ev.preventDefault();
-  const obj = {};
-  const elements = ev.target.elements;
+    const validate = schema.validate(obj, { abortEarly: false });
+    const tempErrors = { ...errors };
+    delete tempErrors[name];
 
-  clientStructure.forEach((s) => {
-    if (s.fields) {
-      const nestedObj = {};
-      s.fields.forEach((field) => {
-        if (field.type === "boolean") {
-          nestedObj[field.name] = elements[`${s.name}.${field.name}`].checked;
-        } else {
-          nestedObj[field.name] = elements[`${s.name}.${field.name}`].value;
-        }
-      });
-      obj[s.name] = nestedObj;
-    } else {
-      if (s.type === "boolean") {
-        obj[s.name] = elements[s.name].checked;
+    if (validate.error) {
+      let item;
+      if (name.includes(".")) {
+        item = validate.error.details.find(
+          (e) => e.context.key === name.split(".")[1]
+        );
       } else {
-        obj[s.name] = elements[s.name].value;
+        item = validate.error.details.find((e) => e.context.key === name);
+      }
+
+      if (item) {
+        tempErrors[name] = item.message;
       }
     }
-  });
 
-  setLoader(true);
+    setIsFormValid(!validate.error);
+    setErrors(tempErrors);
+  };
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+    const obj = {};
+    const elements = ev.target.elements;
 
-  fetch(
-  `http://localhost:4000/signup`,
-  {
-    credentials: "include",
-    method: "POST",
-    headers: { "Content-type": "application/json" },
-    body: JSON.stringify(obj),
-  }
-)
-.then((res) => res.text())
-.then((text) => {
-  try {
-    return JSON.parse(text);
-  } catch {
-    return text;
-  }
-})
-.then((data) => {
-  if (typeof data === 'object') {
+    clientStructure.forEach((s) => {
+      if (s.fields) {
+        const nestedObj = {};
+        s.fields.forEach((field) => {
+          if (field.type === "boolean") {
+            nestedObj[field.name] = elements[`${s.name}.${field.name}`].checked;
+          } else {
+            nestedObj[field.name] = elements[`${s.name}.${field.name}`].value;
+          }
+        });
+        obj[s.name] = nestedObj;
+      } else {
+        if (s.type === "boolean") {
+          obj[s.name] = elements[s.name].checked;
+        } else {
+          obj[s.name] = elements[s.name].value;
+        }
+      }
+    });
+
+    setLoader(true);
+
+    fetch(`http://localhost:4000/signup`, {
+      credentials: "include",
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(obj),
+    })
+      .then((res) => res.text())
+      .then((text) => {
+        try {
+          return JSON.parse(text);
+        } catch {
+          return text;
+        }
+      })
+      .then((data) => {
+        if (typeof data === "object") {
+          navigate("/login");
+        } else {
+          throw new Error(data);
+        }
+      })
+      .catch((err) => alert(err.message))
+      .finally(() => setLoader(false));
     navigate("/login");
-  } else {
-    throw new Error(data);
-  }
-})
-.catch((err) => alert(err.message))
-.finally(() => setLoader(false));
-navigate("/login");
-};
+  };
   return (
     <>
       {
@@ -146,7 +145,7 @@ navigate("/login");
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-              הרשמה למערכת - DataInsight⚡️
+                הרשמה למערכת - DataInsight⚡️
               </Typography>
               <Box
                 component="form"
@@ -175,9 +174,9 @@ navigate("/login");
                             />
                           ) : (
                             <TextField
-                            size="small"
-                            error={errors[`${s.name}.${field.name}`]}
-                            helperText={errors[`${s.name}.${field.name}`]}
+                              size="small"
+                              error={errors[`${s.name}.${field.name}`]}
+                              helperText={errors[`${s.name}.${field.name}`]}
                               margin="normal"
                               required={field.required}
                               fullWidth
@@ -202,9 +201,9 @@ navigate("/login");
                             />
                           ) : (
                             <TextField
-                            size="small"
-                            error={errors[`${s.name}`]}
-                            helperText={errors[`${s.name}`]}
+                              size="small"
+                              error={errors[`${s.name}`]}
+                              helperText={errors[`${s.name}`]}
                               margin="normal"
                               required={s.required}
                               fullWidth
@@ -227,10 +226,10 @@ navigate("/login");
                   variant="contained"
                   disabled={!isFormValid}
                   sx={{ mt: 3, mb: 2 }}>
-                   הירשם
+                  הירשם
                 </Button>
                 <Button
-                style={{backgroundColor: "#4ed2c1"}}
+                  style={{ backgroundColor: "#4ed2c1" }}
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -250,4 +249,3 @@ navigate("/login");
     </>
   );
 }
-

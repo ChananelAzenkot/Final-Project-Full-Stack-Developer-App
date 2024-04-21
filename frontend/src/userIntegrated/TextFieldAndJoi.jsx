@@ -6,7 +6,7 @@ const schema = Joi.object({
       "string.empty": "שם פרטי  הינו חובה",
       "string.min": "השם חייב להכיל לפחות שתי תווים",
     }),
-    middle: Joi.string().allow('').optional(),
+    middle: Joi.string().allow("").optional(),
     last: Joi.string().min(2).required().messages({
       "string.empty": "שם משפחה הינו חובה",
       "string.min": "שם משפחה חייב להכיל לפחות שתי תווים",
@@ -16,7 +16,7 @@ const schema = Joi.object({
     "string.empty": "כתובת מייל הינה חובה",
     "string.email": "כתובת האיימל אינה תקינה",
   }),
-  IsBusiness: Joi.boolean().allow(''),
+  IsBusiness: Joi.boolean().allow(""),
   phone: Joi.string()
     .max(10)
     .pattern(/^0(5[^7]|[2-4]|[8-9]|7[0-9])[0-9]{7}$/)
@@ -39,23 +39,22 @@ const schema = Joi.object({
         "הסיסמה חייבת להכיל לפחות אות אחת גדולה ותו מיוחד אחד",
     }),
   image: Joi.object({
-    url: Joi.string().pattern(/(http(s?):)([/|.|\w|\s|-])*\./).required().messages({
-      "string.empty": "נדרש קישור לתמונה",
-    }),
+    url: Joi.string()
+      .pattern(/(http(s?):)([/|.|\w|\s|-])*\./)
+      .required()
+      .messages({
+        "string.empty": "נדרש קישור לתמונה",
+      }),
     alt: Joi.string().required().messages({
       "string.empty": "תיאור תמונה נדרש",
     }),
   }),
-    teamName: Joi.string()
-    .valid("iron", "impact", "toy")
-    .required()
-    .messages({
-      "any.only": "שם הצוות חייב להיות אחד מהאפשרויות הבאות: iron, impact, toy",
-      "string.empty": "שם הצוות הינו חובה",
-    }),
-  serviceDepartment: Joi.boolean().allow(''),
-  conservationDepartment: Joi.boolean().allow(''),
-
+  teamName: Joi.string().valid("iron", "impact", "toy").required().messages({
+    "any.only": "שם הצוות חייב להיות אחד מהאפשרויות הבאות: iron, impact, toy",
+    "string.empty": "שם הצוות הינו חובה",
+  }),
+  serviceDepartment: Joi.boolean().allow(""),
+  conservationDepartment: Joi.boolean().allow(""),
 });
 
 export default schema;

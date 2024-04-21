@@ -10,14 +10,14 @@ import PropTypes from "prop-types";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { DeleteOperationProp } from "./DeleteOperationProp";
 
-  DeleteOperation.propTypes = {
-    dataOperation: PropTypes.shape({
-      teamName: PropTypes.string,
-      nameAgent: PropTypes.string,
-      createTime: PropTypes.string,
-    }).isRequired,
-    theIDoperation: PropTypes.number.isRequired,
-  };
+DeleteOperation.propTypes = {
+  dataOperation: PropTypes.shape({
+    teamName: PropTypes.string,
+    nameAgent: PropTypes.string,
+    createTime: PropTypes.string,
+  }).isRequired,
+  theIDoperation: PropTypes.number.isRequired,
+};
 
 export default function DeleteOperation({ dataOperation, theIDoperation }) {
   const { snackbar, setIsLoader } = useContext(GeneralContext);
@@ -55,7 +55,6 @@ export default function DeleteOperation({ dataOperation, theIDoperation }) {
     }
   }, [id, setIsLoader, initialValues]);
 
-
   const DeleteOperation = async (e) => {
     e.preventDefault();
     try {
@@ -75,7 +74,8 @@ export default function DeleteOperation({ dataOperation, theIDoperation }) {
         throw new Error(data.message);
       }
       handleClose();
-      snackbar(`תפעול של ${item.nameAgent} נמחק בהצלחה`, "success");setTimeout(() => {
+      snackbar(`תפעול של ${item.nameAgent} נמחק בהצלחה`, "success");
+      setTimeout(() => {
         window.location.reload();
       }, 1500);
     } catch (err) {
@@ -85,9 +85,7 @@ export default function DeleteOperation({ dataOperation, theIDoperation }) {
 
   return (
     <Box>
-      <IconButton
-        style={{ width: "auto" }}
-        onClick={handleOpen}>
+      <IconButton style={{ width: "auto" }} onClick={handleOpen}>
         <DeleteForeverIcon />
       </IconButton>
       <DeleteOperationProp

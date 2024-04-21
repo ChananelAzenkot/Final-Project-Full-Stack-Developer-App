@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { DeleteUserProp } from "./DeleteUserProp";
 
-  DeleteClient.propTypes = {
+DeleteClient.propTypes = {
   dataClient: PropTypes.shape({
     name: PropTypes.shape({
       first: PropTypes.string.isRequired,
@@ -20,19 +20,19 @@ import { DeleteUserProp } from "./DeleteUserProp";
     teamName: PropTypes.string.isRequired,
   }),
   theIDclient: PropTypes.string.isRequired,
-  };
+};
 
 export default function DeleteClient({ theIDclient, dataClient }) {
   const { snackbar, setIsLoader } = useContext(GeneralContext);
 
   const initialValues = useMemo(
     () => ({
-        name:{
-            first:dataClient.name.first,
-            middle:dataClient.name.middle,
-            last:dataClient.name.last,
-        },
-        teamName: dataClient.teamName,
+      name: {
+        first: dataClient.name.first,
+        middle: dataClient.name.middle,
+        last: dataClient.name.last,
+      },
+      teamName: dataClient.teamName,
     }),
     [dataClient]
   );
@@ -60,23 +60,20 @@ export default function DeleteClient({ theIDclient, dataClient }) {
     }
   }, [id, setIsLoader, initialValues]);
 
-
   const DeleteUser = async (e) => {
     e.preventDefault();
     try {
-        fetch(
-        `http://localhost:4000/api/user/${theIDclient}`,
-        {
-          credentials: "include",
-          method: "DELETE",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: localStorage.token,
-          },
-        }
-      );
+      fetch(`http://localhost:4000/api/user/${theIDclient}`, {
+        credentials: "include",
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.token,
+        },
+      });
       handleClose();
-      snackbar(`היוזר  של ${item.name.first} נמחק בהצלחה`, "success");setTimeout(() => {
+      snackbar(`היוזר  של ${item.name.first} נמחק בהצלחה`, "success");
+      setTimeout(() => {
         window.location.reload();
       }, 1500);
     } catch (err) {

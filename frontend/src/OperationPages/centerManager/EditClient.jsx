@@ -9,7 +9,6 @@ import { EditPropClients } from "./EditPropClients";
 import schema from "../../userIntegrated/TextFieldAndJoi";
 import clientStructure from "../../userIntegrated/ClientStructure";
 
-
 EditClient.propTypes = {
   dataClient: PropTypes.shape({
     name: PropTypes.shape({
@@ -38,19 +37,19 @@ export default function EditClient({ dataClient, theIDclient }) {
 
   const initialValues = useMemo(
     () => ({
-        name:{
-            first:dataClient.name.first,
-            middle:dataClient.name.middle,
-            last:dataClient.name.last,
-        },
-        IsBusiness: dataClient.IsBusiness,
-        isAdmin: dataClient.isAdmin,
-        serviceDepartment: dataClient.serviceDepartment,
-        conservationDepartment: dataClient.conservationDepartment,
-        teamName: dataClient.teamName,
-        phone: dataClient.phone,
-        email: dataClient.email,
-        image: dataClient.image,
+      name: {
+        first: dataClient.name.first,
+        middle: dataClient.name.middle,
+        last: dataClient.name.last,
+      },
+      IsBusiness: dataClient.IsBusiness,
+      isAdmin: dataClient.isAdmin,
+      serviceDepartment: dataClient.serviceDepartment,
+      conservationDepartment: dataClient.conservationDepartment,
+      teamName: dataClient.teamName,
+      phone: dataClient.phone,
+      email: dataClient.email,
+      image: dataClient.image,
     }),
     [dataClient]
   );

@@ -22,14 +22,10 @@ export const schemaSales = Joi.object({
     .min(0)
     .max(15)
     .message("כמות השדרוגים חייבת להיות בין1 -2 ספרות"),
-      customerCode: Joi.string()
-    .required()
-    .min(9)
-    .max(9)
-    .messages({
-      "string.empty": "קוד לקוח חובה",
-      "string.min": "קוד לקוח חייב להיות בדיוק 9 תווים",
-    }),
+  customerCode: Joi.string().required().min(9).max(9).messages({
+    "string.empty": "קוד לקוח חובה",
+    "string.min": "קוד לקוח חייב להיות בדיוק 9 תווים",
+  }),
   targets: Joi.number()
     .min(0)
     .max(30)
@@ -38,7 +34,8 @@ export const schemaSales = Joi.object({
   teamName: Joi.string()
     .required()
     .pattern(/iron|impact|toy/)
-    .message("The team name must include 'iron' or 'impact' or 'toy'").allow(""),
+    .message("The team name must include 'iron' or 'impact' or 'toy'")
+    .allow(""),
   userId: Joi.string().allow(""),
   user_id: Joi.string().allow(""),
 });
@@ -46,5 +43,3 @@ export const schemaSales = Joi.object({
 export const middlewareBiz = Joi.object({
   newBizNumber: Joi.number().min(100000000).max(999999999),
 });
-
-

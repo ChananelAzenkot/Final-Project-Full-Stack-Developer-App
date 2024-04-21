@@ -58,10 +58,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function SalesOperationIncremental() {
   const [seller, setSeller] = useState([]);
-    const [selectedMonthSales, setSelectedMonthSales] = useState(moment().format("MM/YYYY"));
-    const [months, setMonths] = useState([]);
+  const [selectedMonthSales, setSelectedMonthSales] = useState(
+    moment().format("MM/YYYY")
+  );
+  const [months, setMonths] = useState([]);
   const { snackbar } = useContext(GeneralContext);
-  
+
   useEffect(() => {
     fetch(`http://localhost:4000/api/incrementalOperationSale`, {
       credentials: "include",
@@ -73,12 +75,12 @@ export default function SalesOperationIncremental() {
     })
       .then((res) => res.json())
       .then((data) => {
-        snackbar(data.message ? data.message : "המכירות של החודש המצטבר נטען בהצלחה !");
+        snackbar(
+          data.message ? data.message : "המכירות של החודש המצטבר נטען בהצלחה !"
+        );
         const uniqueMonths = [
           ...new Set(
-            data.map((seller) =>
-              moment(seller.createTime).format("MM/YYYY")
-            )
+            data.map((seller) => moment(seller.createTime).format("MM/YYYY"))
           ),
         ];
         setMonths(uniqueMonths);
@@ -86,116 +88,132 @@ export default function SalesOperationIncremental() {
       });
   }, []);
 
-    const handleMonthChange = (event) => {
+  const handleMonthChange = (event) => {
     setSelectedMonthSales(event.target.value);
   };
 
   const filterOperationSales = seller.filter((seller) => {
- return moment(seller.createTime).format("MM/YYYY") === selectedMonthSales;
-  }); 
+    return moment(seller.createTime).format("MM/YYYY") === selectedMonthSales;
+  });
 
   return (
     <>
-    {!seller.length ?
+      {!seller.length ? (
         <div className="titleOperationAndAgents">
-      <h3>{`אין עדין מכירות לחודש הנוכחי`}</h3>
-    </div>
-    :
-    <>
-      <div className="titleOperationAndAgents">
-        <h3>{`תפעול מכירות של חודש : ${moment(selectedMonthSales, "MM/YYYY").format(
-          "MM/YYYY"
-        )}`}</h3>
-        <FormControl
-          variant="standard"
-          sx={{ m: 1, minWidth: 120 }}
-          style={{ marginTop: "-5px" }}>
-          <InputLabel id="demo-simple-select-standard-label">
-            בחירת חודש
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={selectedMonthSales}
-            onChange={handleMonthChange}
-            label="בחירת חודש">
-            <MenuItem value={selectedMonthSales}>
-              <em>חודשים מצטברים</em>
-            </MenuItem>
-            {months.map((month) => (
-              <MenuItem key={month} value={month}>
-                {month}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
-      {
-        <TableContainer component={Paper} id="container" style={{ maxHeight: '500px', overflowY: 'scroll' }}>
-          <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>תאריך ביצוע</StyledTableCell>
-                <StyledTableCell>שם צוות</StyledTableCell>
-                <StyledTableCell>שם נציג</StyledTableCell>
-                <StyledTableCell align="right">קוד לקוח</StyledTableCell>
-                <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
-                <StyledTableCell align="right">מכר - TV</StyledTableCell>
-                <StyledTableCell align="right">EasyMesh</StyledTableCell>
-                <StyledTableCell align="right">שדרוג</StyledTableCell>
-                <StyledTableCell align="right">יעדים</StyledTableCell>
-                <StyledTableCell align="right">עדכון מכירה</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Array.isArray(filterOperationSales) &&
-                filterOperationSales.map((seller, index) => (
-                  <StyledTableRow key={index}>
-                    <StyledTableCell component="th" scope="row">
-                      {moment(seller.createTime).format("DD/MM/YYYY")}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {seller.teamName}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {seller.nameAgent}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {seller.customerCode}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {seller.sellerFiber}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {seller.sellerTV}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {seller.easyMesh}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {seller.upgradeProgress}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {seller.sellerFiber + seller.sellerTV + seller.easyMesh + seller.upgradeProgress}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                        <EditSales theIDoperationSale={seller.bizNumber} dataOperationSale={seller} />
-                    </StyledTableCell>
-                  </StyledTableRow>
+          <h3>{`אין עדין מכירות לחודש הנוכחי`}</h3>
+        </div>
+      ) : (
+        <>
+          <div className="titleOperationAndAgents">
+            <h3>{`תפעול מכירות של חודש : ${moment(
+              selectedMonthSales,
+              "MM/YYYY"
+            ).format("MM/YYYY")}`}</h3>
+            <FormControl
+              variant="standard"
+              sx={{ m: 1, minWidth: 120 }}
+              style={{ marginTop: "-5px" }}>
+              <InputLabel id="demo-simple-select-standard-label">
+                בחירת חודש
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={selectedMonthSales}
+                onChange={handleMonthChange}
+                label="בחירת חודש">
+                <MenuItem value={selectedMonthSales}>
+                  <em>חודשים מצטברים</em>
+                </MenuItem>
+                {months.map((month) => (
+                  <MenuItem key={month} value={month}>
+                    {month}
+                  </MenuItem>
                 ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      }
-      <div className="titleOperationAndAgents">
-        <h3 style={{ fontSize: "20px" }}>{`שלום, ${seller[0]?.nameAgent} . סך הביצועים של החודש :)`}</h3>
-      </div>
-      <IncrementalOperatingAverageSale
-        selectedMonthSales={selectedMonthSales}
-        setSelectedMonthSales={setSelectedMonthSales}
-      />
-    </>
-    }
+              </Select>
+            </FormControl>
+          </div>
+          {
+            <TableContainer
+              component={Paper}
+              id="container"
+              style={{ maxHeight: "500px", overflowY: "scroll" }}>
+              <Table
+                sx={{ minWidth: 700 }}
+                stickyHeader
+                aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>תאריך ביצוע</StyledTableCell>
+                    <StyledTableCell>שם צוות</StyledTableCell>
+                    <StyledTableCell>שם נציג</StyledTableCell>
+                    <StyledTableCell align="right">קוד לקוח</StyledTableCell>
+                    <StyledTableCell align="right">מכר - Fiber</StyledTableCell>
+                    <StyledTableCell align="right">מכר - TV</StyledTableCell>
+                    <StyledTableCell align="right">EasyMesh</StyledTableCell>
+                    <StyledTableCell align="right">שדרוג</StyledTableCell>
+                    <StyledTableCell align="right">יעדים</StyledTableCell>
+                    <StyledTableCell align="right">עדכון מכירה</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {Array.isArray(filterOperationSales) &&
+                    filterOperationSales.map((seller, index) => (
+                      <StyledTableRow key={index}>
+                        <StyledTableCell component="th" scope="row">
+                          {moment(seller.createTime).format("DD/MM/YYYY")}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {seller.teamName}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {seller.nameAgent}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {seller.customerCode}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {seller.sellerFiber}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {seller.sellerTV}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {seller.easyMesh}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {seller.upgradeProgress}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {seller.sellerFiber +
+                            seller.sellerTV +
+                            seller.easyMesh +
+                            seller.upgradeProgress}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          <EditSales
+                            theIDoperationSale={seller.bizNumber}
+                            dataOperationSale={seller}
+                          />
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          }
+          <div className="titleOperationAndAgents">
+            <h3
+              style={{
+                fontSize: "20px",
+              }}>{`שלום, ${seller[0]?.nameAgent} . סך הביצועים של החודש :)`}</h3>
+          </div>
+          <IncrementalOperatingAverageSale
+            selectedMonthSales={selectedMonthSales}
+            setSelectedMonthSales={setSelectedMonthSales}
+          />
+        </>
+      )}
     </>
   );
 }

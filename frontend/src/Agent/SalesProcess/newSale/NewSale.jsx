@@ -26,9 +26,8 @@ const style = {
   p: 4,
 };
 
-export default function NewSale({dataOperation , theIDoperation}) {
-
-      NewSale.propTypes = {
+export default function NewSale({ dataOperation, theIDoperation }) {
+  NewSale.propTypes = {
     dataOperation: PropTypes.shape({
       sellerFiber: PropTypes.number,
       sellerTV: PropTypes.number,
@@ -41,7 +40,7 @@ export default function NewSale({dataOperation , theIDoperation}) {
     theIDoperation: PropTypes.number.isRequired,
   };
 
-    const { setIsLoader } = useContext(GeneralContext);
+  const { setIsLoader } = useContext(GeneralContext);
 
   const initialValues = useMemo(
     () => ({
@@ -75,7 +74,7 @@ export default function NewSale({dataOperation , theIDoperation}) {
     targets: 2,
     customerCode: "",
   });
-  
+
   const [user, setUser] = useState({
     name: {
       first: "",
@@ -138,7 +137,7 @@ export default function NewSale({dataOperation , theIDoperation}) {
   };
 
   const { id } = useParams();
-    useEffect(() => {
+  useEffect(() => {
     if (id === "new") {
       setItem(initialValues);
     } else if (id !== undefined) {
@@ -155,63 +154,79 @@ export default function NewSale({dataOperation , theIDoperation}) {
     }
   }, [id, setIsLoader, initialValues]);
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  const { error } = schemaSales.validate(saleData);
-  if (error) {
-    snackbar(error.details[0].message);
-    return;
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { error } = schemaSales.validate(saleData);
+    if (error) {
+      snackbar(error.details[0].message);
+      return;
+    }
 
-  const postRequest = fetch(`http://localhost:4000/api/dailyOperationStartSale`, {
-    credentials: "include",
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: localStorage.token,
-    },
-    body: JSON.stringify(saleData),
-  });
+    const postRequest = fetch(
+      `http://localhost:4000/api/dailyOperationStartSale`,
+      {
+        credentials: "include",
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.token,
+        },
+        body: JSON.stringify(saleData),
+      }
+    );
 
-  const updatedSaleData = {
-  sellerFiber: parseFloat(dataOperation.sellerFiber) + parseFloat(saleData.sellerFiber),
-  sellerTV: parseFloat(dataOperation.sellerTV) + parseFloat(saleData.sellerTV),
-  easyMesh: parseFloat(dataOperation.easyMesh) + parseFloat(saleData.easyMesh),
-  upgradeProgress: parseFloat(dataOperation.upgradeProgress) + parseFloat(saleData.upgradeProgress),
-  customerCode: saleData.customerCode,
-};
+    const updatedSaleData = {
+      sellerFiber:
+        parseFloat(dataOperation.sellerFiber) +
+        parseFloat(saleData.sellerFiber),
+      sellerTV:
+        parseFloat(dataOperation.sellerTV) + parseFloat(saleData.sellerTV),
+      easyMesh:
+        parseFloat(dataOperation.easyMesh) + parseFloat(saleData.easyMesh),
+      upgradeProgress:
+        parseFloat(dataOperation.upgradeProgress) +
+        parseFloat(saleData.upgradeProgress),
+      customerCode: saleData.customerCode,
+    };
 
-  const putRequest = fetch(`http://localhost:4000/api/dailyOperationAgentUpdateForSale/${theIDoperation}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: localStorage.token,
-    },
-    body: JSON.stringify(updatedSaleData),
-  });
+    const putRequest = fetch(
+      `http://localhost:4000/api/dailyOperationAgentUpdateForSale/${theIDoperation}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.token,
+        },
+        body: JSON.stringify(updatedSaleData),
+      }
+    );
 
-  Promise.all([postRequest, putRequest])
-    .then(responses => Promise.all(responses.map(response => response.json())))
-    .then(([saleData]) => {
-      setSaleData(saleData);
-      handleClose();
-      snackbar(`המכירה של קוד לקוח : ${updatedSaleData.customerCode} נוספה בהצלחה !`);
+    Promise.all([postRequest, putRequest])
+      .then((responses) =>
+        Promise.all(responses.map((response) => response.json()))
+      )
+      .then(([saleData]) => {
+        setSaleData(saleData);
+        handleClose();
+        snackbar(
+          `המכירה של קוד לקוח : ${updatedSaleData.customerCode} נוספה בהצלחה !`
+        );
 
-      const confettiCanvas = document.getElementById("confetti-canvas");
-      confetti(confettiCanvas, {
-        particleCount: 100,
-        spread: 70,
-        decay: 0.9,
-        origin: { y: 0.6 },
+        const confettiCanvas = document.getElementById("confetti-canvas");
+        confetti(confettiCanvas, {
+          particleCount: 100,
+          spread: 70,
+          decay: 0.9,
+          origin: { y: 0.6 },
+        });
+        setTimeout(() => {
+          window.location.href = "/dailyOperation";
+        }, 1800);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
-      setTimeout(() => {
-        window.location.href = "/dailyOperation";
-      }, 1800);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-};
+  };
 
   return (
     <Box>

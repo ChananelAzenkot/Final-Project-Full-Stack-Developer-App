@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 // create a token for the user //
 export const getLoggedUserId = (req, res) => {
   try {
@@ -21,6 +21,3 @@ export const getLoggedUserId = (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-
-

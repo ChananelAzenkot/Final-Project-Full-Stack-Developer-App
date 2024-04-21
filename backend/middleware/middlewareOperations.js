@@ -59,7 +59,3 @@ export const middlewareOperations = Joi.object({
 export const middlewareBiz = Joi.object({
   newBizNumber: Joi.number().min(100000000).max(999999999),
 });
-
-
-
-

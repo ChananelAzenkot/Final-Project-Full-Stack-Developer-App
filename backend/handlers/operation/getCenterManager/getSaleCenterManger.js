@@ -1,8 +1,6 @@
 import { adminGuard } from "../../../guards.js";
 import { getLoggedUserId } from "../../../config/config.js";
-import { User } from "../../users/models/user.model.js";
 import {
-  DailyOperationSale,
   IncrementalOperationSale,
 } from "../schemasOperations&Sales/operationSale.model.js";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "@mui/material/Modal";
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import "../../../styles/CreateCards.css";
 import { useContext } from "react";
 import { GeneralContext } from "../../../App";
@@ -8,7 +8,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { jwtDecode } from "jwt-decode";
 import { schemaOperations } from "../../../schemas/schemaOperation";
-import {calculatePercentageTVcreate, calculatePercentageFiberCreate } from "../../../components/calculatePercentage";
+import {
+  calculatePercentageTVcreate,
+  calculatePercentageFiberCreate,
+} from "../../../components/calculatePercentage";
 import { handleInput } from "../../../components/handleInput";
 import CreateOperationInputs from "./CreateOperationInputs";
 
@@ -25,7 +28,6 @@ const style = {
 };
 
 export default function CreateOperation() {
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -47,129 +49,121 @@ export default function CreateOperation() {
     satisfaction: "",
   });
 
-    const [user, setUser] = useState({
+  const [user, setUser] = useState({
     name: {
       first: "",
       last: "",
     },
-    });
+  });
 
-useEffect(() => {
-  const token = localStorage.getItem('token');
-  
-  const decodedToken = jwtDecode(token);
-  const userId = decodedToken.userId;
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-  fetch(
-    `http://localhost:4000/api/user/${userId}`,
-    {
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.userId;
+
+    fetch(`http://localhost:4000/api/user/${userId}`, {
       credentials: "include",
       method: "GET",
       headers: {
         "Content-type": "application/json",
-        'Authorization': token,
-      }
-    }
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      setUser(data);
-    });
-}, []);
+        Authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data);
+      });
+  }, []);
 
-  const [nameAgent, setNameAgent] = useState('');
-  const [teamName, setTeamName] = useState('');
-
-useEffect(() => {
-  if (user && user.name && user.name.first) {
-    setNameAgent(user.name.first + " " + user.name.last);
-  }
-}, [user]);
-
-useEffect(() => {
-  if (user && user.teamName) {
-    setTeamName(user.teamName);
-  }
-}, [user]);
-
-useEffect(() => {
-  setFormData(prevState => ({ ...prevState, teamName }));
-}, [teamName]);
-
-useEffect(() => {
-  setFormData(prevState => ({ ...prevState, nameAgent }));
-}, [nameAgent]);
+  const [nameAgent, setNameAgent] = useState("");
+  const [teamName, setTeamName] = useState("");
 
   useEffect(() => {
-  calculatePercentageTVcreate(formData, setFormData);
-}, [formData.numberCalls, formData.tvDisconnection, formData.simurTV]);
+    if (user && user.name && user.name.first) {
+      setNameAgent(user.name.first + " " + user.name.last);
+    }
+  }, [user]);
 
-useEffect(() => {
-  calculatePercentageFiberCreate(formData, setFormData);
-}, [formData.numberCalls, formData.fiberDisconnection, formData.simurFiber]);
+  useEffect(() => {
+    if (user && user.teamName) {
+      setTeamName(user.teamName);
+    }
+  }, [user]);
 
-const onInputChange = (e) => {
-  handleInput(e, formData, setFormData, errors, setErrors, setIsFormValid);
-};
+  useEffect(() => {
+    setFormData((prevState) => ({ ...prevState, teamName }));
+  }, [teamName]);
 
+  useEffect(() => {
+    setFormData((prevState) => ({ ...prevState, nameAgent }));
+  }, [nameAgent]);
 
-   const handleSubmit = (e) => {
+  useEffect(() => {
+    calculatePercentageTVcreate(formData, setFormData);
+  }, [formData.numberCalls, formData.tvDisconnection, formData.simurTV]);
+
+  useEffect(() => {
+    calculatePercentageFiberCreate(formData, setFormData);
+  }, [formData.numberCalls, formData.fiberDisconnection, formData.simurFiber]);
+
+  const onInputChange = (e) => {
+    handleInput(e, formData, setFormData, errors, setErrors, setIsFormValid);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     const { error } = schemaOperations.validate(formData);
-    if(error){
+    if (error) {
       snackbar(error.details[0].message);
       return;
     }
-    fetch(
-      `http://localhost:4000/api/dailyOperationAgentStart`,
-      {
-        credentials: "include",
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        'Authorization': localStorage.token,
+    fetch(`http://localhost:4000/api/dailyOperationAgentStart`, {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: localStorage.token,
       },
-        body: JSON.stringify(formData),
-      }
-    )
-      .then((data) => {
-        setFormData(data);
-        localStorage.setItem('submitTime', new Date());
-        snackbar("התפעול נוצר בהצלחה !");
-        setTimeout(() => {
-          window.location.href = "/dailyOperation";
-        }, 1500);
-        setIsDisabled(true);
-        handleClose();
-        calculatePercentageTVcreate(formData, setFormData);
-        calculatePercentageFiberCreate(formData, setFormData);
-      });
+      body: JSON.stringify(formData),
+    }).then((data) => {
+      setFormData(data);
+      localStorage.setItem("submitTime", new Date());
+      snackbar("התפעול נוצר בהצלחה !");
+      setTimeout(() => {
+        window.location.href = "/dailyOperation";
+      }, 1500);
+      setIsDisabled(true);
+      handleClose();
+      calculatePercentageTVcreate(formData, setFormData);
+      calculatePercentageFiberCreate(formData, setFormData);
+    });
   };
 
-      useEffect(() => {
-    const submitTime = localStorage.getItem('submitTime');
+  useEffect(() => {
+    const submitTime = localStorage.getItem("submitTime");
     if (submitTime) {
       const now = new Date();
       const timeDifference = now.getTime() - new Date(submitTime).getTime();
       const differenceInHours = timeDifference / (1000 * 60 * 60);
-if (differenceInHours < 24) {
-  setIsDisabled(true);
-} else {
-  setIsDisabled(false);
-  localStorage.removeItem('submitTime');
-}
+      if (differenceInHours < 24) {
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false);
+        localStorage.removeItem("submitTime");
+      }
     }
   }, []);
 
   return (
     <Box>
       <Button
-      disabled={isDisabled}
-      variant="contained"
+        disabled={isDisabled}
+        variant="contained"
         id="BtnStart"
         onClick={handleOpen}
         style={{ width: "auto" }}>
-          התחל נתונים
+        התחל נתונים
       </Button>
       <Modal
         open={open}
@@ -178,8 +172,8 @@ if (differenceInHours < 24) {
         aria-describedby="modal-modal-description">
         <Box id="boxCards" sx={style}>
           <CreateOperationInputs
-          nameAgent={nameAgent}
-          teamName={teamName}
+            nameAgent={nameAgent}
+            teamName={teamName}
             formData={formData}
             onInputChange={onInputChange}
             errors={errors}

@@ -51,7 +51,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function OperatingAverageSaleTeam() {
-
   const [operationAverageSaleTeam, setOperationAverageSaleTeam] = useState([]);
   const { snackbar } = useContext(GeneralContext);
 
@@ -73,7 +72,7 @@ export default function OperatingAverageSaleTeam() {
 
   console.log(operationAverageSaleTeam[0]);
 
-    const [operation, setOperation] = useState([]);
+  const [operation, setOperation] = useState([]);
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/operationTeam`, {
@@ -88,7 +87,9 @@ export default function OperatingAverageSaleTeam() {
       .then((data) => {
         setOperation(data);
         setTimeout(() => {
-          snackbar(data.message ? data.message : "הממצוע של הצוות נטען בהצלחה !");
+          snackbar(
+            data.message ? data.message : "הממצוע של הצוות נטען בהצלחה !"
+          );
         }, 2000);
       });
   }, []);
@@ -102,35 +103,62 @@ export default function OperatingAverageSaleTeam() {
             <TableHead>
               <TableRow>
                 <StyledTableCell>ס׳׳כ פעולות</StyledTableCell>
-                <StyledTableCell align="right">מכירות - Fiber מצטבר</StyledTableCell>
-                <StyledTableCell align="right"> מכירות - TV מצטבר</StyledTableCell>
-                <StyledTableCell align="right">EasyMesh - מצטבר</StyledTableCell>
+                <StyledTableCell align="right">
+                  מכירות - Fiber מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {" "}
+                  מכירות - TV מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  EasyMesh - מצטבר
+                </StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
               </TableRow>
             </TableHead>
-       <TableBody>
-  {operationAverageSaleTeam[0] && (
-    <StyledTableRow key={0}>
-      <StyledTableCell component="th" scope="row">
-         {Object.values(operationAverageSaleTeam[0][Object.keys(operationAverageSaleTeam[0])[0]]).reduce((a, b) => a + b, 0)}
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        {operationAverageSaleTeam[0][Object.keys(operationAverageSaleTeam[0])[0]].totalSellerFiber}
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        {operationAverageSaleTeam[0][Object.keys(operationAverageSaleTeam[0])[0]].totalSellerTV}
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        {operationAverageSaleTeam[0][Object.keys(operationAverageSaleTeam[0])[0]].totalEasyMesh}
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        {operationAverageSaleTeam[0][Object.keys(operationAverageSaleTeam[0])[0]].totalUpgradeProgress}
-      </StyledTableCell>
-    </StyledTableRow>
-  )}
-</TableBody>
+            <TableBody>
+              {operationAverageSaleTeam[0] && (
+                <StyledTableRow key={0}>
+                  <StyledTableCell component="th" scope="row">
+                    {Object.values(
+                      operationAverageSaleTeam[0][
+                        Object.keys(operationAverageSaleTeam[0])[0]
+                      ]
+                    ).reduce((a, b) => a + b, 0)}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {
+                      operationAverageSaleTeam[0][
+                        Object.keys(operationAverageSaleTeam[0])[0]
+                      ].totalSellerFiber
+                    }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {
+                      operationAverageSaleTeam[0][
+                        Object.keys(operationAverageSaleTeam[0])[0]
+                      ].totalSellerTV
+                    }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {
+                      operationAverageSaleTeam[0][
+                        Object.keys(operationAverageSaleTeam[0])[0]
+                      ].totalEasyMesh
+                    }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {
+                      operationAverageSaleTeam[0][
+                        Object.keys(operationAverageSaleTeam[0])[0]
+                      ].totalUpgradeProgress
+                    }
+                  </StyledTableCell>
+                </StyledTableRow>
+              )}
+            </TableBody>
           </Table>
-    </TableContainer>
+        </TableContainer>
       }
     </>
   );

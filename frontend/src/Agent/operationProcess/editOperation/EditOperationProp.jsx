@@ -1,7 +1,7 @@
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { EditOperationInputs } from "./EditOperationInputs";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const style = {
   position: "absolute",
@@ -17,7 +17,7 @@ const style = {
 EditOperationProp.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  item: PropTypes.object, 
+  item: PropTypes.object,
   errors: PropTypes.object,
   onInputChange: PropTypes.func.isRequired,
   save: PropTypes.func.isRequired,
@@ -30,8 +30,7 @@ export function EditOperationProp({
   errors,
   onInputChange,
   save,
-})
- {
+}) {
   return (
     <Modal
       open={open}
@@ -39,7 +38,12 @@ export function EditOperationProp({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
       <Box id="boxCards" sx={style}>
-        <EditOperationInputs item={item} errors={errors} onInputChange={onInputChange} save={save} />
+        <EditOperationInputs
+          item={item}
+          errors={errors}
+          onInputChange={onInputChange}
+          save={save}
+        />
       </Box>
     </Modal>
   );

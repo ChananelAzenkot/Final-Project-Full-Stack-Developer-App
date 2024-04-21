@@ -21,7 +21,6 @@ export default function EditOperation({ dataOperation, theIDoperation }) {
   const [errors, setErrors] = useState({});
   const [, setIsFormValid] = useState(false);
 
-
   EditOperation.propTypes = {
     dataOperation: PropTypes.shape({
       teamName: PropTypes.string,
@@ -80,9 +79,9 @@ export default function EditOperation({ dataOperation, theIDoperation }) {
     }
   }, [id, setIsLoader, initialValues]);
 
-const onInputChange = (e) => {
-  handleInputEdit(e, item, setItem, errors, setErrors, setIsFormValid);
-};
+  const onInputChange = (e) => {
+    handleInputEdit(e, item, setItem, errors, setErrors, setIsFormValid);
+  };
 
   useEffect(() => {
     calculatePercentageTV(item, setItem);
@@ -129,9 +128,7 @@ const onInputChange = (e) => {
 
   return (
     <Box>
-      <IconButton
-        style={{ width: "auto" }}
-        onClick={handleOpen}>
+      <IconButton style={{ width: "auto" }} onClick={handleOpen}>
         <EditIcon />
       </IconButton>
       <EditOperationProp

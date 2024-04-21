@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { GeneralContext } from "../App";
 
 export const useGeneralContext = () => {
-  const { user, setUser, setLoader, userRoleType, setUserRoleType } = useContext(GeneralContext);
+  const { user, setUser, setLoader, userRoleType, setUserRoleType } =
+    useContext(GeneralContext);
   return { user, setUser, setLoader, userRoleType, setUserRoleType };
 };
 export const RoleTypes = {
@@ -24,7 +25,7 @@ export const pages = [
     title: "תפעול יומי",
     permissions: [RoleTypes.user],
   },
-    {
+  {
     route: "/dailySalesOperation",
     title: "מכירות יומי",
     permissions: [RoleTypes.user],
@@ -34,7 +35,7 @@ export const pages = [
     title: "תפעול מצטבר",
     permissions: [RoleTypes.user],
   },
-    {
+  {
     route: "/incrementalSalesOperation",
     title: "מכירות מצטבר",
     permissions: [RoleTypes.user],
@@ -44,41 +45,64 @@ export const pages = [
     title: "תפעול צוותי",
     permissions: [RoleTypes.IsBusiness],
   },
-    {
+  {
     route: "/incrementalSalesOperationTeams",
     title: "מכירות הצוות",
     permissions: [RoleTypes.IsBusiness],
   },
-    {
+  {
     route: "/incrementalOperationTeams",
     title: "תפעול צוות מצטבר",
     permissions: [RoleTypes.IsBusiness],
   },
-      {
+  {
     route: "/incrementalOperationTeamsPerAgent",
     title: "תפעול נציג מצטבר",
     permissions: [RoleTypes.IsBusiness],
   },
-  { route: "/centralizedOperation", title: "תפעול מוקדי", permissions: [RoleTypes.isAdmin] },
-  { route: "/myTeamSupervisor", title: "תפעול צוותים", permissions: [RoleTypes.isAdmin] },
-  { route: "/myAgentSupervisor", title: "תפעול תפעול נציג", permissions: [RoleTypes.isAdmin] },
-  { route: "/mySalesSupervisor", title: "מכירות מוקד", permissions: [RoleTypes.isAdmin] },
-  { route: "/myEmployeeSupervisor", title: "ניהול עובדים", permissions: [RoleTypes.isAdmin] },
-    { route: "/about", title: "יעדים" },
+  {
+    route: "/centralizedOperation",
+    title: "תפעול מוקדי",
+    permissions: [RoleTypes.isAdmin],
+  },
+  {
+    route: "/myTeamSupervisor",
+    title: "תפעול צוותים",
+    permissions: [RoleTypes.isAdmin],
+  },
+  {
+    route: "/myAgentSupervisor",
+    title: "תפעול תפעול נציג",
+    permissions: [RoleTypes.isAdmin],
+  },
+  {
+    route: "/mySalesSupervisor",
+    title: "מכירות מוקד",
+    permissions: [RoleTypes.isAdmin],
+  },
+  {
+    route: "/myEmployeeSupervisor",
+    title: "ניהול עובדים",
+    permissions: [RoleTypes.isAdmin],
+  },
+  { route: "/about", title: "יעדים" },
 ];
 
-
-export const useLogout = (setUser, setUserRoleType, setLoader, navigate, handleCloseUserMenu) => {
+export const useLogout = (
+  setUser,
+  setUserRoleType,
+  setLoader,
+  navigate,
+  handleCloseUserMenu
+) => {
   const logout = () => {
     setLoader(true);
-      setUser();
-      setUserRoleType(RoleTypes.none);
-      setLoader(false);
-      localStorage.removeItem("token");
-      navigate("./login");
+    setUser();
+    setUserRoleType(RoleTypes.none);
+    setLoader(false);
+    localStorage.removeItem("token");
+    navigate("./login");
     handleCloseUserMenu();
   };
   return logout;
 };
-
-

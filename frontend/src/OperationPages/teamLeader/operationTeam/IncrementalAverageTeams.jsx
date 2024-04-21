@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import "../../../styles/operation.css";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { GeneralContext } from "../../../App";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -54,14 +54,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 IncrementalAverageTeams.propTypes = {
   selectedMonth: PropTypes.string,
   setSelectedMonth: PropTypes.func,
-}
-export default function IncrementalAverageTeams({ selectedMonth, setSelectedMonth }) {
-
+};
+export default function IncrementalAverageTeams({
+  selectedMonth,
+  setSelectedMonth,
+}) {
   const [operationAverage, setOperationAverage] = useState([]);
   const { snackbar } = useContext(GeneralContext);
 
-
-    const handleMonthChange = (event) => {
+  const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
   };
 
@@ -77,23 +78,32 @@ export default function IncrementalAverageTeams({ selectedMonth, setSelectedMont
       .then((res) => res.json())
       .then((data) => {
         setOperationAverage([data]);
-        snackbar(data.message ? data.message : "הממוצע תפעול של החודש נטען בהצלחה !");
+        snackbar(
+          data.message ? data.message : "הממוצע תפעול של החודש נטען בהצלחה !"
+        );
       });
   }, []);
 
-let operationAverageArray = [];
-if (operationAverage[0]) {
-  operationAverageArray[0] = Object.entries(operationAverage[0]).map(([monthYear, totals]) => ({
-    monthYear,
-    ...totals,
-  }));
-}
+  let operationAverageArray = [];
+  if (operationAverage[0]) {
+    operationAverageArray[0] = Object.entries(operationAverage[0]).map(
+      ([monthYear, totals]) => ({
+        monthYear,
+        ...totals,
+      })
+    );
+  }
 
   return (
     <>
-<select onChange={handleMonthChange} style={{display:"none"}}>
-  {operationAverage[0] && Object.keys(operationAverage[0]).map((month, index) => <option key={index} value={month}>{month}</option>)}
-</select>
+      <select onChange={handleMonthChange} style={{ display: "none" }}>
+        {operationAverage[0] &&
+          Object.keys(operationAverage[0]).map((month, index) => (
+            <option key={index} value={month}>
+              {month}
+            </option>
+          ))}
+      </select>
       {
         <TableContainer component={Paper} id="container">
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -101,70 +111,103 @@ if (operationAverage[0]) {
               <TableRow>
                 <StyledTableCell>כמות שיחות מצטבר</StyledTableCell>
                 <StyledTableCell align="right">פיריון מצטבר</StyledTableCell>
-                <StyledTableCell align="right">ניתוק - TV מצטבר</StyledTableCell>
-                <StyledTableCell align="right">ניתוק - Fiber מצטבר</StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - TV מצטבר</StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - Fiber מצטבר</StyledTableCell>
-                <StyledTableCell align="right">מכירות - Fiber מצטבר</StyledTableCell>
-                <StyledTableCell align="right"> מכירות - TV מצטבר</StyledTableCell>
-                <StyledTableCell align="right">EasyMesh - מצטבר</StyledTableCell>
+                <StyledTableCell align="right">
+                  ניתוק - TV מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  ניתוק - Fiber מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  אחוז שימור - TV מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  אחוז שימור - Fiber מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  מכירות - Fiber מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {" "}
+                  מכירות - TV מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  EasyMesh - מצטבר
+                </StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">פעולות הצוות</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-{Array.isArray(operationAverageArray) && operationAverageArray.map((operation, index) => {
-  const operationData = operation[Object.keys(operation)[0]];
-  return (
-    <StyledTableRow key={index}>
-      <StyledTableCell component="th" scope="row">
-                {operationData.numberCalls}
-      </StyledTableCell>
-        <StyledTableCell align="right">
-            {operationData.productivity.toFixed(2)}
-        </StyledTableCell>
-        <StyledTableCell align="right">
-            {operationData.tvDisconnection}
-        </StyledTableCell>
-        <StyledTableCell align="right">
-            {operationData.fiberDisconnection}
-        </StyledTableCell>
-        <StyledTableCell align="right" style={{
-            backgroundColor: parseFloat(operationData.simurTV) / 100 >= 0.79 ? "#62a462" : parseFloat(operationData.simurTV) / 100 >= 0.67 ? "#c1c16f" : "#ad6262",
-        }}>
-            {(operationData.simurTV.toFixed(2)) + "%"}
-        </StyledTableCell>
-                <StyledTableCell align="right" style={{
-            backgroundColor: parseFloat(operationData.simurFiber) / 100 >= 0.79 ? "#62a462" : parseFloat(operationData.simurFiber) / 100 >= 0.67 ? "#c1c16f" : "#ad6262",
-        }}>
-            {(operationData.simurFiber.toFixed(2)) + "%"}
-        </StyledTableCell>
-        <StyledTableCell align="right">
-            {operationData.sellerFiber}
-        </StyledTableCell>
-        <StyledTableCell align="right">
-            {operationData.sellerTV}
-        </StyledTableCell>
-        <StyledTableCell align="right">
-            {operationData.easyMesh}
-        </StyledTableCell>
-        <StyledTableCell align="right">
-            {operationData.upgradeProgress}
-        </StyledTableCell>
-        <StyledTableCell align="right">
-          {operationData.satisfaction}
-        </StyledTableCell>
-                <StyledTableCell align="right">
-            {operationData.easyMesh+operationData.upgradeProgress+operationData.sellerFiber+operationData.sellerTV}
-        </StyledTableCell>
-
-    </StyledTableRow>
-  );
-})}
-</TableBody>
+              {Array.isArray(operationAverageArray) &&
+                operationAverageArray.map((operation, index) => {
+                  const operationData = operation[Object.keys(operation)[0]];
+                  return (
+                    <StyledTableRow key={index}>
+                      <StyledTableCell component="th" scope="row">
+                        {operationData.numberCalls}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationData.productivity.toFixed(2)}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationData.tvDisconnection}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationData.fiberDisconnection}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="right"
+                        style={{
+                          backgroundColor:
+                            parseFloat(operationData.simurTV) / 100 >= 0.79
+                              ? "#62a462"
+                              : parseFloat(operationData.simurTV) / 100 >= 0.67
+                              ? "#c1c16f"
+                              : "#ad6262",
+                        }}>
+                        {operationData.simurTV.toFixed(2) + "%"}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="right"
+                        style={{
+                          backgroundColor:
+                            parseFloat(operationData.simurFiber) / 100 >= 0.79
+                              ? "#62a462"
+                              : parseFloat(operationData.simurFiber) / 100 >=
+                                0.67
+                              ? "#c1c16f"
+                              : "#ad6262",
+                        }}>
+                        {operationData.simurFiber.toFixed(2) + "%"}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationData.sellerFiber}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationData.sellerTV}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationData.easyMesh}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationData.upgradeProgress}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationData.satisfaction}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationData.easyMesh +
+                          operationData.upgradeProgress +
+                          operationData.sellerFiber +
+                          operationData.sellerTV}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
+            </TableBody>
           </Table>
-    </TableContainer>
+        </TableContainer>
       }
     </>
   );

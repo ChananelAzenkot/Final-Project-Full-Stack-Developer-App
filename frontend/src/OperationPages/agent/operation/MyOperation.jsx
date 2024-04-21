@@ -77,8 +77,6 @@ export default function MyOperation() {
       });
   }, []);
 
-
-
   return (
     <>
       <div className="btnGroup">
@@ -101,8 +99,7 @@ export default function MyOperation() {
                   display: "flex",
                   border: "1px solid black",
                   borderRadius: "10px",
-                }}>
-              </div>
+                }}></div>
             </div>
           ))
         ) : (
@@ -204,25 +201,36 @@ export default function MyOperation() {
                     }}>
                     {operation.simurFiber}
                   </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operation.sellerFiber}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operation.sellerTV}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operation.easyMesh}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operation.upgradeProgress}
-                      </StyledTableCell>
-                      <StyledTableCell 
-                      align="right" 
-                      style={{
-                        backgroundColor: operation.sellerFiber + operation.easyMesh + operation.upgradeProgress + operation.sellerTV > 3 ? '#62a462' : '#ad6262'
-                        }}>
-                          {operation.sellerFiber + operation.easyMesh + operation.upgradeProgress + operation.sellerTV + " / 4"}
-                          </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {operation.sellerFiber}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {operation.sellerTV}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {operation.easyMesh}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {operation.upgradeProgress}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="right"
+                    style={{
+                      backgroundColor:
+                        operation.sellerFiber +
+                          operation.easyMesh +
+                          operation.upgradeProgress +
+                          operation.sellerTV >
+                        3
+                          ? "#62a462"
+                          : "#ad6262",
+                    }}>
+                    {operation.sellerFiber +
+                      operation.easyMesh +
+                      operation.upgradeProgress +
+                      operation.sellerTV +
+                      " / 4"}
+                  </StyledTableCell>
                   <StyledTableCell align="right">
                     {operation.satisfaction}
                   </StyledTableCell>

@@ -10,7 +10,7 @@ import { useContext, useState } from "react";
 import { useEffect } from "react";
 import "../../../styles/operation.css";
 import { GeneralContext } from "../../../App";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -54,13 +54,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 IncrementalOperatingAverageSale.propTypes = {
   selectedMonthSales: PropTypes.string,
   setSelectedMonthSales: PropTypes.func,
-}
+};
 
-export default function IncrementalOperatingAverageSale({ selectedMonthSales, setSelectedMonthSales }) {
+export default function IncrementalOperatingAverageSale({
+  selectedMonthSales,
+  setSelectedMonthSales,
+}) {
+  const [incrementalAverageSale, incrementalSetOperationAverageSale] = useState(
+    []
+  );
+  const { snackbar } = useContext(GeneralContext);
 
-    const [incrementalAverageSale, incrementalSetOperationAverageSale] = useState([]);
-    const { snackbar } = useContext(GeneralContext);
-    
   const handleMonthChange = (event) => {
     setSelectedMonthSales(event.target.value);
   };
@@ -81,61 +85,80 @@ export default function IncrementalOperatingAverageSale({ selectedMonthSales, se
       });
   }, []);
 
-let operationAverageSale = [];
-if (incrementalAverageSale[0]) {
-  operationAverageSale = Object.entries(incrementalAverageSale[0]).map(([monthYear, totals]) => ({
-    monthYear,
-    ...totals,
-  }));
-}
+  let operationAverageSale = [];
+  if (incrementalAverageSale[0]) {
+    operationAverageSale = Object.entries(incrementalAverageSale[0]).map(
+      ([monthYear, totals]) => ({
+        monthYear,
+        ...totals,
+      })
+    );
+  }
 
   return (
     <>
-<select onChange={handleMonthChange} style={{display:"none"}}>
-  {incrementalAverageSale[0] && Object.keys(incrementalAverageSale[0]).map((month, index) =>
-  <option key={index} value={month}>{month}
-  </option>)}
-</select>
+      <select onChange={handleMonthChange} style={{ display: "none" }}>
+        {incrementalAverageSale[0] &&
+          Object.keys(incrementalAverageSale[0]).map((month, index) => (
+            <option key={index} value={month}>
+              {month}
+            </option>
+          ))}
+      </select>
       {
         <TableContainer component={Paper} id="container">
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
                 <StyledTableCell>החודש הנוכחי </StyledTableCell>
-                <StyledTableCell align="right">מכירות - Fiber מצטבר</StyledTableCell>
-                <StyledTableCell align="right"> מכירות - TV מצטבר</StyledTableCell>
-                <StyledTableCell align="right">EasyMesh - מצטבר</StyledTableCell>
+                <StyledTableCell align="right">
+                  מכירות - Fiber מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {" "}
+                  מכירות - TV מצטבר
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  EasyMesh - מצטבר
+                </StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">סך הפעולות</StyledTableCell>
               </TableRow>
             </TableHead>
-<TableBody>
-  {Array.isArray(operationAverageSale) && 
-  operationAverageSale.filter(operation => operation.monthYear === selectedMonthSales).map((operationAverage, index) => (
-    <StyledTableRow key={index}>
-      <StyledTableCell component="th" scope="row">
-        {selectedMonthSales}
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        {operationAverage.totalSellerFiber}
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        {operationAverage.totalSellerTV}
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        {operationAverage.totalEasyMesh}
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        {operationAverage.totalUpgradeProgress}
-      </StyledTableCell>
-            <StyledTableCell align="right">
-        {operationAverage.totalUpgradeProgress + operationAverage.totalSellerFiber + operationAverage.totalSellerTV + operationAverage.totalEasyMesh}
-      </StyledTableCell>
-    </StyledTableRow>
-  ))}
-</TableBody>
-</Table>
-    </TableContainer>
+            <TableBody>
+              {Array.isArray(operationAverageSale) &&
+                operationAverageSale
+                  .filter(
+                    (operation) => operation.monthYear === selectedMonthSales
+                  )
+                  .map((operationAverage, index) => (
+                    <StyledTableRow key={index}>
+                      <StyledTableCell component="th" scope="row">
+                        {selectedMonthSales}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationAverage.totalSellerFiber}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationAverage.totalSellerTV}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationAverage.totalEasyMesh}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationAverage.totalUpgradeProgress}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {operationAverage.totalUpgradeProgress +
+                          operationAverage.totalSellerFiber +
+                          operationAverage.totalSellerTV +
+                          operationAverage.totalEasyMesh}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       }
     </>
   );

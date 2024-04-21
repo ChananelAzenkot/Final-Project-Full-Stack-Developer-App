@@ -36,7 +36,6 @@ export function EditPropClients({
   handleSubmit,
   setAgentDataUpDate,
 }) {
-  
   return (
     <Modal
       open={open}
@@ -51,8 +50,7 @@ export function EditPropClients({
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-            }}
-            >
+            }}>
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
@@ -63,9 +61,7 @@ export function EditPropClients({
               component="form"
               onSubmit={handleSubmit}
               noValidate
-              sx={{ mt: 1 }}
-              >
-  
+              sx={{ mt: 1 }}>
               <Grid container spacing={2} id="theBoxUserEdit">
                 {clientStructure.map((s) => {
                   if (s.fields) {
@@ -74,8 +70,7 @@ export function EditPropClients({
                         key={field.name}
                         item
                         xs={12}
-                        sm={field.block ? 12 : 6}
-                        >
+                        sm={field.block ? 12 : 6}>
                         {field.type === "boolean" ? (
                           <FormControlLabel
                             control={
@@ -148,7 +143,9 @@ export function EditPropClients({
                             autoComplete={s.name}
                             onChange={handelChange}
                             value={agentDataUpDate[s.name]}
-                            style={{display: s.name === "password" ? "none" : "block" }}
+                            style={{
+                              display: s.name === "password" ? "none" : "block",
+                            }}
                           />
                         )}
                       </Grid>

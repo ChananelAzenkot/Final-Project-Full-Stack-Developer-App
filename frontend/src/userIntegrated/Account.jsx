@@ -262,7 +262,10 @@ export default function Account({ theme }) {
                                     [s.name]: e.target.value,
                                   });
                                 }}
-                                style={{display: s.name === "password" ? "none" : "block" }}
+                                style={{
+                                  display:
+                                    s.name === "password" ? "none" : "block",
+                                }}
                                 disabled={
                                   !user.isAdmin &&
                                   [
@@ -286,9 +289,7 @@ export default function Account({ theme }) {
                     fullWidth
                     variant="contained"
                     style={{
-                      backgroundColor: isFormValid
-                        ? "#4ed2c1"
-                        : "#4ed2c180",
+                      backgroundColor: isFormValid ? "#4ed2c1" : "#4ed2c180",
                     }}
                     sx={{ mt: 3, mb: 2 }}>
                     עדכן פרטים

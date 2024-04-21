@@ -2,9 +2,16 @@ import { schemaOperations } from "../schemas/schemaOperation";
 import { schemaSales } from "../schemas/schemaSale";
 
 // handleInput is for creating a new item
-export const handleInput = (e, formData, setFormData, errors, setErrors, setIsFormValid) => {
+export const handleInput = (
+  e,
+  formData,
+  setFormData,
+  errors,
+  setErrors,
+  setIsFormValid
+) => {
   const { id, value } = e.target;
-  const numberKeys = ['numberCalls', 'tvDisconnection', 'fiberDisconnection'];
+  const numberKeys = ["numberCalls", "tvDisconnection", "fiberDisconnection"];
   const newValue = numberKeys.includes(id) ? Number(value) : value;
   const obj = { ...formData, [id]: newValue };
   setFormData(obj);
@@ -24,7 +31,14 @@ export const handleInput = (e, formData, setFormData, errors, setErrors, setIsFo
   setErrors(tempErrors);
 };
 // handleInputEdit is for editing an existing item
-export const handleInputEdit = (e, item, setItem, errors, setErrors, setIsFormValid) => {
+export const handleInputEdit = (
+  e,
+  item,
+  setItem,
+  errors,
+  setErrors,
+  setIsFormValid
+) => {
   const { id, value } = e.target;
   const obj = { ...item, [id]: value };
   setItem(obj);
@@ -46,7 +60,14 @@ export const handleInputEdit = (e, item, setItem, errors, setErrors, setIsFormVa
 
 // handleInput to create a new seller
 
-export const handleInputSale = (e, saleData, setSaleData, errors, setErrors, setIsFormValid) => {
+export const handleInputSale = (
+  e,
+  saleData,
+  setSaleData,
+  errors,
+  setErrors,
+  setIsFormValid
+) => {
   const { id, value } = e.target;
   const obj = { ...saleData, [id]: value };
   setSaleData(obj);
@@ -66,7 +87,14 @@ export const handleInputSale = (e, saleData, setSaleData, errors, setErrors, set
   setErrors(tempErrors);
 };
 
-export const handleInputSaleEdit = (e, saleDataUpDate, setSaleDataUpDate, errors, setErrors, setIsFormValid) => {
+export const handleInputSaleEdit = (
+  e,
+  saleDataUpDate,
+  setSaleDataUpDate,
+  errors,
+  setErrors,
+  setIsFormValid
+) => {
   const { id, value } = e.target;
   const obj = { ...saleDataUpDate, [id]: value };
   setSaleDataUpDate(obj);

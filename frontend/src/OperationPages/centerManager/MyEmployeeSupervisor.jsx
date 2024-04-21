@@ -77,25 +77,23 @@ export default function MyEmployeeSupervisor() {
       });
   }, []);
 
-
-
   return (
     <>
       <div className="btnGroup">
-              <div className="titleOperationAndManger" style={{display:"grid" }}>
-                <h4>{`ניהול משתמשים של המערכת`}</h4>
-              <div
-                className="search-user"
-                style={{
-                  display: "flex",
-                  border: "1px solid black",
-                  borderRadius: "10px",
-                }}>
-                <SearchBar />
-                <SearchBarOperation />
-              </div>
-              </div>
-            </div>
+        <div className="titleOperationAndManger" style={{ display: "grid" }}>
+          <h4>{`ניהול משתמשים של המערכת`}</h4>
+          <div
+            className="search-user"
+            style={{
+              display: "flex",
+              border: "1px solid black",
+              borderRadius: "10px",
+            }}>
+            <SearchBar />
+            <SearchBarOperation />
+          </div>
+        </div>
+      </div>
       <TableContainer component={Paper} id="container">
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           {operation && operation.length > 0 && (
@@ -143,35 +141,31 @@ export default function MyEmployeeSupervisor() {
                   <StyledTableCell align="right">
                     {operation.serviceDepartment ? "כן" : "לא"}
                   </StyledTableCell>
-                  <StyledTableCell
-                    align="right">
+                  <StyledTableCell align="right">
                     {operation.conservationDepartment ? "כן" : "לא"}
                   </StyledTableCell>
-                  <StyledTableCell
-                    align="right">
+                  <StyledTableCell align="right">
                     {operation.teamName}
                   </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operation.phone}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {operation.email}
-                      </StyledTableCell>
-                      <StyledTableCell
-                      align="right">
-                        <img
-                          src={operation.image.url}
-                          alt="profile"
-
-                          style={{
-                            width: "50px", 
-                            height: "50px", 
-                            borderRadius: "10px",
-                            objectFit: "cover",
-                            boxShadow: "1px 1px 8px 1px black",
-                          }}
-                        />
-                      </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {operation.phone}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {operation.email}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    <img
+                      src={operation.image.url}
+                      alt="profile"
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "10px",
+                        objectFit: "cover",
+                        boxShadow: "1px 1px 8px 1px black",
+                      }}
+                    />
+                  </StyledTableCell>
                   <StyledTableCell align="right">
                     <EditClient
                       theIDclient={operation._id}

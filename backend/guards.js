@@ -1,16 +1,20 @@
-import jwt from 'jsonwebtoken';
-import { getLoggedUserId } from './config/config.js';
+import jwt from "jsonwebtoken";
+import { getLoggedUserId } from "./config/config.js";
 
 // verify the token for the user as guard //
 export const guard = (req, res, next) => {
   try {
-    jwt.verify(req.headers.authorization, process.env.JWT_SECRET, (err, data) => {
-      if (err) {
-        throw new Error("User not authorized for this user");
-      } else {
-        next();
+    jwt.verify(
+      req.headers.authorization,
+      process.env.JWT_SECRET,
+      (err, data) => {
+        if (err) {
+          throw new Error("User not authorized for this user");
+        } else {
+          next();
+        }
       }
-    });
+    );
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error", error: error.message });
@@ -54,9 +58,3 @@ export const adminGuard = (req, res, next) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-
-
-
-
-
-

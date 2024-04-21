@@ -10,18 +10,18 @@ import PropTypes from "prop-types";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { DeleteSaleProp } from "./DeleteSaleProp";
 
-  DeleteSale.propTypes = {
-    dataOperationSale: PropTypes.shape({
-      teamName: PropTypes.string,
-      nameAgent: PropTypes.string,
-      sellerFiber: PropTypes.number,
-      sellerTV: PropTypes.number,
-      easyMesh: PropTypes.number,
-      upgradeProgress: PropTypes.number,
-      customerCode: PropTypes.string,
-    }).isRequired,
-    theIDoperationSale: PropTypes.number.isRequired,
-  };
+DeleteSale.propTypes = {
+  dataOperationSale: PropTypes.shape({
+    teamName: PropTypes.string,
+    nameAgent: PropTypes.string,
+    sellerFiber: PropTypes.number,
+    sellerTV: PropTypes.number,
+    easyMesh: PropTypes.number,
+    upgradeProgress: PropTypes.number,
+    customerCode: PropTypes.string,
+  }).isRequired,
+  theIDoperationSale: PropTypes.number.isRequired,
+};
 
 export default function DeleteSale({ dataOperationSale, theIDoperationSale }) {
   const { snackbar, setIsLoader } = useContext(GeneralContext);
@@ -34,7 +34,7 @@ export default function DeleteSale({ dataOperationSale, theIDoperationSale }) {
       sellerTV: dataOperationSale.sellerTV || "",
       easyMesh: dataOperationSale.easyMesh || "",
       upgradeProgress: dataOperationSale.upgradeProgress || "",
-        customerCode: dataOperationSale.customerCode || "",
+      customerCode: dataOperationSale.customerCode || "",
     }),
     [dataOperationSale]
   );
@@ -63,7 +63,6 @@ export default function DeleteSale({ dataOperationSale, theIDoperationSale }) {
     }
   }, [id, setIsLoader, initialValues]);
 
-
   const DeleteSale = async (e) => {
     e.preventDefault();
     try {
@@ -83,7 +82,8 @@ export default function DeleteSale({ dataOperationSale, theIDoperationSale }) {
         throw new Error(data.message);
       }
       handleClose();
-      snackbar(`מכירה של ${item.customerCode} נמחק בהצלחה`, "success");setTimeout(() => {
+      snackbar(`מכירה של ${item.customerCode} נמחק בהצלחה`, "success");
+      setTimeout(() => {
         window.location.href = "/dailyOperation";
       }, 1500);
     } catch (err) {
@@ -94,7 +94,7 @@ export default function DeleteSale({ dataOperationSale, theIDoperationSale }) {
   return (
     <Box>
       <IconButton
-      id="btnCreateAndPress"
+        id="btnCreateAndPress"
         style={{ width: "auto" }}
         onClick={handleOpen}>
         <DeleteForeverIcon />

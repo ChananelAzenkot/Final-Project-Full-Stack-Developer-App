@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Amatic+SC&family=Montserrat:wght@200&family=Rubik+Pixels&family=Sigmar&family=Varela+Round&display=swap");
 
-.titleAgent{
+.titleAgent {
   display: flex;
   justify-content: left;
   margin-right: 200px;
@@ -9,7 +9,6 @@
   font-size: 24px;
   text-shadow: 1px 2px 3px black;
   color: "inherit";
-
 }
 #myNavBar {
   font-family: "Montserrat", sans-serif;
@@ -33,14 +32,14 @@
   color: "inherit";
 }
 
-#textFooter{
+#textFooter {
   display: flex;
   justify-content: center;
   align-items: center;
   color: "inherit";
 }
 
-#avatarPage{
+#avatarPage {
   height: 80px;
   width: 80px;
   border-radius: 10px;
@@ -51,7 +50,7 @@
   margin-top: 5px;
   margin-right: 90px;
 }
-#avatarPageNav{
+#avatarPageNav {
   height: 60px;
   width: 60px;
   border-radius: 10px;

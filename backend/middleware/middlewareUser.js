@@ -1,5 +1,5 @@
-import Joi from 'joi';
-// joi is a validation library of User // 
+import Joi from "joi";
+// joi is a validation library of User //
 export const middlewareUsers = Joi.object({
   name: Joi.object()
     .keys({
@@ -37,5 +37,3 @@ export const middlewareUsers = Joi.object({
   teamName: Joi.string().valid("iron", "impact", "toy").required(),
   userId: Joi.string().allow(""),
 });
-
-

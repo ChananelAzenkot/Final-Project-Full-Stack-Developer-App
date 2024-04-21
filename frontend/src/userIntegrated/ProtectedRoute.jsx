@@ -18,7 +18,9 @@ export default function ProtectedRoute({ children, permission }) {
     : false;
   if (!userHadPermission) {
     return (
-      <div className="titleOperationAndAgents" style={{height:"200px" , display:"grid"}}>
+      <div
+        className="titleOperationAndAgents"
+        style={{ height: "200px", display: "grid" }}>
         {`שלום , ${user?.name?.first} כנראה הגעת לפה  בטעות אפשר לנסות שוב :)`}
         <ul>
           {user?.IsBusiness && (
@@ -37,9 +39,9 @@ export default function ProtectedRoute({ children, permission }) {
           )}
           {user?.isAdmin && (
             <li onClick={() => navigate("/centralizedOperation")}>
-                <IconButton id="btnCreateAndPress" style={{ color: "black" }}>
-                    תפעול המוקד הכללי
-                </IconButton>
+              <IconButton id="btnCreateAndPress" style={{ color: "black" }}>
+                תפעול המוקד הכללי
+              </IconButton>
             </li>
           )}
         </ul>

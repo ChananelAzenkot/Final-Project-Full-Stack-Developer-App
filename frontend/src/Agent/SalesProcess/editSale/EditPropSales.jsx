@@ -1,7 +1,7 @@
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import EditSaleInputs from "./EditSaleInputs";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const style = {
   position: "absolute",
@@ -17,7 +17,7 @@ const style = {
 EditPropSales.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  saleDataUpDate: PropTypes.object, 
+  saleDataUpDate: PropTypes.object,
   errors: PropTypes.object,
   onInputChange: PropTypes.func.isRequired,
   save: PropTypes.func.isRequired,
@@ -30,8 +30,7 @@ export function EditPropSales({
   errors,
   onInputChange,
   save,
-})
- {
+}) {
   return (
     <Modal
       open={open}
@@ -39,7 +38,12 @@ export function EditPropSales({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
       <Box id="titleSale" sx={style}>
-        <EditSaleInputs saleDataUpDate={saleDataUpDate} errors={errors} onInputChange={onInputChange} save={save} />
+        <EditSaleInputs
+          saleDataUpDate={saleDataUpDate}
+          errors={errors}
+          onInputChange={onInputChange}
+          save={save}
+        />
       </Box>
     </Modal>
   );

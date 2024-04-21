@@ -19,7 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
     border: "1px solid white",
     borderRadius: "3px 3px 0 0",
-    fontSize:"14px",
+    fontSize: "14px",
     padding: "2px 0 2px 0",
   },
   [`&.${tableCellClasses.body}`]: {
@@ -47,7 +47,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
     onInputChange: PropTypes.func,
     save: PropTypes.func,
   };
-  
+
   return (
     <>
       {
@@ -55,7 +55,10 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
           <div className="createOperationTitle">
             <h4>עדכון נתונים</h4>
           </div>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table" id="cssForMobile">
+          <Table
+            sx={{ minWidth: 700 }}
+            aria-label="customized table"
+            id="cssForMobile">
             <TableHead id="forMobile">
               <TableRow>
                 <StyledTableCell>שם נציג</StyledTableCell>
@@ -76,7 +79,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
               <StyledTableRow id="boxCardsInputs">
                 <StyledTableCell component="th" scope="row">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     disabled
                     size="small"
                     id="nameAgent"
@@ -93,7 +96,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     disabled
                     size="small"
                     id="teamName"
@@ -110,7 +113,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="numberCalls"
                     label="כמות שיחות"
@@ -126,7 +129,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="productivity"
                     label="פיריון"
@@ -141,7 +144,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="tvDisconnection"
                     label="ניתוק - TV"
@@ -156,7 +159,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="fiberDisconnection"
                     label="ניתוק - Fiber"
@@ -171,7 +174,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="simurTV"
                     label="אחוז שימור - TV"
@@ -183,12 +186,12 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     error={Boolean(errors.simurTV)}
                     helperText={errors.simurTV}
                     disabled
-                    style={{backgroundColor: item.simurTVColor}}
+                    style={{ backgroundColor: item.simurTVColor }}
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="simurTV"
                     label="אחוז שימור - Fiber"
@@ -200,12 +203,12 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     error={Boolean(errors.simurFiber)}
                     helperText={errors.simurFiber}
                     disabled
-                    style={{backgroundColor: item.simurFiberColor}}
+                    style={{ backgroundColor: item.simurFiberColor }}
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="satisfaction"
                     label="סמ׳׳ט"
@@ -223,7 +226,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     id="btnCreateAndPress"
                     style={{ width: "auto" }}
                     onClick={save}>
-                      שמור
+                    שמור
                     <SaveIcon />
                   </IconButton>
                 </StyledTableCell>

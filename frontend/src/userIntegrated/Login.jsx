@@ -9,7 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { GeneralContext } from "../App";
-import {RoleTypes} from "../components/RoleTypes";
+import { RoleTypes } from "../components/RoleTypes";
 import Joi from "joi";
 import "../App.css";
 import { jwtDecode } from "jwt-decode";
@@ -22,15 +22,17 @@ export default function Login(theme) {
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const navigate = useNavigate();
-  const { setUser, setLoader, setUserRoleType , snackbar } = useContext(GeneralContext);
+  const { setUser, setLoader, setUserRoleType, snackbar } =
+    useContext(GeneralContext);
 
   const schema = Joi.object({
     email: Joi.string().email({ tlds: false }).required(),
     password: Joi.string()
       .pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@%$#^&*\-_*]).{8,32}$/)
       .message({
-           'string.pattern.base': 'הסיסמה חייבת להכיל לפחות ספרה אחת, אות קטנה אחת, אות גדולה אחת, תו מיוחד אחד, ולהיות באורך של בין 8 ל-32 תווים.',
-           'any.required': 'הסיסמה היא שדה חובה',
+        "string.pattern.base":
+          "הסיסמה חייבת להכיל לפחות ספרה אחת, אות קטנה אחת, אות גדולה אחת, תו מיוחד אחד, ולהיות באורך של בין 8 ל-32 תווים.",
+        "any.required": "הסיסמה היא שדה חובה",
       })
       .required(),
   });
@@ -85,22 +87,22 @@ export default function Login(theme) {
 
         setUser(user);
 
-  let navigateTo = "/login";
+        let navigateTo = "/login";
 
-  if (user.isAdmin) {
-    setUserRoleType(RoleTypes.isAdmin);
-    navigateTo = "/centralizedOperation";
-  } else if (user.IsBusiness) {
-    setUserRoleType(RoleTypes.IsBusiness);
-    navigateTo = "/operationTeams";
-  } else {
-    setUserRoleType(RoleTypes.user);
-    navigateTo = "/dailyOperation";
-  }
+        if (user.isAdmin) {
+          setUserRoleType(RoleTypes.isAdmin);
+          navigateTo = "/centralizedOperation";
+        } else if (user.IsBusiness) {
+          setUserRoleType(RoleTypes.IsBusiness);
+          navigateTo = "/operationTeams";
+        } else {
+          setUserRoleType(RoleTypes.user);
+          navigateTo = "/dailyOperation";
+        }
 
-  snackbar(`התחברות בוצעה בהצלחה! ברוך/ה הבא`);
-  navigate(navigateTo);
-})
+        snackbar(`התחברות בוצעה בהצלחה! ברוך/ה הבא`);
+        navigate(navigateTo);
+      })
       .catch((err) => {
         alert(err.message);
       })
@@ -131,7 +133,7 @@ export default function Login(theme) {
                 noValidate
                 sx={{ mt: 1 }}>
                 <TextField
-                size="small"
+                  size="small"
                   error={Boolean(errors.email)}
                   helperText={errors.email}
                   margin="normal"
@@ -146,7 +148,7 @@ export default function Login(theme) {
                   value={formData.email}
                 />
                 <TextField
-                size="small"
+                  size="small"
                   error={Boolean(errors.password)}
                   helperText={errors.password}
                   margin="normal"
@@ -161,7 +163,7 @@ export default function Login(theme) {
                   value={formData.password}
                 />
                 <Button
-                style={{backgroundColor: "#4ed2c1"}}
+                  style={{ backgroundColor: "#4ed2c1" }}
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -170,7 +172,7 @@ export default function Login(theme) {
                   הכנס
                 </Button>
                 <Button
-                style={{backgroundColor: "#4ed2c1"}}
+                  style={{ backgroundColor: "#4ed2c1" }}
                   type="button"
                   fullWidth
                   variant="contained"
@@ -189,6 +191,3 @@ export default function Login(theme) {
     </>
   );
 }
-
-
-

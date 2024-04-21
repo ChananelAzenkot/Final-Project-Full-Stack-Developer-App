@@ -60,7 +60,7 @@ const clientStructure = [
       },
     ],
   },
-    {
+  {
     name: "teamName",
     type: "text",
     label: "שם הצוות",
@@ -74,14 +74,14 @@ const clientStructure = [
     required: true,
     block: false,
   },
-    {
+  {
     name: "serviceDepartment",
     type: "boolean",
     label: "מוקד שירות",
     required: true,
     block: false,
   },
-    {
+  {
     name: "conservationDepartment",
     type: "boolean",
     label: "מוקד שימור",

@@ -12,7 +12,6 @@ import { handleInputSaleEdit } from "../../../components/handleInput";
 import { schemaSales } from "../../../schemas/schemaSale";
 import { EditPropSales } from "./EditPropSales";
 
-
 export default function EditSales({ dataOperationSale, theIDoperationSale }) {
   const { snackbar, setIsLoader } = useContext(GeneralContext);
   const [errors, setErrors] = useState({});
@@ -39,7 +38,7 @@ export default function EditSales({ dataOperationSale, theIDoperationSale }) {
       sellerTV: dataOperationSale.sellerTV || "",
       easyMesh: dataOperationSale.easyMesh || "",
       upgradeProgress: dataOperationSale.upgradeProgress || "",
-        customerCode: dataOperationSale.customerCode || "",
+      customerCode: dataOperationSale.customerCode || "",
     }),
     [dataOperationSale]
   );
@@ -68,9 +67,16 @@ export default function EditSales({ dataOperationSale, theIDoperationSale }) {
     }
   }, [id, setIsLoader, initialValues]);
 
-const onInputChange = (e) => {
-  handleInputSaleEdit(e, saleDataUpDate, setSaleDataUpDate, errors, setErrors, setIsFormValid);
-};
+  const onInputChange = (e) => {
+    handleInputSaleEdit(
+      e,
+      saleDataUpDate,
+      setSaleDataUpDate,
+      errors,
+      setErrors,
+      setIsFormValid
+    );
+  };
 
   const save = async (e) => {
     e.preventDefault();

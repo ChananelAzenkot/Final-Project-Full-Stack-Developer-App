@@ -12,7 +12,6 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -20,7 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
     border: "1px solid white",
     borderRadius: "3px 3px 0 0",
-    fontSize:"14px",
+    fontSize: "14px",
     padding: "2px 0 2px 0",
   },
   [`&.${tableCellClasses.body}`]: {
@@ -41,7 +40,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-  CreateOperationInputs.propTypes = {
+CreateOperationInputs.propTypes = {
   nameAgent: PropTypes.string.isRequired,
   teamName: PropTypes.string.isRequired,
   onInputChange: PropTypes.func.isRequired,
@@ -85,9 +84,14 @@ CreateOperationInputs.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
 };
 
-function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit , nameAgent , teamName }) {
-
-
+function CreateOperationInputs({
+  formData,
+  onInputChange,
+  errors,
+  handleSubmit,
+  nameAgent,
+  teamName,
+}) {
   return (
     <>
       {
@@ -95,7 +99,10 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
           <div className="createOperationTitle">
             <h4>התחל עדכון נתונים</h4>
           </div>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table" id="cssForMobile">
+          <Table
+            sx={{ minWidth: 700 }}
+            aria-label="customized table"
+            id="cssForMobile">
             <TableHead id="forMobile">
               <TableRow>
                 <StyledTableCell>שם נציג</StyledTableCell>
@@ -116,8 +123,8 @@ function CreateOperationInputs({ formData, onInputChange, errors, handleSubmit ,
               <StyledTableRow id="boxCardsInputs">
                 <StyledTableCell component="th" scope="row">
                   <TextField
-                  disabled
-inputProps={{ style: { textAlign: "center" } }}
+                    disabled
+                    inputProps={{ style: { textAlign: "center" } }}
                     size="small"
                     id="nameAgent"
                     label="שם נציג"
@@ -130,10 +137,10 @@ inputProps={{ style: { textAlign: "center" } }}
                     helperText={errors.nameAgent}
                   />
                 </StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
-                  disabled
+                    inputProps={{ style: { textAlign: "center" } }}
+                    disabled
                     size="small"
                     id="teamName"
                     label="שם הצוות"
@@ -148,8 +155,8 @@ inputProps={{ style: { textAlign: "center" } }}
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
-                  autoComplete="off"
+                    inputProps={{ style: { textAlign: "center" } }}
+                    autoComplete="off"
                     size="small"
                     id="numberCalls"
                     label="כמות שיחות"
@@ -164,8 +171,8 @@ inputProps={{ style: { textAlign: "center" } }}
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
-                  autoComplete="off"
+                    inputProps={{ style: { textAlign: "center" } }}
+                    autoComplete="off"
                     size="small"
                     id="productivity"
                     label="פיריון"
@@ -180,8 +187,8 @@ inputProps={{ style: { textAlign: "center" } }}
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
-                  autoComplete="off"
+                    inputProps={{ style: { textAlign: "center" } }}
+                    autoComplete="off"
                     size="small"
                     id="tvDisconnection"
                     label="ניתוק - TV"
@@ -196,8 +203,8 @@ inputProps={{ style: { textAlign: "center" } }}
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
-                  autoComplete="off"
+                    inputProps={{ style: { textAlign: "center" } }}
+                    autoComplete="off"
                     size="small"
                     id="fiberDisconnection"
                     label="ניתוק - Fiber"
@@ -212,8 +219,8 @@ inputProps={{ style: { textAlign: "center" } }}
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
-                  autoComplete="off"
+                    inputProps={{ style: { textAlign: "center" } }}
+                    autoComplete="off"
                     size="small"
                     id="simurFiber"
                     label="אחוז שימור - Fiber"
@@ -224,14 +231,14 @@ inputProps={{ style: { textAlign: "center" } }}
                     onChange={onInputChange}
                     error={Boolean(errors.simurFiber)}
                     helperText={errors.simurFiber}
-                    style={{backgroundColor: formData.simurFiberColor}}
+                    style={{ backgroundColor: formData.simurFiberColor }}
                     disabled
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
-                  autoComplete="off"
+                    inputProps={{ style: { textAlign: "center" } }}
+                    autoComplete="off"
                     size="small"
                     id="simurTV"
                     label="אחוז שימור - TV"
@@ -242,15 +249,14 @@ inputProps={{ style: { textAlign: "center" } }}
                     onChange={onInputChange}
                     error={Boolean(errors.simurTV)}
                     helperText={errors.simurTV}
-                    style={{backgroundColor: formData.simurTVColor}}
+                    style={{ backgroundColor: formData.simurTVColor }}
                     disabled
                   />
-
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                  inputProps={{ style: { textAlign: "center" } }}
-                  autoComplete="off"
+                    inputProps={{ style: { textAlign: "center" } }}
+                    autoComplete="off"
                     size="small"
                     id="satisfaction"
                     label="סמ׳׳ט"
@@ -268,8 +274,8 @@ inputProps={{ style: { textAlign: "center" } }}
                     id="btnCreateAndPress"
                     style={{ width: "auto" }}
                     onClick={handleSubmit}>
-                    <SendIcon/>
-                      עדכן                    
+                    <SendIcon />
+                    עדכן
                   </IconButton>
                 </StyledTableCell>
               </StyledTableRow>

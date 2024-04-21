@@ -58,12 +58,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function IncrementalOperationTeamPerAgent() {
   const [operations, setOperations] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(moment().format("MM/YYYY"));
+  const [selectedMonth, setSelectedMonth] = useState(
+    moment().format("MM/YYYY")
+  );
   const [months, setMonths] = useState([]);
 
   const [selectedAgent, setSelectedAgent] = useState("");
   const [agents, setAgents] = useState([]);
-  
+
   const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {
@@ -86,7 +88,9 @@ export default function IncrementalOperationTeamPerAgent() {
         setMonths(uniqueMonths);
         setAgents([...new Set(data.map((operation) => operation.nameAgent))]);
         setOperations(data);
-           snackbar(data.message ? data.message : "התפעול של החודש המצטבר נטען בהצלחה !");
+        snackbar(
+          data.message ? data.message : "התפעול של החודש המצטבר נטען בהצלחה !"
+        );
       });
   }, []);
 
@@ -96,204 +100,248 @@ export default function IncrementalOperationTeamPerAgent() {
 
   const handleAgentChange = (event) => {
     setSelectedAgent(event.target.value);
-  }
+  };
 
-const filteredOperations = operations.filter((operation) => {
-  const operationMonth = moment(operation.createTime).format("MM/YYYY");
-  return operation.nameAgent === selectedAgent && operationMonth === selectedMonth;
-});
+  const filteredOperations = operations.filter((operation) => {
+    const operationMonth = moment(operation.createTime).format("MM/YYYY");
+    return (
+      operation.nameAgent === selectedAgent && operationMonth === selectedMonth
+    );
+  });
 
   return (
     <>
       <div className="titleOperationAndAgents">
-        <h3>{`בחירת הציג מצטבר על פי חודש : ${moment(selectedMonth, "MM/YYYY").format("MM/YYYY")}`}</h3>
-<div>
-  <FormControl
+        <h3>{`בחירת הציג מצטבר על פי חודש : ${moment(
+          selectedMonth,
+          "MM/YYYY"
+        ).format("MM/YYYY")}`}</h3>
+        <div>
+          <FormControl
             variant="standard"
-          sx={{ m: 1, minWidth: 120 }}
-          style={{ marginTop: "-5px" }}>
-        <InputLabel id="demo-simple-select-standard-label">
-            בחירת סוכן
-          </InputLabel>
-    <Select
-      labelId="demo-simple-select-standard-label"
-      id="demo-simple-select-standard"
-      value={selectedAgent}
-      onChange={handleAgentChange}
-      label="בחירת סוכן">
-      <MenuItem value={selectedAgent}>
-        <em>סוכנים מצטברים</em>
-      </MenuItem>
-      {agents.map((agent) => (
-        <MenuItem key={agent} value={agent}>
-          {agent}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-  <FormControl
+            sx={{ m: 1, minWidth: 120 }}
+            style={{ marginTop: "-5px" }}>
+            <InputLabel id="demo-simple-select-standard-label">
+              בחירת סוכן
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={selectedAgent}
+              onChange={handleAgentChange}
+              label="בחירת סוכן">
+              <MenuItem value={selectedAgent}>
+                <em>סוכנים מצטברים</em>
+              </MenuItem>
+              {agents.map((agent) => (
+                <MenuItem key={agent} value={agent}>
+                  {agent}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl
             variant="standard"
-          sx={{ m: 1, minWidth: 120 }}
-          style={{ marginTop: "-5px" }}>
-        <InputLabel id="demo-simple-select-standard-label">
-            בחירת חודש
-          </InputLabel>
-    
-    <Select
-      labelId="demo-simple-select-standard-label"
-      id="demo-simple-select-standard"
-      value={selectedMonth}
-      onChange={handleMonthChange}
-      label="בחירת חודש">
-      <MenuItem value={selectedMonth}>
-        <em>חודשים מצטברים</em>
-      </MenuItem>
-      {months.map((month) => (
-        <MenuItem key={month} value={month}>
-          {month}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-</div>
+            sx={{ m: 1, minWidth: 120 }}
+            style={{ marginTop: "-5px" }}>
+            <InputLabel id="demo-simple-select-standard-label">
+              בחירת חודש
+            </InputLabel>
+
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={selectedMonth}
+              onChange={handleMonthChange}
+              label="בחירת חודש">
+              <MenuItem value={selectedMonth}>
+                <em>חודשים מצטברים</em>
+              </MenuItem>
+              {months.map((month) => (
+                <MenuItem key={month} value={month}>
+                  {month}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
       </div>
       <>
-      {!filteredOperations.length ?
-      <div className="titleOperationAndAgents">
-        <h3>{`אין תפעול מצטבר / חודשי לסוכן ${selectedAgent}`}</h3>
-        </div>
-        :
-        <>
-              {
-        <TableContainer component={Paper} id="container" style={{ maxHeight: '400px', overflowY: 'scroll' }}>
-          <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>תאריך</StyledTableCell>
-                <StyledTableCell>שם צוות</StyledTableCell>
-                <StyledTableCell>שם נציג</StyledTableCell>
-                <StyledTableCell align="right">כמות שיחות</StyledTableCell>
-                <StyledTableCell align="right">פיריון</StyledTableCell>
-                <StyledTableCell align="right">ניתוק - TV</StyledTableCell>
-                <StyledTableCell align="right">ניתוק - Fiber</StyledTableCell>
-                <StyledTableCell align="right">אחוז שימור - TV</StyledTableCell>
-                <StyledTableCell align="right">
-                  אחוז שימור - Fiber
-                </StyledTableCell>
-                <StyledTableCell align="right">מכירות - Fiber</StyledTableCell>
-                <StyledTableCell align="right"> מכירות - TV</StyledTableCell>
-                <StyledTableCell align="right">EasyMesh</StyledTableCell>
-                <StyledTableCell align="right">שדרוג</StyledTableCell>
-                <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
-                <StyledTableCell align="right">יעדים</StyledTableCell>
-                <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Array.isArray(filteredOperations) &&
-                filteredOperations.map((operations, index) => (
-                  <StyledTableRow key={index}  >
-                    <StyledTableCell component="th" scope="row">
-                      {moment(operations.createTime).format("DD/MM/YYYY")}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {operations.teamName}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {operations.nameAgent}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.numberCalls}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.productivity}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.tvDisconnection}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.fiberDisconnection}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      align="right"
-                      style={{
-                        backgroundColor:
-                          parseFloat(operations.simurTV.replace("%", "")) /
-                            100 >=
-                          0.79
-                            ? "#62a462"
-                            : parseFloat(operations.simurTV.replace("%", "")) /
-                                100 >=
-                              0.67
-                            ? "#c1c16f"
-                            : "#ad6262",
-                      }}>
-                      {operations.simurTV}
-                    </StyledTableCell>
-                                        <StyledTableCell
-                      align="right"
-                      style={{
-                        backgroundColor:
-                          parseFloat(operations.simurFiber.replace("%", "")) /
-                            100 >=
-                          0.79
-                            ? "#62a462"
-                            : parseFloat(
-                                operations.simurFiber.replace("%", "")
-                              ) /
-                                100 >=
-                              0.67
-                            ? "#c1c16f"
-                            : "#ad6262",
-                      }}>
-                      {operations.simurFiber}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.sellerFiber}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.sellerTV}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.easyMesh}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.upgradeProgress}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {operations.satisfaction}
-                    </StyledTableCell>
-  <StyledTableCell 
-  align="right" 
-  style={{
-    backgroundColor: operations.sellerFiber + operations.easyMesh + operations.upgradeProgress + operations.sellerTV > 3 ? '#62a462' : '#ad6262'
-  }}
->
-  {operations.sellerFiber + operations.easyMesh + operations.upgradeProgress + operations.sellerTV}
-</StyledTableCell>
-                 <StyledTableCell align="right">
-                    <EditOperation
-                      theIDoperation={operations.bizNumber}
-                      dataOperation={operations}
-                    />
-                  </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-    }
-      <div className="titleOperationAndAgents">
-        <h3 style={{ fontSize: "20px" }}>{`ממוצע של ${selectedAgent} בחודש הזה : ${selectedMonth}`}</h3>
-      </div>
-      <OperatingAverageTeamPerAgent
-      selectedMonth={selectedMonth}
-      setSelectedMonth={setSelectedMonth}
-        selectedAgent={selectedAgent}
-        setSelectedAgent={setSelectedAgent}
-      />
-    </>
-    }
+        {!filteredOperations.length ? (
+          <div className="titleOperationAndAgents">
+            <h3>{`אין תפעול מצטבר / חודשי לסוכן ${selectedAgent}`}</h3>
+          </div>
+        ) : (
+          <>
+            {
+              <TableContainer
+                component={Paper}
+                id="container"
+                style={{ maxHeight: "400px", overflowY: "scroll" }}>
+                <Table
+                  sx={{ minWidth: 700 }}
+                  stickyHeader
+                  aria-label="sticky table">
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>תאריך</StyledTableCell>
+                      <StyledTableCell>שם צוות</StyledTableCell>
+                      <StyledTableCell>שם נציג</StyledTableCell>
+                      <StyledTableCell align="right">
+                        כמות שיחות
+                      </StyledTableCell>
+                      <StyledTableCell align="right">פיריון</StyledTableCell>
+                      <StyledTableCell align="right">
+                        ניתוק - TV
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        ניתוק - Fiber
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        אחוז שימור - TV
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        אחוז שימור - Fiber
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        מכירות - Fiber
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {" "}
+                        מכירות - TV
+                      </StyledTableCell>
+                      <StyledTableCell align="right">EasyMesh</StyledTableCell>
+                      <StyledTableCell align="right">שדרוג</StyledTableCell>
+                      <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
+                      <StyledTableCell align="right">יעדים</StyledTableCell>
+                      <StyledTableCell align="right">
+                        עדכון פרטים
+                      </StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {Array.isArray(filteredOperations) &&
+                      filteredOperations.map((operations, index) => (
+                        <StyledTableRow key={index}>
+                          <StyledTableCell component="th" scope="row">
+                            {moment(operations.createTime).format("DD/MM/YYYY")}
+                          </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">
+                            {operations.teamName}
+                          </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">
+                            {operations.nameAgent}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {operations.numberCalls}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {operations.productivity}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {operations.tvDisconnection}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {operations.fiberDisconnection}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="right"
+                            style={{
+                              backgroundColor:
+                                parseFloat(
+                                  operations.simurTV.replace("%", "")
+                                ) /
+                                  100 >=
+                                0.79
+                                  ? "#62a462"
+                                  : parseFloat(
+                                      operations.simurTV.replace("%", "")
+                                    ) /
+                                      100 >=
+                                    0.67
+                                  ? "#c1c16f"
+                                  : "#ad6262",
+                            }}>
+                            {operations.simurTV}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="right"
+                            style={{
+                              backgroundColor:
+                                parseFloat(
+                                  operations.simurFiber.replace("%", "")
+                                ) /
+                                  100 >=
+                                0.79
+                                  ? "#62a462"
+                                  : parseFloat(
+                                      operations.simurFiber.replace("%", "")
+                                    ) /
+                                      100 >=
+                                    0.67
+                                  ? "#c1c16f"
+                                  : "#ad6262",
+                            }}>
+                            {operations.simurFiber}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {operations.sellerFiber}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {operations.sellerTV}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {operations.easyMesh}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {operations.upgradeProgress}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {operations.satisfaction}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="right"
+                            style={{
+                              backgroundColor:
+                                operations.sellerFiber +
+                                  operations.easyMesh +
+                                  operations.upgradeProgress +
+                                  operations.sellerTV >
+                                3
+                                  ? "#62a462"
+                                  : "#ad6262",
+                            }}>
+                            {operations.sellerFiber +
+                              operations.easyMesh +
+                              operations.upgradeProgress +
+                              operations.sellerTV}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            <EditOperation
+                              theIDoperation={operations.bizNumber}
+                              dataOperation={operations}
+                            />
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            }
+            <div className="titleOperationAndAgents">
+              <h3
+                style={{
+                  fontSize: "20px",
+                }}>{`ממוצע של ${selectedAgent} בחודש הזה : ${selectedMonth}`}</h3>
+            </div>
+            <OperatingAverageTeamPerAgent
+              selectedMonth={selectedMonth}
+              setSelectedMonth={setSelectedMonth}
+              selectedAgent={selectedAgent}
+              setSelectedAgent={setSelectedAgent}
+            />
+          </>
+        )}
       </>
     </>
   );

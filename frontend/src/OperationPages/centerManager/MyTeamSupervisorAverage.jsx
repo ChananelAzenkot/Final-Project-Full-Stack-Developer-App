@@ -76,14 +76,17 @@ export default function MyTeamSupervisorAverage({
   };
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/incrementalOperationByCenterManagerAvgTeam`, {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.token,
-      },
-    })
+    fetch(
+      `http://localhost:4000/api/incrementalOperationByCenterManagerAvgTeam`,
+      {
+        credentials: "include",
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.token,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setOperationAverage([data]);

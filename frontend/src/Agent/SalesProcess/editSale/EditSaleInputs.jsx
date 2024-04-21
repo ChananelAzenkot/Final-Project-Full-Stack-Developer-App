@@ -6,7 +6,10 @@ import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import PropTypes from "prop-types";
 
 export default function EditSaleInputs({
-saleDataUpDate, errors, onInputChange, save
+  saleDataUpDate,
+  errors,
+  onInputChange,
+  save,
 }) {
   EditSaleInputs.propTypes = {
     errors: PropTypes.object,
