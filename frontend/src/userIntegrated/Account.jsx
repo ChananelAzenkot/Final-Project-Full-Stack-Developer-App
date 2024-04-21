@@ -40,8 +40,6 @@ export default function Account({ theme }) {
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
 
-  console.log(user?._id);
-
   const handelChange = (ev) => {
     const { name, value } = ev.target;
     let obj = { ...formData };
@@ -266,6 +264,7 @@ export default function Account({ theme }) {
                                     [s.name]: e.target.value,
                                   });
                                 }}
+                                style={{display: s.name === "password" ? "none" : "block" }}
                                 disabled={
                                   !user.isAdmin &&
                                   [
