@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/CreateCards.css";
 import "../styles/About.css";
 import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
@@ -11,21 +10,15 @@ export default function About(theme) {
         <ThemeProvider theme={theme}>
           <Box component="div" className="containerAbout">
             <Typography component="div" variant="h3" className="tempTitle">
-              <div>About</div>
+              <div>הדרכה קצרה</div>
             </Typography>
             <Typography variant="h1">
-              Contact Book
+              GoPerfect
             </Typography>
             <Box className="underlineAbout"></Box>
             <Typography component="div" variant="body1" className="containerAboutText">
               <div>
-                PContact book apps allow users to store and organize contact
-                information on their mobile devices. They provide features like
-                adding names, phone numbers, email addresses, home addresses,
-                photos, and notes for each contact. Some apps sync contacts
-                across devices and back them up to the cloud. Contact books help
-                keep important contact info organized and easily accessible on a
-                smartphone or tablet.
+                אנחנו עמידה ביעדים במוקדי טלפונים דורשת ארגון, יכולת ניהול זמן ויכולת להתמודד עם לחצים. חשוב להיות אקטיבי, להתמקד במטרות העיקריות ולתת פתרונות מהירים. נדרשת יכולת תקשורת מעולה, הבנת הלקוח ויכולת להפנים ביעילות. חשוב להיות אמפתיים ומקצועיים גם בזמנים מאתגרים. להתקשר לקוחות במטרה להשיג מטרות עסקיות מוסכמות, תוך שמירה על איכות השירות והיחס האדיב. עליך להיות גם גמיש, יציב ומוכן ללמוד ולהתאים עצמך לצרכי הלקוחות. 
               </div>
             </Typography>
             <Typography
@@ -33,24 +26,23 @@ export default function About(theme) {
               component="div"
               variant="h4"
               style={{ direction: "ltr" }}>
-              So what can we do and how is works ?
+                ?  אז מה בעצם המערכת שלנו יכולה לעשות 
+
             </Typography>
             <Box component="div" className="underlineAbout"></Box>
             <Typography component="div" variant="body1" className="containerAboutText">
               <div>
-                Contact book apps allow users to add new contacts by entering
-                their name, phone number, email address, and other info. Users
-                can view and scroll through their list of contacts, search for
-                specific contacts, and tap on a contact to see their details.
-                Apps allow calling, messaging, or emailing contacts directly
-                from their profile. Users can create different contact groups
-                and organize contacts however they prefer. Some key features are
-                adding, viewing, searching, communicating with, and organizing
-                contacts from one central app.
+יישום הנתונים מארגן ביעילות מדדי פרודוקטיביות עובדים,
+מתן תובנות מפורטות ברמה פרטנית לפי חודש ויום.
+פילוח זה מאפשר ניתוח יסודי, ומציע נראות מראשי צוותים ועד מנהלי מרכז.
+על ידי מעקב אחר ביצועים יומיים, מנהיגים יכולים לעקוב אחר מסלול ההתקדמות של כל עובד,
+זיהוי אזורים לשיפור וזיהוי ביצועים גבוהים באופן מיידי.
+זה מקל על קבלת החלטות מונעת נתונים, טיפוח מצוינות במקום העבודה ואופטימיזציה של היעילות.
+כלי מקצועי זה הוא בעל ערך רב עבור ארגונים השואפים לפרודוקטיביות ולהצלחה.
               </div>
             </Typography>
             <Typography variant="h2" style={{ direction: "ltr" }}>
-              <div>Who Can Use ?</div>
+              <div>? ואיך משתמשים ומי</div>
             </Typography>
             <Box className="underlineAbout"></Box>
             <Box
@@ -61,39 +53,24 @@ export default function About(theme) {
                   <ListItemText
                     component="div"
                     variant="body1"
-                    primary="None :"
-                    secondary="This access level enables users to view all the cards contact 
-    and About On this page app,and you can signUp or if you have account so login,
-    and This access level enables users to view on all the contact cards."
+                    primary="Agent/User :"
+                    secondary="תפקידו של הנציג/סוכן כרוך בעדכוני נתונים יומיים, חתירה לשיפור. הם עוקבים אחר נפחי שיחות, ניתוקים ומכירות מדי יום, ומנתחים הצטברויות חודשיות כדי להעריך את הביצועים מול יעדים שנקבעו."
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     component="div"
                     variant="body1"
-                    primary="User :"
-                    secondary="This access level enables users to view, and
-        favorite contacts that are stored in their personal address book
-        within the app."
+                    primary="Business/TeamLeader :"
+                    secondary="תחומי האחריות של מנהיג הצוות כוללים הנחייה, הנעה ופיקוח על חברי הצוות, הבטחת פרודוקטיביות והשגת יעדים. הם עוקבים אחר נתוני פרודוקטיביות ומנתחים את התוצאות כדי להבין אילו צעדים יש לנקוט כדי לשפר את הביצועים."
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     component="div"
                     variant="body1"
-                    primary="Business :"
-                    secondary="This permission grants access to add, edit, remove, and otherwise
-        manage contact entries within the shared company address book."
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    component="div"
-                    variant="body1"
-                    primary="Admin :"
-                    secondary="The admin permission provides full access to the
-        app including adding/removing users, adjusting settings, managing
-        all data and contacts, and overall app administration."
+                    primary="Admin/CenterManger :"
+                    secondary="המנהל המערכתי עוקב אחר נתוני המערכת ומנתח את המידע כדי להבין אילו צעדים יש לנקוט כדי לשפר את הביצועים. הוא יכול להוסיף ולעדכן משתמשים, להגדיר יעדים ולהגדיר תפקידים."
                   />
                 </ListItem>
               </List>

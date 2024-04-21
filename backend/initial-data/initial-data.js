@@ -5,7 +5,7 @@ export const users = [
     serviceDepartment: false,
     conservationDepartment: true,
     teamName: "iron",
-    phone: "050-0000000",
+    phone: "0500000000",
     email: "regular@gmail.com",
     password: "Fdr1211231!@",
     image: { url: "", alt: "test" },
