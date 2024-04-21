@@ -15,7 +15,10 @@ import rateLimit from "express-rate-limit";
 export default (app) => {
 const postLimit = rateLimit({
   windowMs: 24 * 60 * 60 * 1000, // 24 hours
-  max: 1, // limit each IP to 1 request per windowMs
+  max: 1,
+  keyGenerator: function (req /*, res*/) {
+    return req.userId;
+  },
   handler: function (req, res /*next*/) {
     res
       .status(403)
