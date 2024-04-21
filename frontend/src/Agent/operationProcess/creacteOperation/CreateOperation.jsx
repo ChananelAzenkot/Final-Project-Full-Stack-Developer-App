@@ -151,8 +151,8 @@ const onInputChange = (e) => {
     if (submitTime) {
       const now = new Date();
       const timeDifference = now.getTime() - new Date(submitTime).getTime();
-      const differenceInHours = timeDifference / (1000 * 60);
-if (differenceInHours < 5) {
+      const differenceInHours = timeDifference / (1000 * 60 * 60);
+if (differenceInHours < 24) {
   setIsDisabled(true);
 } else {
   setIsDisabled(false);

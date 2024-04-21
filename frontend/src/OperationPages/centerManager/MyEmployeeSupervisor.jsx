@@ -82,11 +82,10 @@ export default function MyEmployeeSupervisor() {
   return (
     <>
       <div className="btnGroup">
-              <div className="titleOperationAndAgents">
+              <div className="titleOperationAndManger" style={{display:"grid" }}>
                 <h4>{`ניהול משתמשים של המערכת`}</h4>
-              </div>
               <div
-                className="searchUser"
+                className="search-user"
                 style={{
                   display: "flex",
                   border: "1px solid black",
@@ -94,6 +93,7 @@ export default function MyEmployeeSupervisor() {
                 }}>
                 <SearchBar />
                 <SearchBarOperation />
+              </div>
               </div>
             </div>
       <TableContainer component={Paper} id="container">

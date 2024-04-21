@@ -7,8 +7,8 @@ export const middlewareOperations = Joi.object({
   productivity: Joi.string()
     .required()
     .min(0)
-    .max(3)
-    .message("פיריון חייב להיות בין1 -3 ספרות"),
+    .max(4)
+    .message("(4.40) פיריון חייב להיות בספרה עם נקודה עשרונית"),
   tvDisconnection: Joi.number()
     .required()
     .min(0)

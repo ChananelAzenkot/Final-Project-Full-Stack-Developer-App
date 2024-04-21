@@ -11,9 +11,9 @@
       "number.min": "כמות שיחות חייבת להיות בין 1 ל-2 ספרות",
     }),
     productivity: Joi.string().min(0)
-    .max(3).required().messages({
+    .max(4).required().messages({
       "number.empty": "נדרש פיריון",
-      "number.min": "פיריון חייב להיות בין 1 ל-3 ספרות",
+      "number.min": "(4.40) פיריון חייב להיות בספרה עם נקודה עשרונית",
     }),
     simurTV: Joi.string().min(3).required().messages({
       "string.empty": "נדרש שימור טלוויזיה",

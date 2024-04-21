@@ -121,7 +121,6 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     onChange={onInputChange}
                     error={Boolean(errors.numberCalls)}
                     helperText={errors.numberCalls}
-                    type="number"
                     style={{ width: "63%" }}
                   />
                 </StyledTableCell>
@@ -153,7 +152,6 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                     onChange={onInputChange}
                     error={Boolean(errors.tvDisconnection)}
                     helperText={errors.tvDisconnection}
-                    type="number"
                   />
                 </StyledTableCell>
                 <StyledTableCell align="right">

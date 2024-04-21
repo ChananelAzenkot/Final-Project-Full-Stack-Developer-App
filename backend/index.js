@@ -15,8 +15,6 @@ import deleteOperations from "./handlers/operation/deleteOperations.js";
 import users from "./handlers/users/models/users.js";
 import initialDataStart from "./initial-data/initial-data.service.js";
 import logout from "./handlers/users/logout.js";
-import LoggersErrors from './loggers/loggersError.js';
-import loggersOperations from './loggers/loggersOperation.js';
 import cron from 'node-cron';
 import { DailyOperation } from './handlers/operation/schemasOperations&Sales/operations.model.js';
 import {DailyOperationSale} from './handlers/operation/schemasOperations&Sales/operationSale.model.js';
@@ -48,8 +46,7 @@ app.use(cors({
     allowedHeaders: 'Content-Type, Accept, Authorization',
 }));
 
-// Log the requests //
-app.use(LoggersErrors);
+
 
 // Start the server //
 app.listen(4000, () => {
@@ -63,9 +60,7 @@ morgan.token("time", () => moment().format("YYYY-MM-DD HH:mm:ss"));
 const morganFormat = ":time :method :url :status :response-time ms";
 app.use(morgan(chalk.bgMagenta(morganFormat)));
 
-// "0 21 * * *"; // every day at 9 PM
-// "*/4 * * * *"; // every 4 minutes
-// for one hour "0 */1 * * *"
+// "0 21 * * *"; // every day at 9 PM - this deleted the daily operation collection and sale
 cron.schedule("0 21 * * *", async () => {
   await DailyOperation.deleteMany({});
   await DailyOperationSale.deleteMany({});
@@ -98,9 +93,6 @@ deleteOperations(app);
 users(app);
 initialDataStart(app);
 logout(app);
-
-//log the operations //
-app.use(loggersOperations);
 
 
 app.use((req, res) => {

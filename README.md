@@ -53,6 +53,9 @@ where you can read about the product and, of course, contact us if you have any 
 
 just for type of user in the system can create a Operation that includes all the parameter description.
 
+- **the-Operation**: 
+It is very important to know that an operation can only be sent in 24 hours per user, in order to avoid wrong operations for that day, only an agent or representative creates one operation - for testing purposes, you can open an additional 2 or 3 pages - and connect to a team manager or center manager to get a full impression!
+
 ### Team Leader
 
 A team manager monitors the activity of the representatives who create operations in this way can see how the performance of that one was that day and that month.

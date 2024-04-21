@@ -7,17 +7,15 @@ import { FormControlLabel } from "@mui/material";
 import { Switch } from "@mui/material";
 import { Container } from "@mui/material";
 import clientStructure from "../../userIntegrated/ClientStructure";
+import "../../styles/operation.css";
 
 const style = {
   position: "absolute",
-
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
 };
 EditPropClients.propTypes = {
   open: PropTypes.bool.isRequired,
@@ -45,15 +43,16 @@ export function EditPropClients({
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
-      <Box sx={style}>
-        <Container component="main" maxWidth="xs">
+      <Box sx={style} id="theBoxUserEdit">
+        <Container component="main" maxWidth="s">
           <Box
             sx={{
               marginTop: 8,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-            }}>
+            }}
+            >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>

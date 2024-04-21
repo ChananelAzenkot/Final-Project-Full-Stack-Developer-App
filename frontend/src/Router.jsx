@@ -6,7 +6,6 @@ import OperationTeams from "./OperationPages/teamLeader/operationTeam/OperationT
 import About from "./pages/About.jsx";
 import MyOperation from "./OperationPages/agent/operation/MyOperation.jsx";
 import IncrementalOperation from "./OperationPages/agent/operation/IncrementalOperation.jsx";
-import CheckUser from "./OperationPages/CheckUser.jsx";
 import SalesOperationDaily from "./OperationPages/agent/sales/SalesOperationDaily.jsx";
 import SalesOperationIncremental from "./OperationPages/agent/sales/SalesOperationIncremental.jsx";
 import SalesIncrementalTeams from "./OperationPages/teamLeader/salesTeam/SalesIncrementalTeams.jsx";
@@ -23,7 +22,6 @@ import MySalesSupervisor from "./OperationPages/centerManager/MySalesSupervisor.
 export default function Router(theme) {
   return (
     <Routes>
-      <Route path="/" element={<CheckUser theme={theme} />} />
       <Route path="/about" element={<About theme={theme} />} />
       <Route path="/dailyOperation" element={
         <ProtectedRoute permission={[RoleTypes.user]}>

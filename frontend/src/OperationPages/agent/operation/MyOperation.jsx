@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Fragment, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
 import "../../../styles/operation.css";
@@ -14,8 +14,6 @@ import EditOperation from "../../../Agent/operationProcess/editOperation/EditOpe
 import CreateOperation from "../../../Agent/operationProcess/creacteOperation/CreateOperation";
 import NewSale from "../../../Agent/SalesProcess/newSale/NewSale";
 import DeleteOperation from "../../../Agent/operationProcess/deleteOperation/DeleteOperation";
-import SearchBar from "../../../components/searchBar/SearchBar";
-import SearchBarOperation from "../../../components/searchBar/SearchBarOperation";
 import { GeneralContext } from "../../../App";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -104,8 +102,6 @@ export default function MyOperation() {
                   border: "1px solid black",
                   borderRadius: "10px",
                 }}>
-                <SearchBar />
-                <SearchBarOperation />
               </div>
             </div>
           ))
