@@ -16,7 +16,6 @@ export default (app) => {
           }
 
           const user = await User.findById(userId);
-          console.log(user);
 
           if (user.teamName && user.IsBusiness) {
             const dailyOperationTeam = await DailyOperation.find({
@@ -133,7 +132,6 @@ export default (app) => {
               }
 
               res.send(averagesByTeamAndDay);
-              console.log(averagesByTeamAndDay);
             }
           } catch (error) {
             console.log(error);

@@ -70,8 +70,6 @@ export default function OperatingAverageSaleTeam() {
       });
   }, []);
 
-  console.log(operationAverageSaleTeam[0]);
-
   const [operation, setOperation] = useState([]);
 
   useEffect(() => {
@@ -94,7 +92,6 @@ export default function OperatingAverageSaleTeam() {
       });
   }, []);
 
-  console.log(operation[0]);
   return (
     <>
       {

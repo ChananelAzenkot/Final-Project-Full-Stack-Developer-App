@@ -229,9 +229,6 @@ export default (app) => {
                   (total, sale) => total + sale.upgradeProgress,
                   0
                 );
-                console.log(
-                  `user_id: ${updatedDailyOperationSale.user_id}, createTime: ${createTime}`
-                );
                 updatedDailyOperation = await DailyOperation.findOneAndUpdate(
                   {
                     user_id: updatedDailyOperationSale.user_id,
@@ -251,7 +248,6 @@ export default (app) => {
                 );
               }
             }
-            console.log(updatedDailyOperation, updatedIncrementalOperation);
             res.send({
               updatedDailyOperationSale,
               updatedIncrementalOperationSale,

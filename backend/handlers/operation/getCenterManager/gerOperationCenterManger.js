@@ -113,7 +113,6 @@ export default (app) => {
         }
 
         res.send(averagesByDay);
-        console.log(averagesByDay);
       }
     } catch (error) {
       console.log(error);

@@ -166,7 +166,6 @@ export default function OperatingAverageTeamPerAgent({
               {Array.isArray(filteredOperations) &&
                 filteredOperations.map(
                   (operationAverage, index) => (
-                    console.log(filteredOperations),
                     (
                       <StyledTableRow key={index}>
                         <StyledTableCell component="th" scope="row">

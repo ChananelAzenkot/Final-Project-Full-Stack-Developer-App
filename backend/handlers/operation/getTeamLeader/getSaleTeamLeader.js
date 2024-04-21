@@ -17,7 +17,6 @@ export default (app) => {
           }
 
           const user = await User.findById(userId);
-          console.log(user);
 
           if (user.teamName && user.IsBusiness) {
             const dailyOperationTeamSale = await DailyOperationSale.find({
