@@ -43,7 +43,7 @@ export function EditPropClients({
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
-      <Box sx={style} id="theBoxUserEdit">
+      <Box sx={style}>
         <Container component="main" maxWidth="s">
           <Box
             sx={{
@@ -63,8 +63,10 @@ export function EditPropClients({
               component="form"
               onSubmit={handleSubmit}
               noValidate
-              sx={{ mt: 1 }}>
-              <Grid container spacing={2}>
+              sx={{ mt: 1 }}
+              >
+  
+              <Grid container spacing={2} id="theBoxUserEdit">
                 {clientStructure.map((s) => {
                   if (s.fields) {
                     return s.fields.map((field) => (
@@ -72,7 +74,8 @@ export function EditPropClients({
                         key={field.name}
                         item
                         xs={12}
-                        sm={field.block ? 12 : 6}>
+                        sm={field.block ? 12 : 6}
+                        >
                         {field.type === "boolean" ? (
                           <FormControlLabel
                             control={
