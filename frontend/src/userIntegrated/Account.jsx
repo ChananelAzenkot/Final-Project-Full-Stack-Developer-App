@@ -124,14 +124,14 @@ export default function Account({ theme }) {
       })
       .then((data) => {
         if (typeof data === "object") {
-          navigate("/login");
+          navigate("/account");
         } else {
           throw new Error(data);
         }
       })
       .catch((err) => alert(err.message))
       .finally(() => setLoader(false));
-    navigate("/login");
+    navigate("/account");
   };
 
   return (
@@ -232,6 +232,12 @@ export default function Account({ theme }) {
                                     checked={user[s.name] || false}
                                     name={s.name}
                                     disabled={!user.isAdmin}
+                                    onChange={(ev) =>
+                                      setUser({
+                                        ...user,
+                                        [s.name]: ev.target.checked,
+                                      })
+                                    }
                                   />
                                 }
                                 label={s.label}
@@ -282,7 +288,6 @@ export default function Account({ theme }) {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    disabled={!isFormValid}
                     style={{
                       backgroundColor: isFormValid
                         ? "#4ed2c1"

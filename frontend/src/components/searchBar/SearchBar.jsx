@@ -52,7 +52,6 @@ export default function SearchBar() {
 
   return (
     <div>
-      {console.log(searchResults)}
       <form onSubmit={handleSearch} style={{display:"flex"}}>
           <TextField
                   inputProps={{ style: {width:"150px"}}}

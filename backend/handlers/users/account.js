@@ -36,14 +36,12 @@ app.put(
         );
         const destinationPath = path.join("./files", req.file.originalname);
 
-        // Check if source file exists
         if (!fs.existsSync(sourcePath)) {
           return res
             .status(400)
             .json({ message: "Source file does not exist" });
         }
 
-        // Check if destination directory exists, if not create it
         const destinationDir = path.dirname(destinationPath);
         if (!fs.existsSync(destinationDir)) {
           fs.mkdirSync(destinationDir, { recursive: true });
@@ -66,7 +64,6 @@ app.put(
           return res.status(404).json({ message: "User not found" });
         }
 
-        // Save the relative path to the user document
         user.image = { imageUpload: destinationPath };
 
         try {
@@ -91,38 +88,40 @@ app.put(
   }
 );
 
- app.put("/api/user/:id", async (req, res) => {
-   try {
-     const userInfo = req.body;
-     const user = await User.findById(req.params.id);
+app.put("/api/user/:id", async (req, res) => {
+  try {
+    const userInfo = req.body;
+    const user = await User.findById(req.params.id);
 
-     if (!user) {
-       return res.status(404).json({ message: "User not found" });
-     }
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-     const isPasswordCorrect = await bcrypt.compare(
-       userInfo.password,
-       user.password
-     );
-     if (!isPasswordCorrect) {
-       return res
-         .status(400)
-         .json({ message: "הסיסמא לא נכונה כדי לעדכן את הפרטים" });
-     }
+    if (!user.isAdmin && userInfo.isAdmin) {
+      const isPasswordCorrect = await bcrypt.compare(
+        userInfo.password,
+        user.password
+      );
+      if (!isPasswordCorrect) {
+        return res
+          .status(400)
+          .json({ message: "הסיסמא לא נכונה כדי לעדכן את הפרטים" });
+      }
+    }
 
-     delete userInfo.password;
-     Object.assign(user, userInfo);
+    delete userInfo.password;
+    Object.assign(user, userInfo);
 
-     await user.save();
-     res.status(200).send(`הפרטים עודכנו בהצלחה ${user.name.first} !! `);
-   } catch (error) {
-     if (error.code === 11000) {
-       res.status(409).json({ message: "Email already exists" });
-     } else {
-       res.status(500).json({ message: "Server error", error: error.message });
-     }
-   }
- });
+    await user.save();
+    res.status(200).send(`הפרטים עודכנו בהצלחה ${user.name.first} !! `);
+  } catch (error) {
+    if (error.code === 11000) {
+      res.status(409).json({ message: "Email already exists" });
+    } else {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  }
+});
 };
 
 export default myAccount;
