@@ -3,8 +3,10 @@ import { guard } from "../../../guards.js";
 import bcrypt from "bcrypt";
 import { User } from "./user.model.js";
 import { getLoggedUserId } from "../../../config/config.js";
-import {
-  IncrementalOperation} from "../../operation/schemasOperations&Sales/operations.model.js";
+import { IncrementalOperation } from "../../operation/schemasOperations&Sales/operations.model.js";
+import { IncrementalOperationSale } from "../../operation/schemasOperations&Sales/operationSale.model.js";
+import { DailyOperation } from "../../operation/schemasOperations&Sales/operations.model.js";
+import { DailyOperationSale } from "../../operation/schemasOperations&Sales/operationSale.model.js";
 
 
 const users = (app) => {
@@ -129,7 +131,12 @@ app.delete("/api/user/:id", adminGuard, async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.send("User deleted successfully " + user.name.first);
+    await IncrementalOperation.deleteMany({ user_id: req.params.id });
+    await IncrementalOperationSale.deleteMany({ user_id: req.params.id });
+    await DailyOperation.deleteMany({ user_id: req.params.id });
+    await DailyOperationSale.deleteMany({ user_id: req.params.id });
+
+    res.send("User and associated operations and sales deleted successfully " + user.name.first);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error", error: error.message });
