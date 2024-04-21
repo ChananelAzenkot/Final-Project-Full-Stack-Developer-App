@@ -26,6 +26,9 @@ import putSaleAgent_Leader from "./handlers/operation/putAgent_Leader/putSaleAge
 import gerOperationCenterManger from "./handlers/operation/getCenterManager/gerOperationCenterManger.js";
 import getSaleCenterManger from "./handlers/operation/getCenterManager/getSaleCenterManger.js";
 import avg_for_team from "./handlers/operation/getCenterManager/avg_for_team.js";
+import { format } from "date-fns";
+import fs from "fs";
+import LoggersErrors from "./Loggers/LoggersErrors.js";
 
 // Connect to MongoDB //
 async function main() {
@@ -47,6 +50,8 @@ app.use(
     allowedHeaders: "Content-Type, Accept, Authorization",
   })
 );
+// Log the requests //
+app.use(LoggersErrors);
 
 // Start the server //
 app.listen(4000, () => {
