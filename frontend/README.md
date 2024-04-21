@@ -86,7 +86,7 @@ Admin side can edit users and track teams if they have sent data or track the da
 
    - After a representative has typed the operation of the operation the manager can immediately see the behavior so that he can follow others
 
-4. **Manage Users/Cards**
+4. **Manage Users/Operation**
    - The administrator, if necessary, can also view all Operations and manage them in the same way as they manage users—deleting, changing permissions, and modifying their details. Regarding tickets, the administrator has the ability to delete them only.
 
 # Back-End
