@@ -26,7 +26,7 @@ Ensure you have a MongoDB instance running and configure your `.env` file with t
 Start the server:
 
 ```bash
-npm start
+nodemon
 ```
 
 Start the Vite
