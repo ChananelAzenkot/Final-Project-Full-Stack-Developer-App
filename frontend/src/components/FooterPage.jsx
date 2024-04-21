@@ -19,7 +19,7 @@ export default function FooterPage() {
               justifyContent: "center",
             }}>
               {
-                <h3>the app is devloper by Chananel Azenkot tel : 0528308242</h3>
+                <h3>the app is developer by Chananel Azenkot tel : 0528308242</h3>
               }
           </Box>
         </Toolbar>
