@@ -128,7 +128,10 @@ export default function CreateOperation() {
       body: JSON.stringify(formData),
     }).then((data) => {
       setFormData(data);
-      localStorage.setItem("submitTime", new Date());
+      const token = localStorage.getItem("token");
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
+      localStorage.setItem(`submitTime-${userId}`, new Date());
       snackbar("התפעול נוצר בהצלחה !");
       setTimeout(() => {
         window.location.href = "/dailyOperation";
@@ -141,7 +144,10 @@ export default function CreateOperation() {
   };
 
   useEffect(() => {
-    const submitTime = localStorage.getItem("submitTime");
+    const token = localStorage.getItem("token");
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.userId;
+    const submitTime = localStorage.getItem(`submitTime-${userId}`);
     if (submitTime) {
       const now = new Date();
       const timeDifference = now.getTime() - new Date(submitTime).getTime();
@@ -150,7 +156,7 @@ export default function CreateOperation() {
         setIsDisabled(true);
       } else {
         setIsDisabled(false);
-        localStorage.removeItem("submitTime");
+        localStorage.removeItem(`submitTime-${userId}`);
       }
     }
   }, []);
