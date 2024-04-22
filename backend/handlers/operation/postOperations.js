@@ -13,27 +13,28 @@ import { middlewareSales } from "../../middleware/middlewareSale.js";
 import rateLimit from "express-rate-limit";
 
 export default (app) => {
-  const postLimit = rateLimit({
-    windowMs: 24 * 60 * 60 * 1000, // 24 hours
-    max: 1,
-    keyGenerator: function (req /*, res*/) {
-      return req.userId;
-    },
-    handler: function (req, res /*next*/) {
-      res.status(403).json({
-        message:
-          "One operation per 24 hours is allowed, please try again later",
-      });
-    },
-  });
-
+const postLimit = rateLimit({
+  windowMs: 24 * 60 * 60 * 1000, // 24 hours
+  max: 1,
+  keyGenerator: function (req, res) {
+    const {userId} = getLoggedUserId(req, res);
+    return userId;
+  },
+  handler: function (req, res) {
+    res.status(403).json({
+      message:
+      "One operation per 24 hours is allowed, please try again later",
+    });
+  },
+});
+  
   app.post(
     "/api/dailyOperationAgentStart",
     guard,
     postLimit,
     async (req, res) => {
+      
       const { userId } = getLoggedUserId(req, res);
-
       if (!userId) {
         return res.status(403).json({ message: "User not authorized" });
       }
