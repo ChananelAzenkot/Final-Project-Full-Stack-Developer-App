@@ -119,7 +119,7 @@ export default function MyTeamSupervisor() {
   return (
     <>
       <div className="titleOperationAndAgents">
-        <h3>{` תפעול צוות ${selectedTeam} של חודש : ${moment(
+        <h3>{` תפעול צוות ${selectedTeam ? selectedTeam : "הנבחר"} של חודש : ${moment(
           selectedMonth,
           "MM/YYYY"
         ).format("MM/YYYY")}`}</h3>

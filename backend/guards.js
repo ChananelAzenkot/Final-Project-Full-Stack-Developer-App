@@ -25,7 +25,14 @@ export const guard = (req, res, next) => {
 // verify the token for the user as businessGuard //
 export const businessGuard = (req, res, next) => {
   try {
-    const { IsBusiness, isAdmin } = getLoggedUserId(req, res);
+    const userData = getLoggedUserId(req, res);
+
+    if (!userData) {
+      res.status(401).json({ message: "User not authorized" });
+      return;
+    }
+
+    const { IsBusiness, isAdmin } = userData;
 
     if (IsBusiness || isAdmin) {
       next();
@@ -51,7 +58,7 @@ export const adminGuard = (req, res, next) => {
     const { userId, isAdmin } = getLoggedUserId(req, res);
 
     if (isAdmin || userId === req.params.id) {
-      next();
+       return next();
     } else {
       res.status(401).json({ message: "User not authorized" });
     }

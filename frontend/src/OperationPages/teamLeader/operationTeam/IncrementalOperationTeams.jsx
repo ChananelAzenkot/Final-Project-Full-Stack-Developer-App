@@ -106,7 +106,7 @@ export default function IncrementalOperationTeams() {
   return (
     <>
       <div className="titleOperationAndAgents">
-        <h3>{` תפעול צוות ${operationsTeam[0]?.teamName} של חודש : ${moment(
+        <h3>{` תפעול צוות ${operationsTeam[0]?.teamName ? operationsTeam[0]?.teamName : ""} של חודש : ${moment(
           selectedMonth,
           "MM/YYYY"
         ).format("MM/YYYY")}`}</h3>

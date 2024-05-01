@@ -5,11 +5,11 @@ export const schemaOperations = Joi.object({
     "string.empty": "נדרש שם נציג",
     "string.min": "שם סוכן חייב להיות בין 3 ל-30 תווים",
   }),
-  numberCalls: Joi.number().min(0).max(100).required().messages({
-    "number.empty": "כמות שיחות נדרשת",
-    "number.min": "כמות שיחות חייבת להיות בין 1 ל-2 ספרות",
-  }),
-  productivity: Joi.string().min(0).max(4).required().messages({
+numberCalls: Joi.number().min(1).max(100).required().messages({
+  "number.empty": "כמות שיחות נדרשת",
+  "number.min": "כמות שיחות חייבת להיות בין 1 ל-2 ספרות",
+}),
+  productivity: Joi.string().min(4).max(4).required().messages({
     "number.empty": "נדרש פיריון",
     "number.min": "(4.40) פיריון חייב להיות בספרה עם נקודה עשרונית",
   }),
@@ -22,10 +22,12 @@ export const schemaOperations = Joi.object({
     "string.min": "שימור פייבר חייב להיות בין 1 ל-3 ספרות",
   }),
   tvDisconnection: Joi.number().min(0).max(100).required().messages({
+    "number.base": "כמות התנתקויות טלוויזיה חייבת להיות לפחות ספרה גם אם זה - 0",
     "number.empty": "נדרש כמות התנתקויות טלוויזיה",
     "number.min": "כמות התנתקויות טלוויזיה חייבת להיות לפחות ספרה גם אם זה - 0",
   }),
   fiberDisconnection: Joi.number().min(0).max(100).required().messages({
+    "number.base": "כמות התנתקויות פייבר חייבת להיות לפחות ספרה גם אם זה - 0",
     "number.empty": "נדרש כמות התנתקויות פייבר",
     "number.min": "כמות התנתקויות פייבר חייבת להיות לפחות ספרה גם אם זה - 0",
   }),

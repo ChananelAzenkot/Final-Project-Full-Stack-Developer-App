@@ -93,10 +93,7 @@ export default function MyOperation() {
               <div className="titleOperationAndAgents">
                 <h4>{`התפעול היומי של : ${operation.nameAgent}`}</h4>
               </div>
-              <CreateOperation
-                setOperation={setOperation}
-                dataOperation={operation}
-              />
+              <CreateOperation/>
               <div
                 className="searchUser"
                 style={{

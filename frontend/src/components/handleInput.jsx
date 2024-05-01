@@ -40,7 +40,9 @@ export const handleInputEdit = (
   setIsFormValid
 ) => {
   const { id, value } = e.target;
-  const obj = { ...item, [id]: value };
+  const numberKeys = ["numberCalls", "tvDisconnection", "fiberDisconnection"];
+  const newValue = numberKeys.includes(id) ? Number(value) : value;
+  const obj = { ...item, [id]: newValue };
   setItem(obj);
 
   const validate = schemaOperations.validate(obj, { abortEarly: false });

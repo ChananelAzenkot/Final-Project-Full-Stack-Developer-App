@@ -17,6 +17,10 @@ export const getLoggedUserId = (req, res) => {
 
     return data;
   } catch (error) {
+  if (error instanceof jwt.TokenExpiredError) {
+    console.error(chalk.bgRed("Token expired is time out"));
+    return res.status(401).json({ message: "Token expired is time out" });
+  }
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }

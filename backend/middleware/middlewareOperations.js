@@ -9,16 +9,17 @@ export const middlewareOperations = Joi.object({
     .min(0)
     .max(4)
     .message("(4.40) פיריון חייב להיות בספרה עם נקודה עשרונית"),
-  tvDisconnection: Joi.number()
-    .required()
-    .min(0)
-    .max(100)
-    .message("ניתוק טלוויזיה חייב להיות בין1 -2 ספרות"),
-  fiberDisconnection: Joi.number()
-    .required()
-    .min(0)
-    .max(100)
-    .message("ניתוק פייבר חייב להיות בין1 -2 ספרות"),
+  tvDisconnection: Joi.number().min(0).max(100).required().messages({
+    "number.base":
+      "כמות התנתקויות טלוויזיה חייבת להיות לפחות ספרה גם אם זה - 0",
+    "number.empty": "נדרש כמות התנתקויות טלוויזיה",
+    "number.min": "כמות התנתקויות טלוויזיה חייבת להיות לפחות ספרה גם אם זה - 0",
+  }),
+  fiberDisconnection: Joi.number().min(0).max(100).required().messages({
+    "number.base": "כמות התנתקויות פייבר חייבת להיות לפחות ספרה גם אם זה - 0",
+    "number.empty": "נדרש כמות התנתקויות פייבר",
+    "number.min": "כמות התנתקויות פייבר חייבת להיות לפחות ספרה גם אם זה - 0",
+  }),
   simurFiber: Joi.string()
     .min(1)
     .max(10)
