@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { getLoggedUserId } from "./config/config.js";
+import chalk from "chalk";
 
 // verify the token for the user as guard //
 export const guard = (req, res, next) => {
