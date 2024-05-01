@@ -90,6 +90,9 @@ export default function MySalesSupervisor() {
         snackbar(
           data.message ? data.message : "המכירות של החודש המצטבר נטען בהצלחה !"
         );
+        if (data.message) {
+          return;
+        }
         const uniqueMonths = [
           ...new Set(
             data.map((seller) => moment(seller.createTime).format("MM/YYYY"))

@@ -78,6 +78,9 @@ export default function IncrementalOperation() {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data.message) {
+          return;
+        }
         const uniqueMonths = [
           ...new Set(
             data.map((operation) =>
