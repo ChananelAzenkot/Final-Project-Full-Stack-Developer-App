@@ -69,6 +69,10 @@ export default function IncrementalOperationTeamPerAgent() {
   const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {
+    const token = localStorage.token;
+    if (!token) {
+      window.location.href = "/login";
+    }
     fetch(`http://localhost:4000/api/incrementalOperationPerAgent`, {
       credentials: "include",
       headers: {

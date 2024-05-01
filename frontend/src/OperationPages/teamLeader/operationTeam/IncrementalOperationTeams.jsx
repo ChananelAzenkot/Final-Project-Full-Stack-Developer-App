@@ -64,6 +64,10 @@ export default function IncrementalOperationTeams() {
   const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {
+    const token = localStorage.token;
+    if (!token) {
+      window.location.href = "/login";
+    }
     fetch(`http://localhost:4000/api/incrementalOperationTeam`, {
       credentials: "include",
       headers: {

@@ -73,6 +73,10 @@ export default function MySalesSupervisor() {
   const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {
+    const token = localStorage.token;
+    if (!token) {
+      window.location.href = "/login";
+    }
     fetch(`http://localhost:4000/api/incrementalOperationSaleCenterManger`, {
       credentials: "include",
       method: "GET",

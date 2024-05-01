@@ -65,6 +65,10 @@ export default function IncrementalOperation() {
   const { snackbar } = useContext(GeneralContext);
 
   useEffect(() => {
+    const token = localStorage.token;
+    if (!token) {
+      window.location.href = "/login";
+    }
     fetch(`http://localhost:4000/api/incrementalOperation`, {
       credentials: "include",
       headers: {

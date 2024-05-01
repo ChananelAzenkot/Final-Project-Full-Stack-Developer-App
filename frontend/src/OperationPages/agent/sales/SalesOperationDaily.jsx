@@ -55,8 +55,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function SalesOperationDaily() {
   const [seller, setSeller] = useState([]);
-  const { snackbar } = useContext(GeneralContext);
+  const { snackbar} = useContext(GeneralContext);
   useEffect(() => {
+    const token = localStorage.token;
+    if (!token) {
+      window.location.href = "/login";
+    }
     fetch(`http://localhost:4000/api/operationSale`, {
       credentials: "include",
       method: "GET",

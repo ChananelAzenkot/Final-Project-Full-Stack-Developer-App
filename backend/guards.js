@@ -9,7 +9,8 @@ export const guard = (req, res, next) => {
       process.env.JWT_SECRET,
       (err, data) => {
         if (err) {
-          throw new Error("User not authorized for this user");
+          res.status(401).send("User not authorized and need to login");
+          console.error(chalk.bgRed("User not authorized and need to login"));
         } else {
           next();
         }
