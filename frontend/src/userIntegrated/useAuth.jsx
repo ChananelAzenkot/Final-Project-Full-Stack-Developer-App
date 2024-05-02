@@ -4,32 +4,41 @@ import { RoleTypes } from "../components/RoleTypes";
 
 export const useAuth = (setUserRoleType, setLoader) => {
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setUserRoleType(RoleTypes.none);
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setUserRoleType(RoleTypes.none);
+        setLoader(false);
+        return;
+      }
+
+      const user = jwtDecode(token);
+
+      const currentTime = Date.now().valueOf() / 1000;
+      if (user.exp < currentTime) {
+        localStorage.removeItem("token");
+        setUserRoleType(RoleTypes.none);
+        window.location.href = "/login";
+        setLoader(false);
+        return;
+      }
+
+      let role = RoleTypes.user;
+      if (user.isAdmin) {
+        role = RoleTypes.isAdmin;
+      } else if (user.IsBusiness) {
+        role = RoleTypes.IsBusiness;
+      }
+      setUserRoleType(role);
       setLoader(false);
-      return;
-    }
+    };
 
-    const user = jwtDecode(token);
+    checkAuth();
 
-    const currentTime = Date.now().valueOf() / 1000;
-    if (user.exp < currentTime) {
-      localStorage.removeItem("token");
-      setUserRoleType(RoleTypes.none);
-      window.location.href = "/login";
-      setLoader(false);
-      return;
-    }
-
-    let role = RoleTypes.user;
-
-    if (user.isAdmin) {
-      role = RoleTypes.isAdmin;
-    } else if (user.IsBusiness) {
-      role = RoleTypes.IsBusiness;
-    }
-    setUserRoleType(role);
-    setLoader(false);
+    const intervalId = setInterval(checkAuth, 1000);
+    return () => clearInterval(intervalId);
   }, []);
 };
+
+
+
