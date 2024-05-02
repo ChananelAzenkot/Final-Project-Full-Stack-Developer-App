@@ -102,6 +102,7 @@ export default function Login(theme) {
 
         snackbar(`התחברות בוצעה בהצלחה! ברוך/ה הבא`);
         navigate(navigateTo);
+        window.location.reload();
       })
       .catch((err) => {
         alert(err.message);
