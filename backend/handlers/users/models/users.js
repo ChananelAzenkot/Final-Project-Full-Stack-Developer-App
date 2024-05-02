@@ -104,7 +104,7 @@ app.get("/api/agent/searchOperation", async (req, res) => {
 
 
   // get the user logged for user and admin users //
-app.get("/api/user/:id", adminGuard, guard, async (req, res) => {
+app.get("/api/user/:id", guard, adminGuard, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 
@@ -120,6 +120,7 @@ app.get("/api/user/:id", adminGuard, guard, async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
 
 
 // delete the user for admin users //
@@ -145,6 +146,7 @@ app.delete("/api/user/:id", adminGuard, async (req, res) => {
 };
 
 export default users;
+
 
 
 
