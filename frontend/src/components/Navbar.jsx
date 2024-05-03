@@ -17,6 +17,7 @@ import "../styles/Navbar.css";
 import {
   checkPermissions,
   pages,
+  RoleTypes,
   useGeneralContext,
   useLogout,
 } from "./RoleTypes";
@@ -182,7 +183,11 @@ export default function Navbar() {
                 </h3>
               </Box>
               {user ? (
-                <Box sx={{ flexGrow: 0 }}>
+                <Box
+                  sx={{ flexGrow: 0 }}
+                  style={
+                    !user.teamName ? { display: "none" } : { display: "block" }
+                  }>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar

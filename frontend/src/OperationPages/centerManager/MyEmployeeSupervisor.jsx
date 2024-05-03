@@ -98,8 +98,12 @@ export default function MyEmployeeSupervisor() {
           </div>
         </div>
       </div>
-      <TableContainer component={Paper} id="container">
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      
+      <TableContainer 
+      component={Paper}
+      id="container"
+      style={{ maxHeight: "500px", overflowY: "scroll" }}>
+        <Table stickyHeader sx={{ minWidth: 700 }} aria-label="sticky table">
           {operation && operation.length > 0 && (
             <TableHead>
               <TableRow>
