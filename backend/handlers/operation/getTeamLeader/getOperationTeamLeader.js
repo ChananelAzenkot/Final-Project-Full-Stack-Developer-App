@@ -180,105 +180,121 @@ export default (app) => {
               }
             );
 
-        app.get("/api/incrementalOperationTeamAvg", guard, async (req, res) => {
-          try {
-            const { userId } = getLoggedUserId(req, res);
+        app.get(
+          "/api/incrementalOperationTeamAvg",
+          businessGuard,
+          async (req, res) => {
 
-            if (!userId) {
-              return res.status(403).json({ message: "User not authorized" });
+            try {
+              const { userId } = getLoggedUserId(req, res);
+
+              if (!userId) {
+                return res.status(403).json({ message: "User not authorized" });
+              }
+
+              const user = await User.findById(userId);
+
+              const incrementalOperations =
+                await IncrementalOperation.aggregate([
+                  {
+                    $match: {
+                      teamName: user.teamName,
+                    },
+                  },
+                  {
+                    $addFields: {
+                      productivity: {
+                        $convert: {
+                          input: {
+                            $substr: [
+                              "$productivity",
+                              0,
+                              {
+                                $subtract: [{ $strLenCP: "$productivity" }, 1],
+                              },
+                            ],
+                          },
+                          to: "double",
+                        },
+                      },
+                      simurFiber: {
+                        $convert: {
+                          input: {
+                            $substr: [
+                              "$simurFiber",
+                              0,
+                              { $subtract: [{ $strLenCP: "$simurFiber" }, 1] },
+                            ],
+                          },
+                          to: "double",
+                        },
+                      },
+                      satisfaction: {
+                        $convert: {
+                          input: {
+                            $substr: [
+                              "$satisfaction",
+                              0,
+                              {
+                                $subtract: [{ $strLenCP: "$satisfaction" }, 1],
+                              },
+                            ],
+                          },
+                          to: "double",
+                        },
+                      },
+                      simurTV: {
+                        $convert: {
+                          input: {
+                            $substr: [
+                              "$simurTV",
+                              0,
+                              { $subtract: [{ $strLenCP: "$simurTV" }, 1] },
+                            ],
+                          },
+                          to: "double",
+                        },
+                      },
+                    },
+                  },
+                  {
+                    $group: {
+                      _id: "$teamName",
+                      createTime: { $first: "$createTime" },
+                      numberCalls: { $sum: "$numberCalls" },
+                      tvDisconnection: { $sum: "$tvDisconnection" },
+                      fiberDisconnection: { $sum: "$fiberDisconnection" },
+                      sellerFiber: { $sum: "$sellerFiber" },
+                      sellerTV: { $sum: "$sellerTV" },
+                      easyMesh: { $sum: "$easyMesh" },
+                      productivity: { $avg: "$productivity" },
+                      satisfaction: { $avg: "$satisfaction" },
+                      upgradeProgress: { $sum: "$upgradeProgress" },
+                      targets: { $sum: "$targets" },
+                      simurFiber: { $avg: "$simurFiber" },
+                      simurTV: { $avg: "$simurTV" },
+                    },
+                  },
+                ]);
+
+              if (
+                !incrementalOperations ||
+                incrementalOperations.length === 0
+              ) {
+                return res.json({
+                  message: "לא נמצא תפעול מצטבר של החודש הזה",
+                });
+              }
+
+              res.send(incrementalOperations);
+            } catch (error) {
+              console.log(error);
+              res
+                .status(500)
+                .json({ message: "Server error", error: error.message });
             }
-
-            const user = await User.findById(userId);
-
-            const incrementalOperations = await IncrementalOperation.aggregate([
-              {
-                $match: {
-                  teamName: user.teamName,
-                },
-              },
-              {
-                $addFields: {
-                  productivity: {
-                    $convert: {
-                      input: {
-                        $substr: [
-                          "$productivity",
-                          0,
-                          { $subtract: [{ $strLenCP: "$productivity" }, 1] },
-                        ],
-                      },
-                      to: "double",
-                    },
-                  },
-                  simurFiber: {
-                    $convert: {
-                      input: {
-                        $substr: [
-                          "$simurFiber",
-                          0,
-                          { $subtract: [{ $strLenCP: "$simurFiber" }, 1] },
-                        ],
-                      },
-                      to: "double",
-                    },
-                  },
-                  satisfaction: {
-                    $convert: {
-                      input: {
-                        $substr: [
-                          "$satisfaction",
-                          0,
-                          { $subtract: [{ $strLenCP: "$satisfaction" }, 1] },
-                        ],
-                      },
-                      to: "double",
-                    },
-                  },
-                  simurTV: {
-                    $convert: {
-                      input: {
-                        $substr: [
-                          "$simurTV",
-                          0,
-                          { $subtract: [{ $strLenCP: "$simurTV" }, 1] },
-                        ],
-                      },
-                      to: "double",
-                    },
-                  },
-                },
-              },
-              {
-                $group: {
-                  _id: "$teamName",
-                  numberCalls: { $sum: "$numberCalls" },
-                  tvDisconnection: { $sum: "$tvDisconnection" },
-                  fiberDisconnection: { $sum: "$fiberDisconnection" },
-                  sellerFiber: { $sum: "$sellerFiber" },
-                  sellerTV: { $sum: "$sellerTV" },
-                  easyMesh: { $sum: "$easyMesh" },
-                  productivity: { $avg: "$productivity" },
-                  satisfaction: { $avg: "$satisfaction" },
-                  upgradeProgress: { $sum: "$upgradeProgress" },
-                  targets: { $sum: "$targets" },
-                  simurFiber: { $avg: "$simurFiber" },
-                  simurTV: { $avg: "$simurTV" },
-                },
-              },
-            ]);
-
-            if (!incrementalOperations || incrementalOperations.length === 0) {
-              return res.json({ message: "לא נמצא תפעול מצטבר של החודש הזה" });
-            }
-
-            res.send(incrementalOperations);
-          } catch (error) {
-            console.log(error);
-            res
-              .status(500)
-              .json({ message: "Server error", error: error.message });
           }
-        });
+        );
 
           app.get("/api/incrementalOperationTeam", guard, async (req, res) => {
             try {
@@ -356,7 +372,11 @@ export default (app) => {
                   },
                   {
                     $group: {
-                      _id: { user_id: "$user_id" },
+                      _id: {
+                        user_id: "$user_id",
+                        year: { $year: "$createTime" },
+                        month: { $month: "$createTime" },
+                      },
                       nameAgent: { $first: "$nameAgent" },
                       createTime: { $first: "$createTime" },
                       teamName: { $first: "$teamName" },
