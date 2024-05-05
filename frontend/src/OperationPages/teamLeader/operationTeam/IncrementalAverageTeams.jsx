@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import "../../../styles/operation.css";
 import PropTypes from "prop-types";
 import { GeneralContext } from "../../../App";
+import moment from "moment";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -93,7 +94,7 @@ export default function IncrementalAverageTeams({
       })
     );
   }
-  
+
   return (
     <>
       <select onChange={handleMonthChange} style={{ display: "none" }}>
@@ -139,10 +140,14 @@ export default function IncrementalAverageTeams({
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(operationAverageArray) &&
-                operationAverageArray.map((operation, index) => {
-                  const operationData = operation[Object.keys(operation)[0]];
-                  return (
+              {Array.isArray(operationAverageArray[0]) &&
+                operationAverageArray[0]
+                  .filter(
+                    (operation) =>
+                      moment(operation.createTime).format("MM/YYYY") ===
+                      selectedMonth
+                  )
+                  .map((operationData, index) => (
                     <StyledTableRow key={index}>
                       <StyledTableCell component="th" scope="row">
                         {operationData.numberCalls}
@@ -194,10 +199,10 @@ export default function IncrementalAverageTeams({
                         {operationData.upgradeProgress}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                      {typeof operationData.satisfaction === "number"
-                        ? operationData.satisfaction.toFixed(2)+"%"
-                        : operationData.satisfaction}
-                    </StyledTableCell>
+                        {typeof operationData.satisfaction === "number"
+                          ? operationData.satisfaction.toFixed(2) + "%"
+                          : operationData.satisfaction}
+                      </StyledTableCell>
                       <StyledTableCell align="right">
                         {operationData.easyMesh +
                           operationData.upgradeProgress +
@@ -205,8 +210,7 @@ export default function IncrementalAverageTeams({
                           operationData.sellerTV}
                       </StyledTableCell>
                     </StyledTableRow>
-                  );
-                })}
+                  ))}
             </TableBody>
           </Table>
         </TableContainer>

@@ -103,6 +103,7 @@ export default function IncrementalOperationTeams() {
     return moment(operation.createTime).format("MM/YYYY") === selectedMonth;
   });
 
+
   return (
     <>
       <div className="titleOperationAndAgents">

@@ -259,7 +259,11 @@ export default (app) => {
                   },
                   {
                     $group: {
-                      _id: "$teamName",
+                      _id: {
+                        _id: "$teamName",
+                        month: { $month: "$createTime" },
+                        year: { $year: "$createTime" },
+                      },
                       createTime: { $first: "$createTime" },
                       numberCalls: { $sum: "$numberCalls" },
                       tvDisconnection: { $sum: "$tvDisconnection" },
