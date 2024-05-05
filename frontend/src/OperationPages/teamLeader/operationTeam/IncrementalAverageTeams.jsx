@@ -93,7 +93,7 @@ export default function IncrementalAverageTeams({
       })
     );
   }
-
+  
   return (
     <>
       <select onChange={handleMonthChange} style={{ display: "none" }}>
@@ -194,8 +194,10 @@ export default function IncrementalAverageTeams({
                         {operationData.upgradeProgress}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {operationData.satisfaction}
-                      </StyledTableCell>
+                      {typeof operationData.satisfaction === "number"
+                        ? operationData.satisfaction.toFixed(2)+"%"
+                        : operationData.satisfaction}
+                    </StyledTableCell>
                       <StyledTableCell align="right">
                         {operationData.easyMesh +
                           operationData.upgradeProgress +

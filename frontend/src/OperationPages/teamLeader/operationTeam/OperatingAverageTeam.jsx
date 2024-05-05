@@ -109,7 +109,7 @@ export default function OperatingAverageTeam() {
                   EasyMesh - מצטבר
                 </StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
-                <StyledTableCell align="right"> פעולות הצוות</StyledTableCell>
+                <StyledTableCell align="right"> ביצועי הצוות</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט - מצטבר</StyledTableCell>
               </TableRow>
             </TableHead>

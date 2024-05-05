@@ -220,7 +220,7 @@ export default function IncrementalOperationTeamPerAgent() {
                       <StyledTableCell align="right">EasyMesh</StyledTableCell>
                       <StyledTableCell align="right">שדרוג</StyledTableCell>
                       <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
-                      <StyledTableCell align="right">יעדים</StyledTableCell>
+                      <StyledTableCell align="right">ביצועים</StyledTableCell>
                       <StyledTableCell align="right">
                         עדכון פרטים
                       </StyledTableCell>
@@ -243,7 +243,7 @@ export default function IncrementalOperationTeamPerAgent() {
                             {operations.numberCalls}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {operations.productivity}
+                            {typeof operations.productivity === 'number' ? operations.productivity.toFixed(2) : operations.productivity}
                           </StyledTableCell>
                           <StyledTableCell align="right">
                             {operations.tvDisconnection}
@@ -303,9 +303,11 @@ export default function IncrementalOperationTeamPerAgent() {
                           <StyledTableCell align="right">
                             {operations.upgradeProgress}
                           </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {operations.satisfaction}
-                          </StyledTableCell>
+                    <StyledTableCell align="right">
+                    {typeof operations.satisfaction === "number"
+                        ? operations.satisfaction.toFixed(2)+"%"
+                        : operations.satisfaction}
+                    </StyledTableCell>
                           <StyledTableCell
                             align="right"
                             style={{

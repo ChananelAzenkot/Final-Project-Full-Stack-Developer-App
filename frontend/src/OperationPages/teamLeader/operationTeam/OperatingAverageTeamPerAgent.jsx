@@ -159,91 +159,88 @@ export default function OperatingAverageTeamPerAgent({
                 </StyledTableCell>
                 <StyledTableCell align="right">שדרוג - מצטבר</StyledTableCell>
                 <StyledTableCell align="right">סמ׳׳ט - מצטבר</StyledTableCell>
-                <StyledTableCell align="right">מכר - מצטבר</StyledTableCell>
+                <StyledTableCell align="right">ביצוע - מצטבר</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {Array.isArray(filteredOperations) &&
-                filteredOperations.map(
-                  (operationAverage, index) => (
-                    (
-                      <StyledTableRow key={index}>
-                        <StyledTableCell component="th" scope="row">
-                          {operationAverage.numberCalls}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {operationAverage.productivity}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {operationAverage.tvDisconnection}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {operationAverage.fiberDisconnection}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          align="right"
-                          style={{
-                            backgroundColor:
-                              parseFloat(operationAverage.simurFiber) / 100 >=
-                              0.79
-                                ? "#62a462"
-                                : parseFloat(operationAverage.simurFiber) /
-                                    100 >=
-                                  0.67
-                                ? "#c1c16f"
-                                : "#ad6262",
-                          }}>
-                          {operationAverage.simurFiber.toFixed(2) + "%"}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          align="right"
-                          style={{
-                            backgroundColor:
-                              parseFloat(operationAverage.simurTV) / 100 >= 0.79
-                                ? "#62a462"
-                                : parseFloat(operationAverage.simurTV) / 100 >=
-                                  0.67
-                                ? "#c1c16f"
-                                : "#ad6262",
-                          }}>
-                          {operationAverage.simurTV.toFixed(2) + "%"}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {operationAverage.sellerFiber}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {operationAverage.sellerTV}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {operationAverage.easyMesh}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {operationAverage.upgradeProgress}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {operationAverage.satisfaction}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          align="right"
-                          style={{
-                            backgroundColor:
-                              operationAverage.sellerFiber +
-                                operationAverage.easyMesh +
-                                operationAverage.upgradeProgress +
-                                operationAverage.sellerTV >
-                              44
-                                ? "#62a462"
-                                : "#ad6262",
-                          }}>
-                          {operationAverage.sellerFiber +
+                filteredOperations.map((operationAverage, index) => (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell component="th" scope="row">
+                      {operationAverage.numberCalls}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {typeof operationAverage.productivity === "number"
+                        ? operationAverage.productivity.toFixed(2)
+                        : operationAverage.productivity}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operationAverage.tvDisconnection}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operationAverage.fiberDisconnection}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="right"
+                      style={{
+                        backgroundColor:
+                          parseFloat(operationAverage.simurFiber) / 100 >= 0.79
+                            ? "#62a462"
+                            : parseFloat(operationAverage.simurFiber) / 100 >=
+                              0.67
+                            ? "#c1c16f"
+                            : "#ad6262",
+                      }}>
+                      {operationAverage.simurFiber.toFixed(2) + "%"}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="right"
+                      style={{
+                        backgroundColor:
+                          parseFloat(operationAverage.simurTV) / 100 >= 0.79
+                            ? "#62a462"
+                            : parseFloat(operationAverage.simurTV) / 100 >= 0.67
+                            ? "#c1c16f"
+                            : "#ad6262",
+                      }}>
+                      {operationAverage.simurTV.toFixed(2) + "%"}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operationAverage.sellerFiber}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operationAverage.sellerTV}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operationAverage.easyMesh}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {operationAverage.upgradeProgress}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                    {typeof operationAverage.satisfaction === "number"
+                        ? operationAverage.satisfaction.toFixed(2)+"%"
+                        : operationAverage.satisfaction +"%"}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="right"
+                      style={{
+                        backgroundColor:
+                          operationAverage.sellerFiber +
                             operationAverage.easyMesh +
                             operationAverage.upgradeProgress +
-                            operationAverage.sellerTV}
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    )
-                  )
-                )}
+                            operationAverage.sellerTV >
+                          44
+                            ? "#62a462"
+                            : "#ad6262",
+                      }}>
+                      {operationAverage.sellerFiber +
+                        operationAverage.easyMesh +
+                        operationAverage.upgradeProgress +
+                        operationAverage.sellerTV}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

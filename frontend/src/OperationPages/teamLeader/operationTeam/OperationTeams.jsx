@@ -118,7 +118,7 @@ export default function OperationTeams() {
                     <StyledTableCell align="right">EasyMesh</StyledTableCell>
                     <StyledTableCell align="right">שדרוג</StyledTableCell>
                     <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
-                    <StyledTableCell align="right">יעדים</StyledTableCell>
+                    <StyledTableCell align="right">ביצועים</StyledTableCell>
                     <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
                     <StyledTableCell align="right">
                       מחיקת תפעול נציג

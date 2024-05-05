@@ -107,7 +107,7 @@ export default function SalesIncrementalTeams() {
                     <StyledTableCell align="right">מכר - TV</StyledTableCell>
                     <StyledTableCell align="right">EasyMesh</StyledTableCell>
                     <StyledTableCell align="right">שדרוג</StyledTableCell>
-                    <StyledTableCell align="right">יעדים</StyledTableCell>
+                    <StyledTableCell align="right">ביצועים</StyledTableCell>
                     <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
                     <StyledTableCell align="right">מחיקת מכירה</StyledTableCell>
                   </TableRow>

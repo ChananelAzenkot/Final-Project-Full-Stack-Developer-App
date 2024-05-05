@@ -66,29 +66,7 @@ export default function OperatingAverageSaleTeam() {
       .then((res) => res.json())
       .then((data) => {
         setOperationAverageSaleTeam([data]);
-        snackbar(data.message ? data.message : "מכירות יומיות נטענו בהצלחה ! ");
-      });
-  }, []);
-
-  const [operation, setOperation] = useState([]);
-
-  useEffect(() => {
-    fetch(`http://localhost:4000/api/operationTeam`, {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setOperation(data);
-        setTimeout(() => {
-          snackbar(
-            data.message ? data.message : "הממצוע של הצוות נטען בהצלחה !"
-          );
-        }, 2000);
+        snackbar(data.message ? data.message : "ממוצע מכירות היום של הצוות נטען בהצלחה !");
       });
   }, []);
 

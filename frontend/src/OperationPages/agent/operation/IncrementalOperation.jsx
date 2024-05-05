@@ -171,7 +171,6 @@ export default function IncrementalOperation() {
                       מכירות - Fiber
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {" "}
                       מכירות - TV
                     </StyledTableCell>
                     <StyledTableCell align="right">EasyMesh</StyledTableCell>

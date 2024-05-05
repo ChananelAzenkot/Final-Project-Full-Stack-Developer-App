@@ -21,7 +21,7 @@ export default function ProtectedRoute({ children, permission }) {
       <div
         className="titleOperationAndAgents"
         style={{ height: "200px", display: "grid" }}>
-        {`שלום , ${user?.name?.first} כנראה הגעת לפה  בטעות אפשר לנסות שוב :)`}
+        {`שלום , ${user?.name?.first ? user.name.first : "אורח"} כנראה הגעת לפה  בטעות אפשר לנסות שוב :)`}
         <ul>
           {user?.IsBusiness && (
             <li onClick={() => navigate("/operationTeams")}>
@@ -30,7 +30,7 @@ export default function ProtectedRoute({ children, permission }) {
               </IconButton>
             </li>
           )}
-          {!user?.IsBusiness && !user?.isAdmin && (
+          {!user?.IsBusiness && !user?.isAdmin && user?.teamName && (
             <li onClick={() => navigate("/dailyOperation")}>
               <IconButton id="btnCreateAndPress" style={{ color: "black" }}>
                 תפעול היומי שלי
@@ -41,6 +41,13 @@ export default function ProtectedRoute({ children, permission }) {
             <li onClick={() => navigate("/centralizedOperation")}>
               <IconButton id="btnCreateAndPress" style={{ color: "black" }}>
                 תפעול המוקד הכללי
+              </IconButton>
+            </li>
+          )}
+          {!user?.teamName && (
+            <li onClick={() => navigate("/login")}>
+              <IconButton id="btnCreateAndPress" style={{ color: "black" }}>
+                להתחברות
               </IconButton>
             </li>
           )}

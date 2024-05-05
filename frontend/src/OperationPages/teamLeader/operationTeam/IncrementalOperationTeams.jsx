@@ -170,7 +170,6 @@ export default function IncrementalOperationTeams() {
                       מכירות - Fiber
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {" "}
                       מכירות - TV
                     </StyledTableCell>
                     <StyledTableCell align="right">EasyMesh</StyledTableCell>
@@ -196,7 +195,7 @@ export default function IncrementalOperationTeams() {
                           {operations.numberCalls}
                         </StyledTableCell>
                         <StyledTableCell align="right">
-                          {operations.productivity}
+                          {operations.productivity.toFixed(2)}
                         </StyledTableCell>
                         <StyledTableCell align="right">
                           {operations.tvDisconnection}
