@@ -34,11 +34,6 @@ const schema = new Schema({
     unique: true,
   },
   password: String,
-  image: {
-    url: { type: String },
-    alt: { type: String },
-    _id: { type: ObjectId, default: () => new mongoose.Types.ObjectId() },
-  },
 
   createTime: { type: Date, default: Date.now() },
   loginAttempts: { type: Number, required: true, default: 0 },

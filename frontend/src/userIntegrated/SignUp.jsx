@@ -32,10 +32,6 @@ export default function SignUp(theme) {
     phone: "",
     email: "",
     password: "",
-    image: {
-      url: "",
-      alt: "",
-    },
   });
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);

@@ -68,7 +68,7 @@ CreateOperationInputs.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   errors: PropTypes.shape({
     nameAgent: PropTypes.string,
-    numberCalls: PropTypes.number,
+    numberCalls: PropTypes.string,
     productivity: PropTypes.string,
     tvDisconnection: PropTypes.number,
     fiberDisconnection: PropTypes.number,
@@ -155,7 +155,7 @@ function CreateOperationInputs({
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" },maxLength: 2 }}
                     autoComplete="off"
                     size="small"
                     id="numberCalls"
@@ -171,7 +171,7 @@ function CreateOperationInputs({
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" },maxLength: 4}}
                     autoComplete="off"
                     size="small"
                     id="productivity"
@@ -187,7 +187,7 @@ function CreateOperationInputs({
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" },maxLength: 2}}
                     autoComplete="off"
                     size="small"
                     id="tvDisconnection"
@@ -203,7 +203,7 @@ function CreateOperationInputs({
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" },maxLength: 2}}
                     autoComplete="off"
                     size="small"
                     id="fiberDisconnection"
@@ -255,7 +255,7 @@ function CreateOperationInputs({
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" }, maxLength: 3}}
                     autoComplete="off"
                     size="small"
                     id="satisfaction"

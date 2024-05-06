@@ -38,16 +38,6 @@ const schema = Joi.object({
       "string.pattern.base":
         "הסיסמה חייבת להכיל לפחות אות אחת גדולה ותו מיוחד אחד",
     }),
-  image: Joi.object({
-    url: Joi.string()
-      .pattern(/(http(s?):)([/|.|\w|\s|-])*\./)
-      .messages({
-        "string.empty": "נדרש קישור לתמונה",
-      }).allow(""),
-    alt: Joi.string().messages({
-      "string.empty": "תיאור תמונה נדרש",
-    }).allow(""),
-  }),
   teamName: Joi.string().valid("iron", "impact", "toy").required().messages({
     "any.only": "שם הצוות חייב להיות אחד מהאפשרויות הבאות: iron, impact, toy",
     "string.empty": "שם הצוות הינו חובה",

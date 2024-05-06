@@ -32,10 +32,6 @@ export default function Account({ theme }) {
     phone: user?.phone || "",
     email: user?.email || "",
     password: user?.password || "",
-    image: {
-      url: user?.image?.url || "",
-      alt: user?.image?.alt || "",
-    },
   });
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);

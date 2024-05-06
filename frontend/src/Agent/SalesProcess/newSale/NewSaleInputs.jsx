@@ -28,7 +28,7 @@ export default function NewSaleInputs({
         style={{ width: "auto", textAlign: "center" }}
         variant="h6"
         component="h2">
-        הוספת מכירה 🤩
+        יצירת מכירה
         <NoteAddIcon />
       </Typography>
       <TextField
@@ -71,6 +71,7 @@ export default function NewSaleInputs({
         onChange={onInputChange}
         error={Boolean(errors.customerCode)}
         helperText={errors.customerCode}
+        type="number"
       />
       <TextField
         autoComplete="off"

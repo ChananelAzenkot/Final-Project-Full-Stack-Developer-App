@@ -16,11 +16,6 @@ const schema = new Schema({
   upgradeProgress: Number,
   satisfaction: String,
   targets: Number,
-  image: {
-    url: { type: String },
-    alt: { type: String },
-    _id: { type: ObjectId, default: () => new mongoose.Types.ObjectId() },
-  },
   bizNumber: Number,
   teamName: String,
   user_id: { type: ObjectId },

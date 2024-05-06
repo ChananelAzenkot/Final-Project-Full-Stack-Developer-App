@@ -2,13 +2,18 @@ import Joi from "joi";
 // joi is a validation library of Cards //
 export const middlewareOperations = Joi.object({
   nameAgent: Joi.string().required().min(3).max(100),
-  numberCalls: Joi.number().required().min(0).max(100),
-
+  numberCalls: Joi.number().min(1).max(100).required().messages({
+    "number.empty": "כמות שיחות נדרשת",
+    "number.min": "כמות שיחות חייבת להיות בין 1 ל-2 ספרות",
+  }),
   productivity: Joi.string()
+    .pattern(/^\d+\.\d{2}$/)
     .required()
-    .min(0)
-    .max(4)
-    .message("(4.40) פיריון חייב להיות בספרה עם נקודה עשרונית"),
+    .messages({
+      "string.empty": "נדרש פיריון",
+      "string.pattern.base":
+        "פיריון חייב להיות מספר עשרוני עם שני ספרות אחרי הנקודה (לדוגמה, 4.22)",
+    }),
   tvDisconnection: Joi.number().min(0).max(100).required().messages({
     "number.base":
       "כמות התנתקויות טלוויזיה חייבת להיות לפחות ספרה גם אם זה - 0",
@@ -31,22 +36,17 @@ export const middlewareOperations = Joi.object({
     .message("אחוז שימור טלוויזיה חייב להיות בין1 -2 ספרות")
     .allow(""),
   satisfaction: Joi.string()
+    .pattern(/^100%$|^[1-9][0-9]?%$|^[0-9]%$/)
     .required()
-    .min(1)
-    .max(3)
-    .message("כמות השביעות רצון חייבת להיות בין1 -2 ספרות"),
+    .messages({
+      "string.empty": "נדרש סמ׳׳ט",
+      "string.pattern.base": "סמ׳׳ט חייב להיות בין 0% ל-100%",
+    }),
   targets: Joi.number()
     .min(1)
     .max(3)
     .message("כמות היעדים חייבת להיות בין1 -2 ספרות")
     .allow(""),
-  image: Joi.object().keys({
-    url: Joi.string()
-      .pattern(/(http(s?):)([/|.|\w|\s|-])*\./)
-      .message('card.image "url" must be a valid url')
-      .allow(""),
-    alt: Joi.string().min(2).max(256).allow(""),
-  }),
   teamName: Joi.string()
     .required()
     .pattern(/iron|impact|toy/)

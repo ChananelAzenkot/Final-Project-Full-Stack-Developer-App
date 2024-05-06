@@ -113,7 +113,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" }, maxLength: 2}}
                     size="small"
                     id="numberCalls"
                     label="כמות שיחות"
@@ -129,7 +129,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" },maxLength: 4}}
                     size="small"
                     id="productivity"
                     label="פיריון"
@@ -144,7 +144,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" },maxLength: 2}}
                     size="small"
                     id="tvDisconnection"
                     label="ניתוק - TV"
@@ -159,7 +159,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" },maxLength: 2}}
                     size="small"
                     id="fiberDisconnection"
                     label="ניתוק - Fiber"
@@ -208,7 +208,7 @@ export function EditOperationInputs({ item, errors, onInputChange, save }) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <TextField
-                    inputProps={{ style: { textAlign: "center" } }}
+                    inputProps={{ style: { textAlign: "center" },maxLength: 3}}
                     size="small"
                     id="satisfaction"
                     label="סמ׳׳ט"

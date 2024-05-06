@@ -34,13 +34,13 @@ sellerTV: Joi.number()
   .messages({
     'number.base': 'כמות מכירות שדרוג חייב לציין גם אם זה - 0',
   }),
-  customerCode: Joi.string().required().min(9).max(9).messages({
+customerCode: Joi.string().pattern(/^\d{9}$/).required().messages({
     "string.empty": "קוד לקוח חובה",
-    "string.min": "קוד לקוח חייב להיות בדיוק 9 תווים",
-  }),
+    "string.pattern.base": "קוד לקוח חייב להיות מספר באורך של 9 תווים",
+}),
   targets: Joi.number()
     .min(0)
-    .max(30)
+    .max(100)
     .message("כמות היעדים חייב להיות בין1 -2 ספרות")
     .allow(""),
   teamName: Joi.string()

@@ -25,13 +25,6 @@ export const middlewareUsers = Joi.object({
       '"Password" must be 7-20 characters long and include at least one digit, one uppercase letter, one lowercase letter, and one special character (!@#$%^&*-).'
     )
     .required(),
-  image: Joi.object({
-    url: Joi.string()
-      .pattern(/(http(s?):)([/|.|\w|\s|-])*\./)
-      .message('The "url" must be a valid image URL')
-      .allow(""),
-    alt: Joi.string().min(2).max(50).allow(""),
-  }),
   serviceDepartment: Joi.boolean().required(),
   conservationDepartment: Joi.boolean().required(),
   teamName: Joi.string().valid("iron", "impact", "toy").required(),

@@ -42,25 +42,6 @@ const clientStructure = [
     initialOnly: true,
   },
   {
-    name: "image",
-    fields: [
-      {
-        name: "url",
-        type: "text",
-        label: "צרף תמונת אינטרנט",
-        required: false,
-        block: true,
-      },
-      {
-        name: "alt",
-        type: "text",
-        label: "תיאור התמונה",
-        required: false,
-        block: false,
-      },
-    ],
-  },
-  {
     name: "teamName",
     type: "text",
     label: "שם הצוות",

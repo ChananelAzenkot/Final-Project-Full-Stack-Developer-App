@@ -23,10 +23,6 @@ EditClient.propTypes = {
     teamName: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    image: PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      alt: PropTypes.string.isRequired,
-    }).isRequired,
   }),
   theIDclient: PropTypes.string.isRequired,
 };
@@ -49,7 +45,6 @@ export default function EditClient({ dataClient, theIDclient }) {
       teamName: dataClient.teamName,
       phone: dataClient.phone,
       email: dataClient.email,
-      image: dataClient.image,
     }),
     [dataClient]
   );
