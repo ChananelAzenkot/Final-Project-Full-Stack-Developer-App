@@ -31,7 +31,7 @@ const myAccount = (app) => {
       res.status(200).send(`הפרטים עודכנו בהצלחה ${user.name.first} !! `);
     } catch (error) {
       if (error.code === 11000) {
-        res.status(409).json({ message: "Email already exists" });
+        res.status(409).json({ message: "קיים חשבון עם כתובת -Email !" });
       } else {
         res.status(500).json({ message: "Server error", error: error.message });
       }
