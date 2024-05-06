@@ -93,55 +93,64 @@ export default function EditClient({ dataClient, theIDclient }) {
     setErrors(tempErrors);
   };
 
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
-    const obj = {};
-    const elements = ev.target.elements;
+const handleSubmit = (ev) => {
+  ev.preventDefault();
+  const obj = {};
+  const elements = ev.target.elements;
 
-    clientStructure.forEach((s) => {
-      if (s.fields) {
-        const nestedObj = {};
-        s.fields.forEach((field) => {
-          if (field.type === "boolean") {
-            nestedObj[field.name] = elements[`${s.name}.${field.name}`].checked;
-          } else {
-            nestedObj[field.name] = elements[`${s.name}.${field.name}`].value;
-          }
-        });
-        obj[s.name] = nestedObj;
+  clientStructure.forEach((s) => {
+    if (s.fields) {
+      const nestedObj = {};
+      s.fields.forEach((field) => {
+        if (field.type === "boolean") {
+          nestedObj[field.name] = elements[`${s.name}.${field.name}`].checked;
+        } else {
+          nestedObj[field.name] = elements[`${s.name}.${field.name}`].value;
+        }
+      });
+      obj[s.name] = nestedObj;
+    } else {
+      if (s.type === "boolean") {
+        obj[s.name] = elements[s.name].checked;
       } else {
-        if (s.type === "boolean") {
-          obj[s.name] = elements[s.name].checked;
-        } else {
-          obj[s.name] = elements[s.name].value;
-        }
+        obj[s.name] = elements[s.name].value;
       }
-    });
+    }
+  });
 
-    fetch(`http://localhost:4000/api/user/${theIDclient}`, {
-      credentials: "include",
-      method: "PUT",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(obj),
+  fetch(`http://localhost:4000/api/user/${theIDclient}`, {
+    credentials: "include",
+    method: "PUT",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify(obj),
+  })
+    .then((response) => {
+      if (response.status === 409) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "קיים חשבון עם כתובת -Email !",
+        }));
+        throw new Error("קיים חשבון עם כתובת -Email !");
+      }
+      return response.text();
     })
-      .then((res) => res.text())
-      .then((text) => {
-        try {
-          return JSON.parse(text);
-        } catch {
-          return text;
-        }
-      })
-      .then((data) => {
-        if (typeof data === "object") {
-          window.location.reload();
-        } else {
-          throw new Error(data);
-        }
-      })
-      .catch((err) => alert(err.message))
-      .finally(() => window.location.reload());
-  };
+    .then((text) => {
+      try {
+        return JSON.parse(text);
+      } catch {
+        return text;
+      }
+    })
+    .then((data) => {
+      if (typeof data === "object") {
+        window.location.reload();
+      } else {
+        throw new Error(data);
+      }
+    })
+    .catch((err) => alert(err.message))
+    .finally(() => window.location.reload());
+};
 
   return (
     <Box>
