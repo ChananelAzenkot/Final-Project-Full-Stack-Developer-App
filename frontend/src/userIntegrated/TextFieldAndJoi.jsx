@@ -41,13 +41,12 @@ const schema = Joi.object({
   image: Joi.object({
     url: Joi.string()
       .pattern(/(http(s?):)([/|.|\w|\s|-])*\./)
-      .required()
       .messages({
         "string.empty": "נדרש קישור לתמונה",
-      }),
-    alt: Joi.string().required().messages({
+      }).allow(""),
+    alt: Joi.string().messages({
       "string.empty": "תיאור תמונה נדרש",
-    }),
+    }).allow(""),
   }),
   teamName: Joi.string().valid("iron", "impact", "toy").required().messages({
     "any.only": "שם הצוות חייב להיות אחד מהאפשרויות הבאות: iron, impact, toy",

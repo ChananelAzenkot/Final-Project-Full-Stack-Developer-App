@@ -175,7 +175,7 @@ export default function SignUp(theme) {
                           ) : (
                             <TextField
                               size="small"
-                              error={errors[`${s.name}.${field.name}`]}
+                              error={!!errors[`${s.name}.${field.name}`]}
                               helperText={errors[`${s.name}.${field.name}`]}
                               margin="normal"
                               required={field.required}
@@ -202,7 +202,7 @@ export default function SignUp(theme) {
                           ) : (
                             <TextField
                               size="small"
-                              error={errors[`${s.name}`]}
+                              error={!!errors[`${s.name}`]}
                               helperText={errors[`${s.name}`]}
                               margin="normal"
                               required={s.required}
