@@ -79,7 +79,11 @@ app.get(
         },
         {
           $group: {
-            _id: { teamName: "$teamName" },
+            _id: {
+              teamName: "$teamName",
+              month: { $month: "$createTime" },
+              year: { $year: "$createTime" },
+            },
             nameAgent: { $first: "$nameAgent" },
             createTime: { $first: "$createTime" },
             teamName: { $first: "$teamName" },

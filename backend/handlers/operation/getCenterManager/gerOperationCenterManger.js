@@ -195,7 +195,11 @@ export default (app) => {
           },
           {
             $group: {
-              _id: { user_id: "$user_id" },
+              _id: {
+                user_id: "$user_id",
+                month: { $month: "$createTime" },
+                year: { $year: "$createTime" },
+              },
               nameAgent: { $first: "$nameAgent" },
               createTime: { $first: "$createTime" },
               teamName: { $first: "$teamName" },
