@@ -29,7 +29,7 @@ EditClient.propTypes = {
 
 export default function EditClient({ dataClient, theIDclient }) {
   const [errors, setErrors] = useState({});
-  const [, setIsFormValid] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const initialValues = useMemo(
     () => ({
@@ -88,7 +88,6 @@ export default function EditClient({ dataClient, theIDclient }) {
         tempErrors[name] = item.message;
       }
     }
-
     setIsFormValid(!validate.error);
     setErrors(tempErrors);
   };
@@ -97,6 +96,7 @@ const handleSubmit = (ev) => {
   ev.preventDefault();
   const obj = {};
   const elements = ev.target.elements;
+  
 
   clientStructure.forEach((s) => {
     if (s.fields) {
@@ -117,7 +117,6 @@ const handleSubmit = (ev) => {
       }
     }
   });
-
   fetch(`http://localhost:4000/api/user/${theIDclient}`, {
     credentials: "include",
     method: "PUT",
@@ -168,6 +167,7 @@ const handleSubmit = (ev) => {
         errors={errors}
         handelChange={handelChange}
         handleSubmit={handleSubmit}
+        isFormValid={isFormValid}
       />
     </Box>
   );

@@ -17,7 +17,7 @@ const signup = (app) => {
       const user = new User(userInfo);
 
       await user.save();
-      res.status(201).send("User created successfully");
+      res.status(201).send("משתמש נוצר בהצלחה !!");
     } catch (error) {
       if (error.code === 11000) {
         res.status(409).json({ message: "קיים חשבון עם כתובת -Email !" });

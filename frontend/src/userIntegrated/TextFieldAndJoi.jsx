@@ -26,11 +26,12 @@ const schema = Joi.object({
         "מספר הנייד חייב להיות בן 10 ספרות, הוא צריך להיות רק מספרים",
       "string.max": "מספר הטלפון לא יעלה על 10 ספרות",
     }),
+    isAdmin: Joi.boolean().optional(),
   password: Joi.string()
     .min(8)
     .max(32)
     .regex(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@%$#^&*\-_*]).{8,32}$/)
-    .required()
+    .optional()
     .messages({
       "string.empty": "דרושה סיסמא",
       "string.min": "הסיסמה חייבת להיות באורך 8 תווים לפחות",

@@ -5,6 +5,10 @@ import { middlewareUsers } from "../../middleware/middlewareUser.js";
 const myAccount = (app) => {
   app.put("/api/user/:id", async (req, res) => {
     try {
+      const { error } = middlewareUsers.validate(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
       const userInfo = req.body;
       const user = await User.findById(req.params.id);
 

@@ -25,6 +25,7 @@ EditPropClients.propTypes = {
   errors: PropTypes.object,
   handelChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  isFormValid: PropTypes.bool,
 };
 
 export function EditPropClients({
@@ -35,6 +36,7 @@ export function EditPropClients({
   handelChange,
   handleSubmit,
   setAgentDataUpDate,
+  isFormValid,
 }) {
   return (
     <Modal
@@ -92,7 +94,7 @@ export function EditPropClients({
                         ) : (
                           <TextField
                             size="small"
-                            error={errors[`${s.name}.${field.name}`]}
+                            error={!!errors[`${s.name}.${field.name}`]}
                             helperText={errors[`${s.name}.${field.name}`]}
                             margin="normal"
                             required={field.required}
@@ -131,7 +133,7 @@ export function EditPropClients({
                         ) : (
                           <TextField
                             size="small"
-                            error={errors[`${s.name}`]}
+                            error={!!errors[`${s.name}`]}
                             helperText={errors[`${s.name}`]}
                             margin="normal"
                             required={s.required}
@@ -156,6 +158,7 @@ export function EditPropClients({
               <Button
                 type="submit"
                 fullWidth
+                disabled={!isFormValid}
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 style={{ backgroundColor: "#4ed2c1" }}>
