@@ -13,7 +13,7 @@ export default function About(theme) {
               <div>הדרכה קצרה</div>
             </Typography>
             <Typography variant="h1">DataInsight</Typography>
-            <Box className="underlineAbout"></Box>
+            <br />
             <Typography
               component="div"
               variant="body1"
@@ -28,6 +28,7 @@ export default function About(theme) {
                 ומוכן ללמוד ולהתאים עצמך לצרכי הלקוחות.
               </div>
             </Typography>
+            <br />
             <Typography
               className="tempTitle"
               component="div"
@@ -35,7 +36,7 @@ export default function About(theme) {
               style={{ direction: "ltr" }}>
               ? אז מה בעצם המערכת שלנו יכולה לעשות
             </Typography>
-            <Box component="div" className="underlineAbout"></Box>
+            <br />
             <Typography
               component="div"
               variant="body1"
@@ -54,7 +55,7 @@ export default function About(theme) {
             <Typography variant="h2" style={{ direction: "ltr" }}>
               <div>? ואיך משתמשים ומי</div>
             </Typography>
-            <Box className="underlineAbout"></Box>
+            <br />
             <Box
               className="whoCan"
               style={{ textAlign: "justify", direction: "ltr", margin: "2px" }}>

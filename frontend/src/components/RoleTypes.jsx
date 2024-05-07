@@ -85,7 +85,7 @@ export const pages = [
     title: "ניהול עובדים",
     permissions: [RoleTypes.isAdmin],
   },
-  { route: "/about", title: "יעדים" },
+  { route: "/about", title: "אודות" },
 ];
 
 export const useLogout = (

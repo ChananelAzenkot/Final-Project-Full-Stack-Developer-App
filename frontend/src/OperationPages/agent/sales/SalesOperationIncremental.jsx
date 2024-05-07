@@ -144,7 +144,7 @@ export default function SalesOperationIncremental() {
             <TableContainer
               component={Paper}
               id="container"
-              style={{ maxHeight: "500px", overflowY: "scroll" }}>
+              style={{ maxHeight: "250px", overflowY: "scroll" }}>
               <Table
                 sx={{ minWidth: 700 }}
                 stickyHeader
@@ -159,7 +159,8 @@ export default function SalesOperationIncremental() {
                     <StyledTableCell align="right">מכר - TV</StyledTableCell>
                     <StyledTableCell align="right">EasyMesh</StyledTableCell>
                     <StyledTableCell align="right">שדרוג</StyledTableCell>
-                    <StyledTableCell align="right">יעדים</StyledTableCell>
+                    <StyledTableCell align="right">                                פעולות מצטבר 
+</StyledTableCell>
                     <StyledTableCell align="right">עדכון מכירה</StyledTableCell>
                   </TableRow>
                 </TableHead>

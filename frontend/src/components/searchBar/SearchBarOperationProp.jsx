@@ -186,7 +186,7 @@ const filteredResults = Array.isArray(searchResults)
                                 סמ׳׳ט
                               </StyledTableCell>
                               <StyledTableCell align="right">
-                                יעדים
+                                פעולות מצטבר 
                               </StyledTableCell>
                               <StyledTableCell align="right">
                                 עדכון פרטים

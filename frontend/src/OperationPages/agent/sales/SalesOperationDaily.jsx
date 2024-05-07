@@ -93,9 +93,14 @@ export default function SalesOperationDaily() {
               }}>{` הלקוחות של היום : ${moment().format("DD/MM/YYYY")}`}</h3>
           </div>
           {
-            <TableContainer component={Paper} id="container">
-              <div className="btnGroup"></div>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableContainer
+              component={Paper}
+              id="container"
+              style={{ maxHeight: "250px", overflowY: "scroll" }}>
+              <Table
+                sx={{ minWidth: 700 }}
+                stickyHeader
+                aria-label="sticky table">
                 <TableHead>
                   <TableRow>
                     <StyledTableCell>תאריך ביצוע</StyledTableCell>
@@ -106,7 +111,8 @@ export default function SalesOperationDaily() {
                     <StyledTableCell align="right">מכר - TV</StyledTableCell>
                     <StyledTableCell align="right">EasyMesh</StyledTableCell>
                     <StyledTableCell align="right">שדרוג</StyledTableCell>
-                    <StyledTableCell align="right">יעדים</StyledTableCell>
+                    <StyledTableCell align="right">                                פעולות מצטבר 
+</StyledTableCell>
                     <StyledTableCell align="right">עדכון מכירה</StyledTableCell>
                     <StyledTableCell align="right">מחיקת מכירה</StyledTableCell>
                   </TableRow>

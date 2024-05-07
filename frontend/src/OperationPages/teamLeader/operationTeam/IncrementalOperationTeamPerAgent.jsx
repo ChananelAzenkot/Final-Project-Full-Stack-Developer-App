@@ -181,15 +181,15 @@ export default function IncrementalOperationTeamPerAgent() {
         ) : (
           <>
             {
-              <TableContainer
-                component={Paper}
-                id="container"
-                style={{ maxHeight: "400px", overflowY: "scroll" }}>
-                <Table
-                  sx={{ minWidth: 700 }}
-                  stickyHeader
-                  aria-label="sticky table">
-                  <TableHead>
+            <TableContainer
+              component={Paper}
+              id="container"
+              style={{ maxHeight: "250px", overflowY: "scroll" }}>
+              <Table
+                sx={{ minWidth: 700 }}
+                stickyHeader
+                aria-label="sticky table">
+                <TableHead>
                     <TableRow>
                       <StyledTableCell>תאריך</StyledTableCell>
                       <StyledTableCell>שם צוות</StyledTableCell>

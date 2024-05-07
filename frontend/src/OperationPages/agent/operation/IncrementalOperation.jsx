@@ -145,7 +145,7 @@ export default function IncrementalOperation() {
             <TableContainer
               component={Paper}
               id="container"
-              style={{ maxHeight: "400px", overflowY: "scroll" }}>
+              style={{ maxHeight: "250px", overflowY: "scroll" }}>
               <Table
                 sx={{ minWidth: 700 }}
                 stickyHeader
@@ -176,7 +176,7 @@ export default function IncrementalOperation() {
                     <StyledTableCell align="right">EasyMesh</StyledTableCell>
                     <StyledTableCell align="right">שדרוג</StyledTableCell>
                     <StyledTableCell align="right">סמ׳׳ט</StyledTableCell>
-                    <StyledTableCell align="right">יעדים</StyledTableCell>
+                    <StyledTableCell align="right">מספר פעולות</StyledTableCell>
                     <StyledTableCell align="right">עדכון פרטים</StyledTableCell>
                   </TableRow>
                 </TableHead>

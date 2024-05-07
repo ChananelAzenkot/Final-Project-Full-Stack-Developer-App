@@ -2,14 +2,13 @@
 
 # Front-End
 
-
 Welcome to DataInsight, your premier solution for effortlessly organizing and maximizing employee productivity metrics. Our platform offers unparalleled granularity, empowering leaders with detailed daily and monthly insights. From team leaders to center managers, gain visibility and make informed decisions to optimize efficiency. Unlock the potential of your workforce with DataInsight – the indispensable tool for achieving organizational success.
 
 ## Getting Started
 
 MongoDB: in cloud in the project initial-data of the Users.
 
-The project has initial-data.js its have all users with password for check all project
+The project has initial-data.js its have all users with password for check all project and file fo namea&passwords.txt for all ready users to tester.
 
 To get started with this project, clone the repository and install dependencies:
 
@@ -53,12 +52,12 @@ where you can read about the product and, of course, contact us if you have any 
 
 **Imported-For-Create-Operation**
 just for type of user in the system can create all so to deleted or edit a Operation that includes all the parameter description.
- **
- the team leader and center manger can edit or delete but not to create is not the role so Their role is only to monitor the agents and not to perform these actions if it is an extreme case that needs to be edited or deleted there will be involvement on their part
+**
+the team leader and center manger can edit or delete but not to create is not the role so Their role is only to monitor the agents and not to perform these actions if it is an extreme case that needs to be edited or deleted there will be involvement on their part
 **
 
-- **the-Operation**: 
-It is very important to know that an operation can only be sent in 24 hours per user, in order to avoid wrong operations for that day, only an agent or representative creates one operation - for testing purposes, you can open an additional 2 or 3 pages - and connect to a team manager or center manager to get a full impression!
+- **the-Operation**:
+  It is very important to know that an operation can only be sent in 24 hours per user, in order to avoid wrong operations for that day, only an agent or representative creates one operation - for testing purposes, you can open an additional 2 or 3 pages - and connect to a team manager or center manager to get a full impression!
 
 ### Team Leader
 
@@ -67,7 +66,6 @@ A team manager monitors the activity of the representatives who create operation
 ### Manger Center
 
 The Manager Center provides a platform for team managers to monitor the performance of representatives. It allows managers to track daily and monthly activity, providing insights into the performance of individual team members. This feature empowers managers to make informed decisions and optimize efficiency within their teams. Additionally, managers have the ability to edit user information, allowing them to update user details as needed.
-
 
 ### Technician Panel:
 
@@ -83,7 +81,6 @@ Admin side can edit users and track teams if they have sent data or track the da
 
    - Sign up for a free account using your email and a secure password.
    - Log in to access the full range of features our application has to offer.
-
 
 2. **Create Your Operation**
 
@@ -111,4 +108,3 @@ Admin side can edit users and track teams if they have sent data or track the da
 - **Cors**: Cross-Origin Resource Sharing.
 - **Chalk**: Console output styling.
 - **Moment**: Date formatting
-

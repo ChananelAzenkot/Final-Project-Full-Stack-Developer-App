@@ -243,7 +243,8 @@ export default function MySalesSupervisor() {
                           EasyMesh
                         </StyledTableCell>
                         <StyledTableCell align="right">שדרוג</StyledTableCell>
-                        <StyledTableCell align="right">יעדים</StyledTableCell>
+                        <StyledTableCell align="right">                                פעולות מצטבר 
+                        </StyledTableCell>
                         <StyledTableCell align="right">
                           עדכון מכירה
                         </StyledTableCell>

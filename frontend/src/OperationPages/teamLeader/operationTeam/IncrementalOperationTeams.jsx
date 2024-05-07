@@ -145,7 +145,7 @@ export default function IncrementalOperationTeams() {
             <TableContainer
               component={Paper}
               id="container"
-              style={{ maxHeight: "400px", overflowY: "scroll" }}>
+              style={{ maxHeight: "250px", overflowY: "scroll" }}>
               <Table
                 sx={{ minWidth: 700 }}
                 stickyHeader
