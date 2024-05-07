@@ -17,7 +17,6 @@ import "../styles/Navbar.css";
 import {
   checkPermissions,
   pages,
-  RoleTypes,
   useGeneralContext,
   useLogout,
 } from "./RoleTypes";
@@ -195,11 +194,11 @@ export default function Navbar() {
                         alt={`https://ideogram.ai/api/images/direct/Lgf0yImGRqetiFUUf67b4g.jpg`}
                         src={
                           user && user.isAdmin
-                            ? "https://ideogram.ai/api/images/direct/nXIhWw6ER_eLGigiACob8g.png"
+                            ? "https://ideogram.ai/api/images/direct/IaLLA8g8Th6ud05mLTPPig.png"
                             : user && user.IsBusiness
-                            ? "https://ideogram.ai/api/images/direct/-v0aqxnQTpOG6STx2inSrg.png"
+                            ? "https://ideogram.ai/api/images/direct/5lZMJEGhTrC26gANLFXtwg.png"
                             : user && !user.isAdmin && !user.IsBusiness
-                            ? "https://ideogram.ai/api/images/direct/B6hXS_fXR6uEHFsB_3yrjA.png"
+                            ? "https://ideogram.ai/api/images/direct/co1wQyI1Qx-q7Wm2iiPuvg.png"
                             : "https://ideogram.ai/api/images/direct/Lgf0yImGRqetiFUUf67b4g.jpg"
                         }
                       />

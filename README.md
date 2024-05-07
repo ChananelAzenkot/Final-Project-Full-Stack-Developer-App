@@ -51,7 +51,11 @@ where you can read about the product and, of course, contact us if you have any 
 
 ### Create Operation
 
-just for type of user in the system can create a Operation that includes all the parameter description.
+**Imported-For-Create-Operation**
+just for type of user in the system can create all so to deleted or edit a Operation that includes all the parameter description.
+ **
+ the team leader and center manger can edit or delete but not to create is not the role so Their role is only to monitor the agents and not to perform these actions if it is an extreme case that needs to be edited or deleted there will be involvement on their part
+**
 
 - **the-Operation**: 
 It is very important to know that an operation can only be sent in 24 hours per user, in order to avoid wrong operations for that day, only an agent or representative creates one operation - for testing purposes, you can open an additional 2 or 3 pages - and connect to a team manager or center manager to get a full impression!

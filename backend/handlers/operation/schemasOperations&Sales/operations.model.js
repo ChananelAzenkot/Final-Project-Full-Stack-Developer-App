@@ -22,14 +22,6 @@ const schema = new Schema({
   createTime: { type: Date, default: Date.now() },
 });
 
-const LoggersOperationSchema = new Schema({
-  timestamp: Date,
-  userId: String,
-  method: String,
-  path: String,
-  body: Schema.Types.Mixed,
-});
-
 schema.statics.generateUniqueBizNumber = async function () {
   let bizNumber;
 
@@ -46,5 +38,3 @@ schema.statics.generateUniqueBizNumber = async function () {
 
 export const IncrementalOperation = mongoose.model("incrementalOperations", schema);
 export const DailyOperation = mongoose.model("dailyOperation", schema);
-export const LoggersOperation = mongoose.model(
-  "loggersOperation",LoggersOperationSchema);
