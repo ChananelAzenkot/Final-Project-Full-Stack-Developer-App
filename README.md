@@ -6,9 +6,15 @@ Welcome to DataInsight, your premier solution for effortlessly organizing and ma
 
 ## Getting Started
 
-MongoDB: in cloud in the project initial-data of the Users.
+MongoDB: The data of the users and cumulative operations and sales are in the json-import-MongoDB folder, it is necessary after running the server side to import the files in order to access the Users&Passwords.txt file for the users. In addition, the users' data is in json files. They also need to import according to the Collection. It is very important to do this only for the Collection with the name matching the json file. There are 3 json files.
 
-The project has initial-data.js its have all users with password for check all project and file fo namea&passwords.txt for all ready users to tester.
+- 1. BackHand-FullStack122.users.json - for users Collection.
+- 2. BackHand-FullStack122.incrementaloperations.json - for incrementaloperations Collection.
+- 3. BackHand-FullStack122.incrementaloperationsales.json - for incrementaloperationsales Collection.
+
+After the files are imported, it will be possible to use the users and see the operations and the sales according to the representative and according to the team manager and according to the call center manager repeats it again: a file of the passwords is in initial-data under the name: Users&Passwords.txt.
+
+Joying experience !
 
 To get started with this project, clone the repository and install dependencies:
 
@@ -25,7 +31,7 @@ Ensure you have a MongoDB instance running and configure your `.env` file with t
 Start the server:
 
 ```bash
-nodemon
+npm run start
 ```
 
 Start the Vite
