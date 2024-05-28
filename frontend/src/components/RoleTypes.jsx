@@ -55,6 +55,11 @@ export const pages = [
     title: "תפעול צוות מצטבר",
     permissions: [RoleTypes.IsBusiness],
   },
+    {
+    route: "/incrementalSalesOperationTeamsMonthly",
+    title: "מכירות הצוות חודשי",
+    permissions: [RoleTypes.IsBusiness],
+  },
   {
     route: "/incrementalOperationTeamsPerAgent",
     title: "תפעול נציג מצטבר",

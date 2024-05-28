@@ -18,6 +18,7 @@ import MyAgentSupervisor from "./OperationPages/centerManager/MyAgentSupervisor.
 import MyEmployeeSupervisor from "./OperationPages/centerManager/MyEmployeeSupervisor.jsx";
 import MyTeamSupervisor from "./OperationPages/centerManager/MyTeamSupervisor.jsx";
 import MySalesSupervisor from "./OperationPages/centerManager/MySalesSupervisor.jsx";
+import SalesIncrementalTeamsMonthly from "./OperationPages/teamLeader/salesTeam/SalesIncrementalTeamsMonthly.jsx";
 
 export default function Router(theme) {
   return (
@@ -57,6 +58,14 @@ export default function Router(theme) {
         element={
           <ProtectedRoute permission={[RoleTypes.IsBusiness]}>
             <SalesIncrementalTeams theme={theme} />
+          </ProtectedRoute>
+        }
+      />
+            <Route
+        path="/incrementalSalesOperationTeamsMonthly"
+        element={
+          <ProtectedRoute permission={[RoleTypes.IsBusiness]}>
+            <SalesIncrementalTeamsMonthly theme={theme} />
           </ProtectedRoute>
         }
       />
