@@ -1,21 +1,22 @@
-# ⚡️DataInsight
+# ⚡️GoPartner
 
 # Front-End
 
-Welcome to DataInsight, your premier solution for effortlessly organizing and maximizing employee productivity metrics. Our platform offers unparalleled granularity, empowering leaders with detailed daily and monthly insights. From team leaders to center managers, gain visibility and make informed decisions to optimize efficiency. Unlock the potential of your workforce with DataInsight – the indispensable tool for achieving organizational success.
+Welcome to GoPartner, your premier solution for effortlessly organizing and maximizing employee productivity metrics. Our platform offers unparalleled granularity, empowering leaders with detailed daily and monthly insights. From team leaders to center managers, gain visibility and make informed decisions to optimize efficiency. Unlock the potential of your workforce with GoPartner – the indispensable tool for achieving organizational success.
 
 ## Getting Started
 
 MongoDB: The data of the users and cumulative operations and sales are in the json-import-MongoDB folder, it is necessary after running the server side to import the files in order to access the Users&Passwords.txt file for the users. In addition, the users' data is in json files. They also need to import according to the Collection. It is very important to do this only for the Collection with the name matching the json file. There are 3 json files.
 
 ## MongoDB Atlas
-all so we add the env file the locally or mongo atlas what you prefer you just in to put the mongo link and click on Connect 
+
+all so we add the env file the locally or mongo atlas what you prefer you just in to put the mongo link and click on Connect
 and you well see the 4 Collection.
+
 1. is for dailyoperations - is well remove when the day is over at 21:00
 2. all so for the dailyoperationsales - is well remove when the day is over at 21:00
 3. all data and days saved is well have the - incremental operations is Saved all the accumulated data, in a good way so that the days can be tracked in terms of date, day and month later.
 4. all so for the incrementaloperationsales - Follow up the sales of the representatives with those sold to the services and know the sales force of the representative or the team.
-
 
 - 1. BackHand-FullStack122.users.json - for users Collection.
 - 2. BackHand-FullStack122.incrementaloperations.json - for incrementaloperations Collection.

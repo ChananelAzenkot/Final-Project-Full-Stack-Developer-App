@@ -141,7 +141,7 @@ export default function SignUp(theme) {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                הרשמה למערכת - DataInsight⚡️
+                הרשמה למערכת - GoPartner⚡️
               </Typography>
               <Box
                 component="form"

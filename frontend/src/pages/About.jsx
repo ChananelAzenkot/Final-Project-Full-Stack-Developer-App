@@ -12,7 +12,7 @@ export default function About(theme) {
             <Typography component="div" variant="h3" className="tempTitle">
               <div>הדרכה קצרה</div>
             </Typography>
-            <Typography variant="h1">DataInsight</Typography>
+            <Typography variant="h1">GoPartner</Typography>
             <br />
             <Typography
               component="div"
