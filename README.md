@@ -1,8 +1,8 @@
-# ⚡️GoPartner
+# ⚡️DataInsight
 
 # Front-End
 
-Welcome to GoPartner, your premier solution for effortlessly organizing and maximizing employee productivity metrics. Our platform offers unparalleled granularity, empowering leaders with detailed daily and monthly insights. From team leaders to center managers, gain visibility and make informed decisions to optimize efficiency. Unlock the potential of your workforce with GoPartner – the indispensable tool for achieving organizational success.
+Welcome to DataInsight, your premier solution for effortlessly organizing and maximizing employee productivity metrics. Our platform offers unparalleled granularity, empowering leaders with detailed daily and monthly insights. From team leaders to center managers, gain visibility and make informed decisions to optimize efficiency. Unlock the potential of your workforce with DataInsight – the indispensable tool for achieving organizational success.
 
 ## Getting Started
 
